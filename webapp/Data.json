@@ -1,0 +1,77 @@
+{
+  "title": "Picked Items",
+  "articles": [
+    {
+      "name": "Pams Pure Plain Flour",
+      "qty": "1.5kg",
+      "price": 1.99,
+      "articleNo": 5003829,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif"
+    },
+    {
+      "name": "Tararua Butter",
+      "qty": "500g",
+      "price": 6.49,
+      "articleNo": 5013622,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3765420344565789.avif"
+    },
+    {
+      "name": "Chelsea White Sugar",
+      "qty": "1.5kg",
+      "price": 3.19,
+      "articleNo": 5002760,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4560913944979699.avif"
+    },
+    {
+      "name": "All Good Oat Milk Barista",
+      "qty": "1l",
+      "price": 4.49,
+      "articleNo": 5273270,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/544443431544691.avif"
+    },
+    {
+      "name": "Pic's Really Good Smooth Peanut Butter",
+      "qty": "380g",
+      "price": 6.89,
+      "articleNo": 5019876,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7278182323084154.avif"
+    },
+    {
+      "name": "Nature's Fresh Bread White Toast",
+      "qty": "700g",
+      "price": 3.49,
+      "articleNo": 5026067,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7138028174164914.avif"
+    },
+    {
+      "name": "Pineapple Lumps Confectionery",
+      "qty": "120g",
+      "price": 1.99,
+      "articleNo": 5308268,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3374903838554067.avif"
+    },
+    {
+      "name": "Mutti Chopped Tomatoes",
+      "qty": "400g",
+      "price": 1.99,
+      "articleNo": 5013580,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4781330397012883.avif"
+    },
+    {
+      "name": "Whittaker's Creamy Milk 33% Cocoa Milk Chocolate Block",
+      "qty": "250g",
+      "price": 5.99,
+      "articleNo": 5308268,
+      "stock": true,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3374903838554067.avif"
+    }
+  ]
+}

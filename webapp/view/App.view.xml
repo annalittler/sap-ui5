@@ -1,8 +1,43 @@
 <mvc:View
-   xmlns="sap.m"
-   xmlns:mvc="sap.ui.core.mvc"
-    controllerName="sap.ui.demo.walkthrough.controller.App">
-    <Button text="Increment by 1" press=".incrementBy1"/>
-    <Text text="0" id="counter"/>
-    <Button text="Reset" press=".resetCounter"/>
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  display-block="true"
+  controllerName="sap.ui.demo.walkthrough.controller.App">
+
+  <App>
+    <pages>
+      <Page title="{i18n>homePageTitle}">
+        <content>
+          <Panel headerText="{i18n>panelTitle}">
+            <content>
+              <!-- <Button text="Increment by 1" press=".incrementBy1" />
+              <Text text="0" id="counter" />
+              <Button text="Reset" press=".reset" />
+              <Text text="Enter Your Name" id="name" />
+              <Input
+                value="{dataModel>/recipient/name}"
+                description="Hello {dataModel>/recipient/name}"
+                valueLiveUpdate="true"
+                width="60%"
+              /> -->
+              <Input placeholder="Enter an article number" value="{dataModel>/search/item}"
+                valueLiveUpdate="true" width="80%" />
+              <Button text="{i18n>inputSearch}" press=".sayHi" width="20%" />
+              <List id="episodeOverView" headerText="{tableData>/title}" items="{tableData>/articles}">
+                <ObjectListItem title="{tableData>name}" icon="{tableData>image}" type="Active" attributes="hello">
+                  <ObjectAttribute text=" Article: {tableData>articleNo}" />
+                  <firstStatus></firstStatus>
+                </ObjectListItem>
+              </List>
+              <!-- <List id="episodeOverView" headerText="{tableData>/title}" items="{tableData>/articles}">
+                <StandardListItem title="{tableData>name}" icon="{tableData>image}" description="Quantity: {tableData>qty} - Price: ${tableData>price} - In stock {tableData>stock}" />
+              </List> -->
+            </content>
+          </Panel>
+        </content>
+
+      </Page>
+    </pages>
+  </App>
+
 </mvc:View>
