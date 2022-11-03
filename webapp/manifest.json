@@ -40,14 +40,15 @@
       "tablet": true,
       "phone": true
     },
-    "supportedThemes": ["sap_hcb", "sap_bluecrystal"]
+    "supportedThemes": ["sap_fiori_3"]
   },
   "sap.ui5": {
     "_version": "1.1.0",
     "resources": {
       "js": [
         {
-          "uri": "<uri>"
+          "uri": "resources/libs/Scandit.js",
+          "name": "Scandit.js"
         }
       ],
       "css": [

@@ -1,26 +1,159 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/m/MessageToast"],
-  function (Controller, MessageToast) {
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
+    "sap/ui/model/json/JSONModel",
+  ],
+  function (Controller, MessageToast, MessageBox) {
     "use strict";
     return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
-      incrementBy1: function () {
-        let myTextElem = this.getView().byId("counter");
-        let myNum = parseInt(myTextElem.getText());
-        let myNewNum = myNum + 1;
-        myTextElem.setText(myNewNum);
+      onStartScan: function () {
+        var closeBtn = this.getView().byId("closeBtn");
+        var scanBtn = this.getView().byId("scanBtn");
+        scanBtn.setEnabled(false);
+        closeBtn.setVisible(true);
+
+        var oScannedItems = [];
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+
+        ScanditSDK.configure(
+          "AeUi1GO8QVCLQNsakx9oKmAH8IrQG9AmeWtsE+tNIEiresInMWGlkKgl6E7VYtnzlUu7bctPsTKOYGdgeVS0grtHLoL2Sfksjw1W7ER0ZTfRdGo+a3Rt1p0Z3abZOunN1CykPI44zjwq/CNmFimQxgaubAj5Vn/RuJdbFyuQQEthlnNgDYQmrHOH02p5luFLvnFpnmVjtnJI+/+MnHFg7Mbyaj9uPqOxuApRhPkGJQOmWOw3EAIDDUv3EicW+0L+Dxe3FYebkYfcmlkuhuI7KF+bezTYCwStuwYGINtr3+AKlqKstFFoSqroA71EZw32tfr8FDfr0YrGeZD1UoPK6qR7Gz0RVWHjtVYs2cZqsYPp8pXg7wC0Rs5GoF7kA9V/7gB5Prla1SwUEimHpqg/IPmOjnZjR3WFjq9JCFilbZ2ljY3yv3kbZ9wxA93HqYuYEUm5EfQnjkDq+VETJMzcUyl8MrIzDcoMuKjaDPSlew0hbI0uzJY8MRRpxdrxG0zStKDj2G7bzynd8H9AOft0+fPw5Tgb2/LmJc87AuwAlnPVSBMhDpoBDCMWLVPE1rB+Idn0oHkzKbMfvmm56BLRNLQocQKj3JY4fuKD5hHsmnQy0sXxlWjAF0ospJCvbW9KbWPWALnMDZ/ZE050vY4ZNeXOHULN2joOxxQbG/Y6CXJKpJm4dbUEUuSPEs5Ufn2e3b4ZPjLrrHAm1geZ40BNWtdNkuV+rOxLCC4XbbWLcyhSy7QtZu1x3BpSMyHqfHQWne+GgMpBbNPKvgJHf15jA6qBI0zDcbP6/MkBuhD4ASU2+UAYm7DK",
+          {
+            engineLocation:
+              "https://cdn.jsdelivr.net/npm/scandit-sdk@5.x/build/",
+          }
+        )
+          .then(() => {
+            return ScanditSDK.BarcodePicker.create(
+              document.getElementById(
+                this.getView().createId("scandit-barcode-picker")
+              ),
+              {
+                // enable some common symbologies
+                scanSettings: new ScanditSDK.ScanSettings({
+                  enabledSymbologies: ["ean8", "ean13", "upca", "upce"],
+                }),
+              }
+            );
+          })
+          .then((barcodePicker) => {
+            // barcodePicker is ready here, show a message every time a barcode is scanned
+            barcodePicker.on("scan", (scanResult) => {
+              // console.log(mockData);
+              var oScannedBarcode = {};
+              var item = parseInt(scanResult.barcodes[0].data);
+              oScannedBarcode.barcode = item;
+              if (
+                oScannedItems.findIndex((obj) => obj.barcode == item) === -1
+              ) {
+                oScannedItems.push(oScannedBarcode);
+                if (mockData.find((e) => e.barcode === item)) {
+                  function existsInData(e) {
+                    return e.barcode === item;
+                  }
+                  const index = mockData.findIndex(existsInData);
+                  oData.articles.push(mockData[index]);
+                  oModel.refresh();
+                }
+
+                oModel.refresh();
+              }
+            });
+          });
       },
-      reset: function () {
-        let myTextElem = this.getView().byId("counter");
-        myTextElem.setText("0");
+
+      onShowImages: function (e) {
+        var oModel = this.getView().getModel("showImgs");
+        var state = e.getSource().getState();
+
+        if (state === true) {
+          var showImgs = {
+            status: true,
+          };
+          oModel.oData = showImgs;
+          oModel.refresh();
+        }
+
+        if (state === false) {
+          var showImgs = {
+            status: false,
+          };
+          oModel.oData = showImgs;
+          oModel.refresh();
+        }
       },
-      sayHi: function () {
-        var oBundle = this.getView().getModel("i18n").getResourceBundle();
-        var sRecipient = this.getView()
-          .getModel("dataModel")
-          .getProperty("/search/item");
-        var sMsg = oBundle.getText("helloPerson", [sRecipient]);
-        // Show message
-        MessageToast.show(sMsg);
+
+      onAddItem: function () {
+        var input = parseInt(this.getView().byId("searchInputVal").getValue());
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+
+        if (mockData.find((e) => e.articleNo === input)) {
+          function existsInData(e) {
+            return e.articleNo === input;
+          }
+
+          const index = mockData.findIndex(existsInData);
+          oData.articles.push(mockData[index]);
+          oModel.refresh();
+        } else {
+          MessageToast.show("Product not found");
+        }
+      },
+      onDeleteList: function () {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+        MessageBox.confirm("Are you sure you want to delete the list?", {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+            if (sAction === MessageBox.Action.OK) {
+              oData.articles = [];
+              oModel.refresh();
+              MessageToast.show("List deleted");
+            }
+          },
+        });
+      },
+      onDeleteItem: function (e) {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+
+        var oItem = e
+          .getParameter("listItem")
+          .getBindingContext("tableData")
+          .getObject();
+        console.log(oItem);
+        oModel.refresh();
+
+        var oArticles = oData.articles;
+
+        MessageBox.confirm("Are you sure you want to delete this item?", {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+            if (sAction === MessageBox.Action.OK) {
+              function existsInData(e) {
+                return e.articleNo === oItem.articleNo;
+              }
+              const index = oArticles.findIndex(existsInData);
+              oArticles.splice(index, 1);
+              oModel.refresh();
+              MessageToast.show("Item deleted");
+            }
+          },
+        });
+      },
+      onStopScan: function () {
+        console.log(true);
+        var closeBtn = this.getView().byId("closeBtn");
+        var scanBtn = this.getView().byId("scanBtn");
+        var scanner = this.getView().byId("scandit-barcode-picker");
+        scanBtn.setEnabled(true);
+        closeBtn.setVisible(false);
+        scanner.setVisible(false);
       },
     });
   }

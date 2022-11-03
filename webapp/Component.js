@@ -14,20 +14,42 @@ sap.ui.define(
         // call the init function of the parent
         UIComponent.prototype.init.apply(this, arguments);
 
-        // set data model
-        let oDataName = {
-          search: {
-            item: "",
-          },
+        var showImgs = {
+          state: false,
         };
-        let oModelData = new JSONModel(oDataName);
-        this.setModel(oModelData, "dataModel");
+        var oModel = new JSONModel(showImgs);
+        this.setModel(oModel, "showImgs");
 
-        //set table data
-        let tableModel = new JSONModel();
-        tableModel.loadData("./Data.json");
+        const obj = {
+          title: "Picked Items",
+          articles: [
+            // {
+            //   name: "NATURE'S FRESH BREAD WHITE TOAST",
+            //   qty: "700G",
+            //   price: 3.49,
+            //   articleNo: 5026067,
+            //   stock: true,
+            //   image:
+            //     "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7138028174164914.avif",
+            //   soh: 2,
+            //   presStock: 0,
+            // },
+          ],
+        };
+
+        let tableModel = new JSONModel(obj);
+        // tableModel.loadData("./Data.json");
         this.setModel(tableModel, "tableData");
-        // console.log(oModelTable);
+
+        // console.log(oTableModel);
+        // let oArticles = {
+        //   articles: {},
+        // };
+        // oArticles.articles.push({
+        //   name: "Anna",
+        // });
+        // let oArticleData = new JSONModel(oArticles);
+        // this.setModel(oModelData, "dataModel");
       },
     });
   }
