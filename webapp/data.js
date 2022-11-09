@@ -76,6 +76,7 @@ const mockData = [
     qty: "400g",
     price: 1.99,
     articleNo: 5013580,
+    barcode: 80042556,
     image:
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4781330397012883.avif",
     soh: 56,
@@ -89,6 +90,17 @@ const mockData = [
     image:
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/5152274480947803.avif.avif",
     soh: 0,
+    presStock: 2,
+  },
+  {
+    name: "PAMS COCONUT CREAM",
+    qty: "400ML",
+    price: 1.39,
+    articleNo: 5003719,
+    barcode: 9415077038398,
+    image:
+      "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/2626326568698991.avif",
+    soh: 5,
     presStock: 2,
   },
 ];

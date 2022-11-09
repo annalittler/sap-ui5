@@ -4,8 +4,9 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/m/MessageBox",
     "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment",
   ],
-  function (Controller, MessageToast, MessageBox) {
+  function (Controller, MessageToast, MessageBox, JSONModel, Fragment) {
     "use strict";
     return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
       onInit: function () {
@@ -71,23 +72,43 @@ sap.ui.define(
             });
         }
       },
+      onSettingsPopup: function () {
+        var oView = this.getView();
+        if (!this.byId("settingsBox")) {
+          console.log("hello");
+          Fragment.load({
+            id: oView.getId(),
+            name: "sap.ui.demo.walkthrough.view.fragments.Settings",
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            oDialog.open();
+          });
+        } else {
+          console.log("hellooooo");
+          this.byId("settingsBox").open();
+        }
+      },
+
+      onCloseSettings: function () {
+        this.byId("settingsBox").close();
+      },
 
       onStopScan: function () {
         console.log(true);
         var closeBtn = this.byId("closeBtn");
         var scanBtn = this.byId("scanBtn");
         var scanner = this.byId("scandit-barcode-picker");
-        // console.log(this.getView().byId("scandit-barcode-picker"));
         this.byId("scandit-barcode-picker").setVisible(false);
         closeBtn.setVisible(false);
         scanBtn.setVisible(true);
         scanBtn.setEnabled(true);
         scanner.setVisible(false);
-        // this.startedScanning(false);
       },
 
       onShowImages: function (e) {
         var oModel = this.getView().getModel("showImgs");
+        console.log(oModel);
         var state = e.getSource().getState();
 
         if (state === true) {
@@ -139,6 +160,7 @@ sap.ui.define(
           },
         });
       },
+
       onDeleteItem: function (e) {
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
