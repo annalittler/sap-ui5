@@ -11,6 +11,8 @@ sap.ui.define(
     "sap/ui/core/util/Export",
     "sap/ui/core/util/ExportTypeCSV",
     "sap/m/GroupHeaderListItem",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
   ],
   function (
     Controller,
@@ -23,7 +25,9 @@ sap.ui.define(
     Spreadsheet,
     Export,
     exportCSV,
-    GroupHeaderListItem
+    GroupHeaderListItem,
+    Filter,
+    FilterOperator
   ) {
     "use strict";
 
@@ -102,7 +106,6 @@ sap.ui.define(
         var oModel = this.getView().getModel("showImgs");
         // console.log(oModel);
         var state = e.getSource().getState();
-
         if (state === true) {
           var showImgs = {
             status: true,
@@ -118,6 +121,30 @@ sap.ui.define(
           oModel.oData = showImgs;
           oModel.refresh();
         }
+      },
+
+      onGroupByAisle: function (e) {
+        console.log("hi");
+        var oModel = this.getView().getModel("groupByAisle");
+
+        // console.log(oModel);
+        var state = e.getSource().getState();
+        if (state === true) {
+          var groupByAisle = {
+            status: true,
+          };
+          oModel.oData = groupByAisle;
+          oModel.refresh();
+        }
+
+        if (state === false) {
+          var groupByAisle = {
+            status: false,
+          };
+          oModel.oData = groupByAisle;
+          oModel.refresh();
+        }
+        console.log(oModel.oData);
       },
 
       onSettingsPopup: function () {
@@ -359,6 +386,12 @@ sap.ui.define(
             },
             columns: [
               {
+                name: "Aisle No.",
+                template: {
+                  content: "{aisle}",
+                },
+              },
+              {
                 name: "Article No.",
                 template: {
                   content: "{articleNo}",
@@ -404,13 +437,29 @@ sap.ui.define(
           MessageToast.show("Cannot export empty list");
         }
       },
-      getAisle: function (oContext) {
-        return oContext.getProperty("aisle");
-      },
+      onFilterItems: function (oEvent) {
+        // build filter array
+        var aFilter = [];
+        var sQuery = oEvent.getParameter("query");
+        if (sQuery) {
+          aFilter.push(new Filter("name", FilterOperator.Contains, sQuery));
+        }
 
+        // filter binding
+        var oList = this.byId("listItems");
+        var oBinding = oList.getBinding("items");
+        oBinding.filter(aFilter);
+      },
+      getGroup: function (oContext) {
+        var sKey = oContext.getProperty("aisle");
+        return {
+          key: sKey,
+          title: "Aisle " + sKey || "No Aisle Assigned",
+        };
+      },
       getGroupHeader: function (oGroup) {
-        return new GroupHeaderListItem({
-          title: oGroup.key,
+        return new sap.m.GroupHeaderListItem({
+          title: oGroup.title,
           upperCase: false,
         });
       },

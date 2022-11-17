@@ -15,7 +15,11 @@ sap.ui.define(
         UIComponent.prototype.init.apply(this, arguments);
 
         var showImgs = {
-          state: false,
+          status: true,
+        };
+
+        var groupByAisle = {
+          status: true,
         };
 
         this.getRouter().initialize();
@@ -23,19 +27,23 @@ sap.ui.define(
         var oModel = new JSONModel(showImgs);
         this.setModel(oModel, "showImgs");
 
+        var oModelGroup = new JSONModel(groupByAisle);
+        this.setModel(oModelGroup, "groupByAisle");
+
         const obj = {
           title: "Picked Items",
           articles: [
             {
-              name: "NATURE'S FRESH BREAD WHITE TOAST",
-              qty: "700G",
-              price: 3.49,
-              articleNo: 5026067,
-              stock: true,
+              name: "PAMS PURE PLAIN FLOUR",
+              qty: "1.5KG",
+              price: 1.99,
+              articleNo: 5003829,
+              barcode: 50038299,
               image:
-                "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7138028174164914.avif",
-              soh: 2,
-              presStock: 0,
+                "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
+              soh: 8,
+              presStock: 4,
+              aisle: 3,
             },
             {
               name: "TARARUA BUTTER",
@@ -46,6 +54,7 @@ sap.ui.define(
                 "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3765420344565789.avif",
               soh: 54,
               presStock: 3,
+              aisle: 10,
             },
             {
               name: "CHELSEA WHITE SUGAR",
@@ -56,16 +65,7 @@ sap.ui.define(
                 "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4560913944979699.avif",
               soh: 34,
               presStock: 0,
-            },
-            {
-              name: "ALL GOOD OAT MILK BARISTA",
-              qty: "1L",
-              price: 4.49,
-              articleNo: 5273270,
-              image:
-                "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/544443431544691.avif",
-              soh: 0,
-              presStock: 0,
+              aisle: 3,
             },
           ],
         };

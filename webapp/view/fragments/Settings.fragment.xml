@@ -9,11 +9,19 @@
 
     <Dialog id="settingsBox" title="Settings">
         <!-- <html:div class="sapUiSmallMarginStart"> -->
-        <Label text="Images:" class="sapUiTinyMargin"></Label>
-        <Switch state=" false" customTextOn=" On" customTextOff=" Off" change=" .onShowImages" />
-        <!-- </html:div> -->
+        <VBox justifyContent="SpaceBetween">
+            <HBox>
+                <Label text="Images:" class="sapUiTinyMargin"></Label>
+                <Switch state="true" change=".onShowImages" />
+            </HBox>
+            <HBox>
+                <Label text="Sort items by aisle:"></Label>
+                <Switch state="true" change=".onGroupByAisle" />
+            </HBox>
+            <!-- </html:div> -->
+        </VBox>
         <beginButton>
-            <Button text=" Close" press=" .onCloseSettings" class=" sapUiNoMarginBottom" type=" Emphasized"></Button>
+            <Button text="Close" press=".onCloseSettings" class="sapUiNoMarginBottom" type="Emphasized"></Button>
         </beginButton>
     </Dialog>
 </core:FragmentDefinition>

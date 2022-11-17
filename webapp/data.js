@@ -9,7 +9,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
     soh: 8,
     presStock: 4,
-    aisle: 03,
+    aisle: 3,
   },
   {
     name: "TARARUA BUTTER",
@@ -31,7 +31,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4560913944979699.avif",
     soh: 34,
     presStock: 0,
-    aisle: 03,
+    aisle: 3,
   },
 
   {
@@ -43,7 +43,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/544443431544691.avif",
     soh: 0,
     presStock: 0,
-    aisle: 04,
+    aisle: 4,
   },
   {
     name: "PIC'S REALLY GOOD SMOOTH PEANUT BUTTER",
@@ -54,7 +54,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7278182323084154.avif",
     soh: 83,
     presStock: 2,
-    aisle: 04,
+    aisle: 4,
   },
   {
     name: "NATURE'S FRESH BREAD WHITE TOAST",
@@ -66,7 +66,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7138028174164914.avif",
     soh: 2,
     presStock: 0,
-    aisle: 09,
+    aisle: 9,
   },
   {
     name: "PINEAPPLE LUMPS CONFECTIONARY",
@@ -77,7 +77,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3374903838554067.avif",
     soh: 0,
     presStock: 0,
-    aisle: 05,
+    aisle: 5,
   },
   {
     name: "MUTTI CHOPPED TOMATOES",
@@ -89,7 +89,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4781330397012883.avif",
     soh: 56,
     presStock: 1,
-    aisle: 07,
+    aisle: 7,
   },
   {
     name: "WHITTAKER'S CREAMY MILK 33% COCOA MILK CHOCOLATE BLOCK",
@@ -100,7 +100,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/5152274480947803.avif.avif",
     soh: 0,
     presStock: 2,
-    aisle: 05,
+    aisle: 5,
   },
   {
     name: "PAMS COCONUT CREAM",
@@ -112,7 +112,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/2626326568698991.avif",
     soh: 5,
     presStock: 2,
-    aisle: 07,
+    aisle: 7,
   },
   {
     name: "EXTRA SPEARMINT GUM",
@@ -124,7 +124,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4098008843437409.avif",
     soh: 45,
     presStock: 0,
-    aisle: 05,
+    aisle: 5,
   },
 ];
 
