@@ -9,6 +9,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
     soh: 8,
     presStock: 4,
+    aisle: 03,
   },
   {
     name: "TARARUA BUTTER",
@@ -19,6 +20,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3765420344565789.avif",
     soh: 54,
     presStock: 3,
+    aisle: 10,
   },
   {
     name: "CHELSEA WHITE SUGAR",
@@ -29,7 +31,9 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4560913944979699.avif",
     soh: 34,
     presStock: 0,
+    aisle: 03,
   },
+
   {
     name: "ALL GOOD OAT MILK BARISTA",
     qty: "1L",
@@ -39,6 +43,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/544443431544691.avif",
     soh: 0,
     presStock: 0,
+    aisle: 04,
   },
   {
     name: "PIC'S REALLY GOOD SMOOTH PEANUT BUTTER",
@@ -49,6 +54,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7278182323084154.avif",
     soh: 83,
     presStock: 2,
+    aisle: 04,
   },
   {
     name: "NATURE'S FRESH BREAD WHITE TOAST",
@@ -60,6 +66,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7138028174164914.avif",
     soh: 2,
     presStock: 0,
+    aisle: 09,
   },
   {
     name: "PINEAPPLE LUMPS CONFECTIONARY",
@@ -70,6 +77,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3374903838554067.avif",
     soh: 0,
     presStock: 0,
+    aisle: 05,
   },
   {
     name: "MUTTI CHOPPED TOMATOES",
@@ -81,6 +89,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4781330397012883.avif",
     soh: 56,
     presStock: 1,
+    aisle: 07,
   },
   {
     name: "WHITTAKER'S CREAMY MILK 33% COCOA MILK CHOCOLATE BLOCK",
@@ -91,6 +100,7 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/5152274480947803.avif.avif",
     soh: 0,
     presStock: 2,
+    aisle: 05,
   },
   {
     name: "PAMS COCONUT CREAM",
@@ -102,6 +112,19 @@ const mockData = [
       "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/2626326568698991.avif",
     soh: 5,
     presStock: 2,
+    aisle: 07,
+  },
+  {
+    name: "EXTRA SPEARMINT GUM",
+    qty: "27G",
+    price: 1.39,
+    articleNo: 5003713,
+    barcode: 93613903,
+    image:
+      "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4098008843437409.avif",
+    soh: 45,
+    presStock: 0,
+    aisle: 05,
   },
 ];
 

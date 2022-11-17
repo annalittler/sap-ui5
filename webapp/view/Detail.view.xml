@@ -1,0 +1,54 @@
+<!-- <mvc:View
+    controllerName="sap.ui.demo.walkthrough.controller.Detail"
+    xmlns="sap.m" xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <Page title="hello">
+        
+        <Text text="hello {tableData>name}" />
+            
+        </Page>
+
+</mvc:View> -->
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+    controllerName="sap.ui.demo.walkthrough.controller.Detail"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f">
+
+
+    <Page title="{tableData>name}" id="idDetail" showFooter="true" showNavButton="true" navButtonPress=".onNavBack">
+        <!-- <title> -->
+        <!-- <PageTitle> -->
+        <!-- <heading>
+            <Title text="{tableData>name}" wrapping="true" />
+        </heading> -->
+        <!-- <expandedContent>
+            <Label text="{tableData>name}" />
+        </expandedContent>
+        <snappedContent>
+            <Label text="{tableData>name}" />
+        </snappedContent> -->
+        <!-- </PageTitle> -->
+        <!-- </title> -->
+
+        <content></content>
+        <footer></footer>
+    </Page>
+    <!-- <f:DynamicPage id="idDetail" showFooter="true" showNavButton="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{tableData>name}" wrapping="true" />
+                </f:heading>
+                <f:expandedContent>
+                    <Label text="{tableData>name}" />
+                </f:expandedContent>
+                <f:snappedContent>
+                    <Label text="{tableData>name}" />
+                </f:snappedContent>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content></f:content>
+        <f:footer></f:footer>
+    </f:DynamicPage> -->
+</mvc:View>

@@ -1,10 +1,19 @@
 <core:FragmentDefinition
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+
+    <!-- <Text text="Images:" class="sapUiTinyMargin"></Text>
+    <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" />
+ -->
+
     <Dialog id="settingsBox" title="Settings">
-        <Text text="Images:" class="sapUiTinyMargin"></Text>
-        <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" />
-        <Button text="Close" press=".onCloseSettings" class="sapUiNoMarginBottom
-" width="100%" type="Emphasized"></Button>
+        <!-- <html:div class="sapUiSmallMarginStart"> -->
+        <Label text="Images:" class="sapUiTinyMargin"></Label>
+        <Switch state=" false" customTextOn=" On" customTextOff=" Off" change=" .onShowImages" />
+        <!-- </html:div> -->
+        <beginButton>
+            <Button text=" Close" press=" .onCloseSettings" class=" sapUiNoMarginBottom" type=" Emphasized"></Button>
+        </beginButton>
     </Dialog>
 </core:FragmentDefinition>

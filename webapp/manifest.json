@@ -87,7 +87,50 @@
     },
     "handleValidation": false,
     "config": {},
-    "routing": {},
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "sap.ui.demo.walkthrough.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "list",
+          "target": "list",
+          "view": "List",
+          "viewId": "list",
+          "viewPath": "sap.ui.demo.view.List"
+        },
+        {
+          "pattern": "detail/{detailPath}",
+          "name": "detail",
+          "target": "detail"
+        },
+        {
+          "pattern": "scan",
+          "name": "scan",
+          "target": "scan"
+        }
+      ],
+      "targets": {
+        "list": {
+          "viewId": "list",
+          "viewName": "List"
+        },
+        "detail": {
+          "viewId": "detail",
+          "viewName": "Detail"
+        },
+        "scan": {
+          "viewId": "scan",
+          "viewName": "Scan"
+        }
+      }
+    },
     "extends": {
       "component": "<extendedComponentId>",
       "minVersion": "<minComp1Version>",

@@ -1,0 +1,101 @@
+<mvc:View
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+  xmlns:prdimg="fsni.ca.lib.product.image.controls" xmlns:m="sap.m" xmlns:f="sap.f"
+  xmlns:barcode="fsni.ca.lib.barcode.scanner.controls" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:ndc="sap.ndc"
+  controllerName="sap.ui.demo.walkthrough.controller.App" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1">
+
+  <Shell showLogout="false" appWidthLimited="false">
+    <App>
+
+      <pages>
+        <Page title="{i18n>homePageTitle}">
+          <customHeader design="Solid">
+            <f:ShellBar title="{i18n>appTitle}" showNavButton="true"
+            >
+
+              <f:profile>
+                <Avatar initials="AL" />
+              </f:profile>
+
+            </f:ShellBar>
+          </customHeader>
+          <content>
+
+            <OverflowToolbar>
+              <Input placeholder="Enter article number" width="72%" id="searchInputVal"
+              >
+                <layoutData>
+                  <OverflowToolbarLayoutData priority="NeverOverflow" />
+                </layoutData>
+              </Input>
+              <Button press=".onAddItem" width="50px" text="Add" type="Ghost">
+                <layoutData>
+                  <OverflowToolbarLayoutData priority="NeverOverflow" />
+                </layoutData>
+              </Button>
+              <Button text="Settings" icon="sap-icon://action-settings" press=".onSettingsPopup"
+                class="sapUiSmallMarginBottom"
+                ariaHasPopup="Dialog">
+                <layoutData>
+                  <OverflowToolbarLayoutData priority="AlwaysOverflow" />
+                </layoutData>
+              </Button>
+              <Button text="Delete Items" icon="sap-icon://delete" press=".onDeleteMenu"
+                class="sapUiSmallMarginBottom"
+              >
+                <!-- ariaHasPopup="Dialog" -->
+                <layoutData>
+                  <OverflowToolbarLayoutData priority="AlwaysOverflow" />
+                </layoutData>
+              </Button>
+            </OverflowToolbar>
+            <html:div id="scandit-barcode-picker"></html:div>
+            <List id="listItems" items="{tableData>/articles}" mode="Delete" delete=".onDeleteItem"
+            >
+              <items>
+                <CustomListItem id="idListItem" type="Active" press=".onClickItem">
+                  <HBox class="sapUiSmallMargin" width="95%">
+                    <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginEnd">
+                      <Image src="{tableData>
+              image}" height="50px" visible="{= ${showImgs>/status} === true ? true : false }" />
+                    </HBox>
+                    <VBox class="SapUiLargeMargin" width="100%">
+                      <HBox justifyContent="SpaceBetween">
+                        <Title text="{tableData>name} {tableData>qty}" wrapping="true" class="SapUiLargeMarginEnd" width="95%"></Title>
+                      </HBox>
+                      <HBox justifyContent="SpaceBetween">
+                        <ObjectAttribute title="Article" text="{tableData>articleNo}" />
+                      </HBox>
+                      <HBox justifyContent="SpaceBetween">
+                        <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }"
+                          state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" />
+                        <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }"
+                          state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" />
+                      </HBox>
+                    </VBox>
+                  </HBox>
+                </CustomListItem>
+              </items>
+            </List>
+          </content>
+          <footer>
+
+
+            <Toolbar
+              design="Solid" enabled="true" visible="true" width="100%">
+              <Button id="scanBtn" icon="sap-icon://bar-code" press=".onOpenScan" visible="true" />
+              <!-- <Button id="" icon="sap-icon://hello-world" press=".onOpenScan" visible="true" /> -->
+              <Button text="End Scanning" id="closeBtn" visible="false" press=".onStopScan"></Button>
+              <ToolbarSpacer />
+              <!-- <Text text="Images: "></Text>
+              <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" /> -->
+              <Button id="idButtonDelete" type="Reject" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" />
+              <Button id="idButtonExport" type="Emphasized" text="Export" press=".onExportPress" />
+            </Toolbar>
+          </footer>
+        </Page>
+      </pages>
+    </App>
+  </Shell>
+</mvc:View>

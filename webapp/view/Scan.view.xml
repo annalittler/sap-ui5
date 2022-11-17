@@ -1,0 +1,52 @@
+<mvc:View
+    controllerName="sap.ui.demo.walkthrough.controller.Scan"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml">
+
+    <Page title="Scan an item" showNavButton="true" navButtonPress=".onNavBack">
+        <headerContent>
+            <!-- <Button text="hi im a button" icon="sap-icon://hello-world" press=""></Button> -->
+        </headerContent>
+        <content>
+            <html:div id="scandit-barcode-picker1"></html:div>
+            <!-- <mvc:XMLView viewName="sap.ui.demo.walkthrough.view"></mvc:XMLView> -->
+            <!-- <Text text="Recent scans" /> -->
+
+            <List id=""
+                items="{tableData>/articles}" mode="Delete" delete="onDeleteItem">
+                <items>
+                    <CustomListItem id="idListItem" type="Active" press=".onClickItem">
+                        <HBox class="sapUiSmallMargin" width="95%">
+                            <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginEnd">
+                                <Image src="{tableData>image}" height="50px" visible="{= ${showImgs>/status} === true ? true : false }" />
+                            </HBox>
+                            <VBox class="SapUiLargeMargin" width="100%">
+                                <HBox justifyContent="SpaceBetween">
+                                    <Title text="{tableData>name} {tableData>qty}" wrapping="true" class="SapUiLargeMarginEnd" width="95%"></Title>
+                                </HBox>
+                                <HBox justifyContent="SpaceBetween">
+                                    <ObjectAttribute title="Article" text="{tableData>articleNo}" />
+                                </HBox>
+                                <HBox justifyContent="SpaceBetween">
+                                    <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }"
+                                        state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" />
+                                    <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }"
+                                        state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" />
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                    </CustomListItem>
+                </items>
+            </List>
+        </content>
+        <footer>
+            <Toolbar
+                design="Solid" enabled="true" visible="true" width="100%">
+                <Button text="End Scanning" id="closeBtn" press=".onLeaveScan"></Button>
+                <ToolbarSpacer />
+                <Button id="idButtonDelete" type="Reject" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" />
+                <Button id="idButtonExport" type="Emphasized" text="Export" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>
