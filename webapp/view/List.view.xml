@@ -26,7 +26,7 @@
           </customHeader>
           <content>
             <OverflowToolbar>
-              <Input placeholder="Enter article number" width="72%" id="searchInputVal">
+              <!-- <Input placeholder="Enter article number" width="72%" id="searchInputVal">
                 <layoutData>
                   <OverflowToolbarLayoutData priority="AlwaysOverflow" />
                 </layoutData>
@@ -35,7 +35,7 @@
                 <layoutData>
                   <OverflowToolbarLayoutData priority="AlwaysOverflow" />
                 </layoutData>
-              </Button>
+              </Button> -->
               <!-- <contentMiddle> -->
 
               <SearchField search=".onFilterItems" width="85%" placeholder="Search your list">
@@ -45,7 +45,11 @@
               </SearchField>
               <!-- </contentMiddle> -->
               <ToolbarSpacer />
-
+              <Button text="Add by article number" icon="sap-icon://add" press=".onAddItemPopup" class="sapUiSmallMarginBottom" ariaHasPopup="Dialog">
+                <layoutData>
+                  <OverflowToolbarLayoutData priority="AlwaysOverflow" />
+                </layoutData>
+              </Button>
               <Button text="Settings" icon="sap-icon://action-settings" press=".onSettingsPopup" class="sapUiSmallMarginBottom" ariaHasPopup="Dialog">
                 <layoutData>
                   <OverflowToolbarLayoutData priority="AlwaysOverflow" />

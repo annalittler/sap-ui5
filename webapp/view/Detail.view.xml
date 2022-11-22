@@ -16,7 +16,34 @@
 
 
     <Page title="{tableData>name}" id="idDetail" showFooter="true" showNavButton="true" navButtonPress=".onNavBack">
+        <!-- <Header text="hi"></Header> -->
         <!-- <title> -->
+        <content>
+            <HBox alignItems="Center" backgroundDesign="Solid">
+                <VBox class="sapUiContentPadding">
+                    <Image src="{tableData>image}" width="60px" press=".onImgPress" />
+                </VBox>
+                <VBox>
+                    <Title text="{tableData>name}"></Title>
+                    <Text text="Article: {tableData>articleNo}"></Text>
+                    <Text text="Barcode: {tableData>barcode}"></Text>
+                </VBox>
+            </HBox>
+            <!-- <VBox class="sapUiContentPadding sapUiSmallMargin sapUiMediumMarginBeginEnd">
+                <HBox justifyContent="SpaceBetween">
+                    <Text text="PRESENTATION STOCK: {tableData>presStock}"></Text>
+                    <Text text="SOH: {tableData>soh}"></Text>
+                </HBox>
+                <RadioButtonGroup>
+                    <RadioButton id="idRadioFullShelf" text="Replenish Full Shelf" selected="{= ${presStock} > 0 ? false : true }" editable="{= ${RequestType} !== 'IC' ? true : false }" />
+                    <RadioButton id="idRadioExactQuantity" text="Replenish Exact Quantity" selected="{= ${RequestType} === 'EQ' ? true : false }" editable="{= ${RequestType} !== 'IC' ? true : false }" />
+                    <RadioButton id="idRadioInvController" text="Report to Inventory Controller" selected="{= ${RequestType} === 'IC' ? true : false }" editable="false" />
+                </RadioButtonGroup>
+                <Label text="Presentation Stock" class="sapUiSmallMarginTop" />
+                <StepInput value="{PresentationStock}" min="0" step="1" />
+            </VBox> -->
+        </content>
+
         <!-- <PageTitle> -->
         <!-- <heading>
             <Title text="{tableData>name}" wrapping="true" />

@@ -164,8 +164,25 @@ sap.ui.define(
         }
       },
 
+      onAddItemPopup: function () {
+        var oView = this.getView();
+        if (!this.byId("addItemBox")) {
+          Fragment.load({
+            id: oView.getId(),
+            name: "sap.ui.demo.walkthrough.view.fragments.AddItem",
+            controller: this,
+          }).then(function (oDialog) {
+            console.log(oDialog);
+            oView.addDependent(oDialog);
+            oDialog.open();
+          });
+        } else {
+          this.byId("addItemBox").open();
+        }
+      },
+
       onCloseSettings: function () {
-        this.byId("settingsBox").close();
+        this.byId("addItemBox").close();
       },
 
       onStopScan: function () {
@@ -184,16 +201,26 @@ sap.ui.define(
         var input = parseInt(this.getView().byId("searchInputVal").getValue());
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
+        var oArticles = oData.articles;
 
-        if (mockData.find((e) => e.articleNo === input)) {
-          function existsInData(e) {
-            return e.articleNo === input;
+        // oData.findIndex(items);
+        var index = oArticles.findIndex((items) => items.articleNo == input);
+        console.log(index);
+        console.log(oArticles[0].barcode);
+        if (oArticles.findIndex((item) => item.articleNo == input) == -1) {
+          console.log("hi");
+          if (mockData.find((e) => e.articleNo === input)) {
+            function existsInData(e) {
+              return e.articleNo === input;
+            }
+            const index = mockData.findIndex(existsInData);
+            oData.articles.unshift(mockData[index]);
+            oModel.refresh();
+          } else {
+            MessageToast.show("Product not found");
           }
-          const index = mockData.findIndex(existsInData);
-          oData.articles.unshift(mockData[index]);
-          oModel.refresh();
         } else {
-          MessageToast.show("Product not found");
+          MessageToast.show("Item already in list");
         }
       },
       onDeleteList: function () {
@@ -264,178 +291,94 @@ sap.ui.define(
         } else {
           list.setMode("Delete");
         }
-        // console.log(list._sLastMode);
-        // if (list.mode === "None") {
-        //   list.mode === "MultiSelect";
-        // } else {
-        // }
       },
-      //Model Data
 
-      //Line chart logic
-      //   var oVizFrame = this.getView().byId("barId");
-      //   var oDataset = new sap.viz.ui5.data.FlattenedDataset({
-      //     dimensions: [
-      //       {
-      //         name: "Name",
-      //         value: "{Name}",
-      //       },
-      //     ],
-
-      //     measures: [
-      //       {
-      //         name: "Age",
-      //         value: "{Age}",
-      //       },
-      //     ],
-
-      //     data: {
-      //       path: "/results",
-      //     },
-      //   });
-      //   oVizFrame.setDataset(oDataset);
-      //   oVizFrame.setModel(oModel);
-      //   oVizFrame.setVizType("line");
-      //   // 4.Set Viz properties
-      //   var properties = {
-      //     title: {
-      //       visible: true,
-      //       text: "",
-      //       width: "50%",
-      //       height: "50%",
-      //     },
-      //     plotArea: {
-      //       colorPalette: d3.scale.category20().range(),
-
-      //       /*drawingEffect: "glossy"*/
-      //     },
-      //   };
-      //   oVizFrame.setVizProperties(properties);
-      //   var feedValueAxis = new sap.viz.ui5.controls.common.feeds.FeedItem({
-      //       uid: "valueAxis",
-      //       type: "Measure",
-      //       values: ["Age"],
-      //     }),
-      //     feedCategoryAxis = new sap.viz.ui5.controls.common.feeds.FeedItem({
-      //       uid: "categoryAxis",
-      //       type: "Dimension",
-      //       values: ["Name"],
-      //     });
-      //   oVizFrame.addFeed(feedValueAxis);
-      //   oVizFrame.addFeed(feedCategoryAxis);
-      // },
-      // onExportPress: function () {
-      //   var oModel = this.getView().getModel("tableData");
-      //   //Logic to export data in the page to xls format
-
-      //   //Read the HTML content Dynamically
-      //   var hContent =
-      //     '<html><head></head><body id="content" class="sapUiSizeCompact displayCSS">';
-      //   var bodyContent = "";
-      //   bodyContent = $(".ExportPage").html();
-      //   var closeContent = "</body></html>";
-      //   var htmlpage = hContent + bodyContent + closeContent;
-
-      //   var htmls = "";
-      //   var uri = "data:application/vnd.ms-excel;base64,";
-      //   var base64 = function (s) {
-      //     return window.btoa(unescape(encodeURIComponent(s)));
-      //   };
-
-      //   var format = function (s, c) {
-      //     return s.replace(/{(\w+)}/g, function (m, p) {
-      //       return c[p];
-      //     });
-      //   };
-
-      //   htmls = "Page Export";
-      //   var ctx = {
-      //     worksheet: "Page_Export",
-      //     table: htmls,
-      //   };
-
-      //   var link = document.createElement("a");
-      //   link.download = "Page_Export.xls";
-      //   link.href = uri + base64(format(htmlpage, ctx));
-      //   link.click();
-      // },
       onExportPress: function () {
         // var time = getTime();
         var date = new Date();
         // getting model into oModel variable.
         var oModel = this.getView().getModel("tableData");
-        if (oModel.oData.articles.length > 0) {
-          var oExport = new Export({
-            exportType: new exportCSV({
-              // for xls....
-              // fileExtension: "xls",
-              // separatorChar: "\t",
-              // charset: "utf-8",
-              // mimeType: "application/vnd.ms-excel",
 
-              // for CSV....
-              charset: "utf-8",
-              fileExtension: "csv",
-              separatorChar: ",",
-              mimeType: "application/csv",
-            }),
-            models: oModel,
+        MessageBox.confirm("Are you sure you want to export the list?", {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+            if (sAction === MessageBox.Action.OK) {
+              if (oModel.oData.articles.length > 0) {
+                var oExport = new Export({
+                  exportType: new exportCSV({
+                    // for xls....
+                    // fileExtension: "xls",
+                    // separatorChar: "\t",
+                    // charset: "utf-8",
+                    // mimeType: "application/vnd.ms-excel",
 
-            rows: {
-              path: "/articles",
-            },
-            columns: [
-              {
-                name: "Aisle No.",
-                template: {
-                  content: "{aisle}",
-                },
-              },
-              {
-                name: "Article No.",
-                template: {
-                  content: "{articleNo}",
-                },
-              },
-              {
-                name: "Name",
-                template: {
-                  content: "{name}",
-                },
-              },
-              {
-                name: "Qty",
-                template: {
-                  content: "{qty}",
-                },
-              },
-              {
-                name: "Stock on hand",
-                template: {
-                  content: "{soh}",
-                },
-              },
-              {
-                name: "Pres. stock",
-                template: {
-                  content: "{presStock}",
-                },
-              },
-            ],
-          });
-          oExport
-            .saveFile(`Gapbuster List ${date}`)
-            .catch(function (oError) {
-              sap.m.MessageToast.show(
-                "Generate is not possible beause no model was set"
-              );
-            })
-            .then(function () {
-              oExport.destroy();
-            });
-        } else {
-          MessageToast.show("Cannot export empty list");
-        }
+                    // for CSV....
+                    charset: "utf-8",
+                    fileExtension: "csv",
+                    separatorChar: ",",
+                    mimeType: "application/csv",
+                  }),
+                  models: oModel,
+
+                  rows: {
+                    path: "/articles",
+                  },
+                  columns: [
+                    {
+                      name: "Aisle No.",
+                      template: {
+                        content: "{aisle}",
+                      },
+                    },
+                    {
+                      name: "Article No.",
+                      template: {
+                        content: "{articleNo}",
+                      },
+                    },
+                    {
+                      name: "Name",
+                      template: {
+                        content: "{name}",
+                      },
+                    },
+                    {
+                      name: "Qty",
+                      template: {
+                        content: "{qty}",
+                      },
+                    },
+                    {
+                      name: "Stock on hand",
+                      template: {
+                        content: "{soh}",
+                      },
+                    },
+                    {
+                      name: "Pres. stock",
+                      template: {
+                        content: "{presStock}",
+                      },
+                    },
+                  ],
+                });
+                oExport
+                  .saveFile(`Gapbuster List ${date}`)
+                  .catch(function (oError) {
+                    sap.m.MessageToast.show(
+                      "Generate is not possible beause no model was set"
+                    );
+                  })
+                  .then(function () {
+                    oExport.destroy();
+                  });
+              } else {
+                MessageToast.show("Cannot export empty list");
+              }
+            }
+          },
+        });
       },
       onFilterItems: function (oEvent) {
         // build filter array

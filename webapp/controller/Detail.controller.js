@@ -8,11 +8,13 @@ sap.ui.define(
     "use strict";
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.Detail", {
-      onInit: function () {
+      onInit: function (e) {
         var oRouter = UIComponent.getRouterFor(this);
         oRouter
           .getRoute("detail")
           .attachPatternMatched(this._onObjectMatched, this);
+        var oBinding = this.getView().getBindingContext();
+        console.log(oBinding);
       },
       _onObjectMatched: function (oEvent) {
         this.getView().bindElement({
@@ -33,6 +35,10 @@ sap.ui.define(
           var oRouter = UIComponent.getRouterFor(this);
           oRouter.navTo("list");
         }
+      },
+      onImgPress: function (e) {
+        var oBinding = this.getView().getBindingContext();
+        console.log(oBinding);
       },
     });
   }
