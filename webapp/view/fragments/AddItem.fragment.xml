@@ -10,13 +10,12 @@
     <Dialog id="addItemBox" title="Add an item by article number">
         <HBox justifyContent="Center" class="sapUiSmallMargin">
 
-            <Input placeholder="Enter article number" id="searchInputVal"></Input>
-
-            <Button press=".onAddItem" width="50px" text="Add" type="Ghost"></Button>
+            <Input placeholder="Enter article number" id="searchInputVal" width="250px"></Input>
+            <Button press=".onAddItem" width="50px" text="Add" type="Ghost" class="sapUiTinyMarginBegin"></Button>
 
         </HBox>
         <beginButton>
-            <Button text="Close" press=".onCloseSettings" class="sapUiNoMarginBottom" type="Emphasized"></Button>
+            <Button text="Close" press=".onCloseAddItem" class="sapUiNoMarginBottom" type="Emphasized"></Button>
         </beginButton>
     </Dialog>
 </core:FragmentDefinition>

@@ -5,8 +5,22 @@ sap.ui.define(
     "sap/ui/core/routing/History",
     "sap/m/MessageBox",
     "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast",
+    "sap/ui/export/Spreadsheet",
+    "sap/ui/core/util/Export",
+    "sap/ui/core/util/ExportTypeCSV",
   ],
-  function (Controller, UIComponent, History, MessageBox, JSONModel) {
+  function (
+    Controller,
+    UIComponent,
+    History,
+    MessageBox,
+    JSONModel,
+    MessageToast,
+    Spreadsheet,
+    Export,
+    exportCSV
+  ) {
     "use strict";
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.Scan", {
@@ -67,7 +81,13 @@ sap.ui.define(
                     }
                     const index = mockData.findIndex(existsInData);
                     oData.articles.unshift(mockData[index]);
-                    oModel.refresh();
+                    // oModel.refresh();
+                  }
+                  if (oData.articles.length >= 10) {
+                    MessageBox.warning(
+                      "Your list contains 10 items, please export soon to avoid data loss."
+                    );
+                    // console.log("time to save");
                   }
                   oModel.refresh();
                 }
@@ -78,6 +98,8 @@ sap.ui.define(
       onLeaveScan: function () {
         var oRouter = UIComponent.getRouterFor(this);
         oRouter.navTo("list");
+        var oView = this.getView("Scan");
+        console.log(oView);
       },
       onNavBack: function () {
         var oHistory = History.getInstance();
@@ -126,6 +148,108 @@ sap.ui.define(
           detailPath: window.encodeURIComponent(
             e.getSource().getBindingContext("tableData").getPath().substr(1)
           ),
+        });
+      },
+      onExportPress: function () {
+        // var time = getTime();
+        var date = new Date();
+        // getting model into oModel variable.
+        var oModel = this.getView().getModel("tableData");
+
+        MessageBox.confirm("Are you sure you want to export the list?", {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+            if (sAction === MessageBox.Action.OK) {
+              if (oModel.oData.articles.length > 0) {
+                var oExport = new Export({
+                  exportType: new exportCSV({
+                    // for xls....
+                    // fileExtension: "xls",
+                    // separatorChar: "\t",
+                    // charset: "utf-8",
+                    // mimeType: "application/vnd.ms-excel",
+
+                    // for CSV....
+                    charset: "utf-8",
+                    fileExtension: "csv",
+                    separatorChar: ",",
+                    mimeType: "application/csv",
+                  }),
+                  models: oModel,
+
+                  rows: {
+                    path: "/articles",
+                  },
+                  columns: [
+                    {
+                      name: "Aisle No.",
+                      template: {
+                        content: "{aisle}",
+                      },
+                    },
+                    {
+                      name: "Article No.",
+                      template: {
+                        content: "{articleNo}",
+                      },
+                    },
+                    {
+                      name: "Name",
+                      template: {
+                        content: "{name}",
+                      },
+                    },
+                    {
+                      name: "Qty",
+                      template: {
+                        content: "{qty}",
+                      },
+                    },
+                    {
+                      name: "Stock on hand",
+                      template: {
+                        content: "{soh}",
+                      },
+                    },
+                    {
+                      name: "Pres. stock",
+                      template: {
+                        content: "{presStock}",
+                      },
+                    },
+                  ],
+                });
+                oExport
+                  .saveFile(`Gapbuster List ${date}`)
+                  .catch(function (oError) {
+                    sap.m.MessageToast.show(
+                      "Generate is not possible beause no model was set"
+                    );
+                  })
+                  .then(function () {
+                    oExport.destroy();
+                  });
+              } else {
+                MessageToast.show("Cannot export empty list");
+              }
+            }
+          },
+        });
+      },
+      onDeleteList: function () {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+        MessageBox.confirm("Are you sure you want to delete the list?", {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+            if (sAction === MessageBox.Action.OK) {
+              oData.articles = [];
+              oModel.refresh();
+              MessageToast.show("List deleted");
+            }
+          },
         });
       },
     });

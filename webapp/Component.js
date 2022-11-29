@@ -22,13 +22,27 @@ sap.ui.define(
           status: true,
         };
 
+        var deleteMulti = {
+          status: false,
+        };
+
+        var emptyShelvesTag = {
+          status: false,
+        };
+
         this.getRouter().initialize();
 
-        var oModel = new JSONModel(showImgs);
-        this.setModel(oModel, "showImgs");
+        var oShowImgs = new JSONModel(showImgs);
+        this.setModel(oShowImgs, "showImgs");
 
-        var oModelGroup = new JSONModel(groupByAisle);
-        this.setModel(oModelGroup, "groupByAisle");
+        var oEmptyShelvesTag = new JSONModel(emptyShelvesTag);
+        this.setModel(oEmptyShelvesTag, "emptyShelvesTag");
+
+        var oGroupByAisle = new JSONModel(groupByAisle);
+        this.setModel(oGroupByAisle, "groupByAisle");
+
+        var oModelDelete = new JSONModel(deleteMulti);
+        this.setModel(oModelDelete, "deleteMulti");
 
         const obj = {
           title: "Picked Items",
@@ -44,6 +58,7 @@ sap.ui.define(
               soh: 8,
               presStock: 4,
               aisle: 3,
+              delivery: "25/12/2022",
             },
             {
               name: "TARARUA BUTTER",
@@ -55,6 +70,7 @@ sap.ui.define(
               soh: 54,
               presStock: 3,
               aisle: 10,
+              delivery: "25/12/2022",
             },
             {
               name: "CHELSEA WHITE SUGAR",
@@ -66,11 +82,12 @@ sap.ui.define(
               soh: 34,
               presStock: 0,
               aisle: 3,
+              delivery: "25/12/2022",
             },
           ],
         };
 
-        let tableModel = new JSONModel(obj);
+        var tableModel = new JSONModel(obj);
         sap.ui.getCore().setModel(tableModel, "tableData");
         this.setModel(tableModel, "tableData");
       },

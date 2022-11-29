@@ -55,8 +55,7 @@
                   <OverflowToolbarLayoutData priority="AlwaysOverflow" />
                 </layoutData>
               </Button>
-              <Button text="Delete" icon="sap-icon://delete" press=".onDeleteMenu" class="sapUiSmallMarginBottom">
-                <!-- ariaHasPopup="Dialog" -->
+              <Button text="{= ${deleteMulti>/status} === true ? 'Delete Single' : 'Delete Multiple'}" icon="sap-icon://delete" press=".onDeleteMenu" class="sapUiSmallMarginBottom">
                 <layoutData>
                   <OverflowToolbarLayoutData priority="AlwaysOverflow" />
                 </layoutData>
@@ -71,7 +70,7 @@
                 }
             } : items='tableData>/articles'}"> -->
 
-            <List id="listItems" mode="Delete" delete=".onDeleteItem" items="{
+            <List id="listItems" mode="Delete" delete=".onDeleteItem" selectionChange=".onSelectionChange" items="{
                 path: 'tableData>/articles',
                   sorter: {
                     path: 'aisle',
@@ -81,20 +80,23 @@
                 }">
               <items>
                 <CustomListItem id="idListItem" type="Active" press=".onClickItem">
-                  <HBox class="sapUiSmallMargin" width="95%">
+                  <HBox class="sapUiSmallMargin" width="98%">
                     <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginEnd">
                       <Image src="{tableData>image}" height="50px" visible="{= ${showImgs>/status} === true ? true : false }" />
                     </HBox>
                     <VBox class="SapUiLargeMargin" width="100%">
                       <HBox justifyContent="SpaceBetween">
-                        <Title text="{tableData>name} {tableData>qty}" wrapping="true" class="SapUiLargeMarginEnd" width="95%" />
+                        <Title text="{tableData>name} {tableData>qty}" wrapping="true" class="SapUiLargeMarginEnd" />
                       </HBox>
                       <HBox justifyContent="SpaceBetween">
+                        <!-- <ObjectAttribute title="Qty" text="{tableData>qty}" /> -->
                         <ObjectAttribute title="Article" text="{tableData>articleNo}" />
                       </HBox>
-                      <HBox justifyContent="SpaceBetween">
+                      <HBox justifyContent="SpaceBetween" class="sapUiMediumMarginEnd">
                         <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }" state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" />
                         <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" />
+                        <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop' : 'sapUiTinyMarginTop'}" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" /> -->
+                        <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop sapUiTinyMarginEnd' : 'sapUiTinyMarginTop'}" text="{deleteMulti>/status}" /> -->
                       </HBox>
                     </VBox>
                   </HBox>
@@ -111,6 +113,7 @@
               <!-- <Text text="Images: "></Text>
               <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" /> -->
               <Button id="idButtonDelete" type="Reject" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" />
+              <Button id="idButtonDeleteMulti" type="Reject" text="Delete Items" press=".onDeleteMulti" ariaHasPopup="Dialog" visible="false" />
               <Button id="idButtonExport" type="Emphasized" text="Export" press=".onExportPress" />
             </Toolbar>
           </footer>

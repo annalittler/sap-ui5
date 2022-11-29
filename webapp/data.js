@@ -10,6 +10,7 @@ const mockData = [
     soh: 8,
     presStock: 4,
     aisle: 3,
+    delivery: "25/12/2022",
   },
   {
     name: "TARARUA BUTTER",
@@ -21,6 +22,7 @@ const mockData = [
     soh: 54,
     presStock: 3,
     aisle: 10,
+    delivery: "25/12/2022",
   },
   {
     name: "CHELSEA WHITE SUGAR",
@@ -32,6 +34,7 @@ const mockData = [
     soh: 34,
     presStock: 0,
     aisle: 3,
+    delivery: "25/12/2022",
   },
 
   {
@@ -44,6 +47,7 @@ const mockData = [
     soh: 0,
     presStock: 0,
     aisle: 4,
+    delivery: "25/12/2022",
   },
   {
     name: "PIC'S REALLY GOOD SMOOTH PEANUT BUTTER",
@@ -55,6 +59,7 @@ const mockData = [
     soh: 83,
     presStock: 2,
     aisle: 4,
+    delivery: "25/12/2022",
   },
   {
     name: "NATURE'S FRESH BREAD WHITE TOAST",
@@ -67,6 +72,7 @@ const mockData = [
     soh: 2,
     presStock: 0,
     aisle: 9,
+    delivery: "25/12/2022",
   },
   {
     name: "PINEAPPLE LUMPS CONFECTIONARY",
@@ -78,6 +84,7 @@ const mockData = [
     soh: 0,
     presStock: 0,
     aisle: 5,
+    delivery: "25/12/2022",
   },
   {
     name: "MUTTI CHOPPED TOMATOES",
@@ -90,6 +97,7 @@ const mockData = [
     soh: 56,
     presStock: 1,
     aisle: 7,
+    delivery: "25/12/2022",
   },
   {
     name: "WHITTAKER'S CREAMY MILK 33% COCOA MILK CHOCOLATE BLOCK",
@@ -101,6 +109,7 @@ const mockData = [
     soh: 0,
     presStock: 2,
     aisle: 5,
+    delivery: "25/12/2022",
   },
   {
     name: "PAMS COCONUT CREAM",
@@ -113,6 +122,7 @@ const mockData = [
     soh: 5,
     presStock: 2,
     aisle: 7,
+    delivery: "25/12/2022",
   },
   {
     name: "EXTRA SPEARMINT GUM",
@@ -125,6 +135,46 @@ const mockData = [
     soh: 45,
     presStock: 0,
     aisle: 5,
+    delivery: "25/12/2022",
+  },
+  {
+    name: "JOHN WEST TUNA CHUNKS IN OLIVE OIL",
+    qty: "95G",
+    price: 2.39,
+    articleNo: 5983740,
+    barcode: 9300462348575,
+    image:
+      "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/300623578866993.avif",
+    soh: 68,
+    presStock: 0,
+    aisle: 7,
+    delivery: "25/12/2022",
+  },
+  {
+    name: "BILLINGTON'S DARK MUSCOVADO SUGAR",
+    qty: "500G",
+    price: 4.39,
+    articleNo: 5023849,
+    barcode: 5010651001313,
+    image:
+      "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/554995834038976.avif",
+    soh: 0,
+    presStock: 0,
+    aisle: 3,
+    delivery: "25/12/2022",
+  },
+  {
+    name: "EXTRA WHITE BUBBLEMINT GUM",
+    qty: "14G",
+    price: 1.39,
+    articleNo: 5003713,
+    barcode: 93544160,
+    image:
+      "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4098008843437409.avif",
+    soh: 45,
+    presStock: 0,
+    aisle: 5,
+    delivery: "25/12/2022",
   },
 ];
 

@@ -1,34 +1,51 @@
-<!-- <mvc:View
-    controllerName="sap.ui.demo.walkthrough.controller.Detail"
-    xmlns="sap.m" xmlns:f="sap.f"
-    xmlns:mvc="sap.ui.core.mvc">
-
-    <Page title="hello">
-        
-        <Text text="hello {tableData>name}" />
-            
-        </Page>
-
-</mvc:View> -->
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
     controllerName="sap.ui.demo.walkthrough.controller.Detail"
-    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f">
-
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f"
+>
 
     <Page title="{tableData>name}" id="idDetail" showFooter="true" showNavButton="true" navButtonPress=".onNavBack">
-        <!-- <Header text="hi"></Header> -->
-        <!-- <title> -->
+
         <content>
             <HBox alignItems="Center" backgroundDesign="Solid">
-                <VBox class="sapUiContentPadding">
-                    <Image src="{tableData>image}" width="60px" press=".onImgPress" />
+                <VBox class="sapUiContentPadding" width="20%" alignItems="Center">
+                    <Image src="{tableData>image}" width="75px" press=".onImgPress" />
                 </VBox>
-                <VBox>
-                    <Title text="{tableData>name}"></Title>
-                    <Text text="Article: {tableData>articleNo}"></Text>
-                    <Text text="Barcode: {tableData>barcode}"></Text>
+                <VBox width="80%" class="sapUiContentPadding">
+                    <HBox>
+                        <Title text="{tableData>name}"></Title>
+                    </HBox>
+                    <HBox class="sapUiTinyMarginTop">
+                        <ObjectAttribute text="Article: {tableData>articleNo}"></ObjectAttribute>
+                    </HBox>
+                    <HBox>
+                        <ObjectAttribute text="Barcode: {tableData>barcode}"></ObjectAttribute>
+                    </HBox>
+                    <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginTop">
+                        <ObjectAttribute text="SOH: {tableData>soh}"></ObjectAttribute>
+                        <!-- <ObjectAttribute text="{= ${tableData>soh > 10 ? 'In Stock' : 'Out of Stock'} }"></ObjectAttribute> -->
+                    </HBox>
+                    <HBox alignItems="Center" justifyContent="SpaceBetween">
+                        <ObjectStatus icon="{= ${tableData>soh} > 0 ? 'sap-icon://message-success' : 'sap-icon://message-error'}" text="{= ${tableData>soh} > 0 ? 'In Stock' : 'No Stock'}" state="{= ${tableData>soh} > 0 ? 'Success' : 'Error'}"></ObjectStatus>
+                        <!-- <ObjectAttribute text="{ parts: ['json>/name', 'json>/nr'], formatter: '.Formatter.inStockCondition'}"></ObjectAttribute> -->
+                        <!-- <Icon src="{= ${propertyname} === 'UP' ? 'sap-icon://arrow-top' : ${propertyname} === 'DOWN' ? 'sap-icon://arrow-bottom' : 'sap-icon://arrow-left'}" /> -->
+                        <CheckBox id="emptyCheckbox" text="Empty Shelf?" select=".onCheckboxChange" selected="{= ${emptyShelvesTag>/status} === true ? true : false}"></CheckBox>
+                        <!-- <CheckBox id="emptyCheckbox" text="{emptyShelvesTag>/status}" select=".onCheckboxChange"></CheckBox> -->
+                    </HBox>
+                    <HBox justifyContent="SpaceBetween">
+                        <ObjectAttribute text="Next delivery date: {tableData>delivery}"></ObjectAttribute>
+                        <VBox>
+                            <ObjectAttribute text="Pres Stock: {tableData>presStock}"></ObjectAttribute>
+                            <Button text="Update" press=".onUpdatePresStock" ariaHasPopup="Dialog"></Button>
+                        </VBox>
+                    </HBox>
                 </VBox>
             </HBox>
+            <VBox class="sapUiSmallMargin">
+                <Text text="Please select action(s)"></Text>
+                <CheckBox id="replenShelfCheck" text="Replenish Shelf"></CheckBox>
+                <Text text="hello world" visible="{formatter: '.replenishShelf'}"></Text>
+                <!-- <Text text="hello world" visible=""></Text> -->
+            </VBox>
             <!-- <VBox class="sapUiContentPadding sapUiSmallMargin sapUiMediumMarginBeginEnd">
                 <HBox justifyContent="SpaceBetween">
                     <Text text="PRESENTATION STOCK: {tableData>presStock}"></Text>
@@ -44,38 +61,7 @@
             </VBox> -->
         </content>
 
-        <!-- <PageTitle> -->
-        <!-- <heading>
-            <Title text="{tableData>name}" wrapping="true" />
-        </heading> -->
-        <!-- <expandedContent>
-            <Label text="{tableData>name}" />
-        </expandedContent>
-        <snappedContent>
-            <Label text="{tableData>name}" />
-        </snappedContent> -->
-        <!-- </PageTitle> -->
-        <!-- </title> -->
 
-        <content></content>
         <footer></footer>
     </Page>
-    <!-- <f:DynamicPage id="idDetail" showFooter="true" showNavButton="true">
-        <f:title>
-            <f:DynamicPageTitle>
-                <f:heading>
-                    <Title text="{tableData>name}" wrapping="true" />
-                </f:heading>
-                <f:expandedContent>
-                    <Label text="{tableData>name}" />
-                </f:expandedContent>
-                <f:snappedContent>
-                    <Label text="{tableData>name}" />
-                </f:snappedContent>
-            </f:DynamicPageTitle>
-        </f:title>
-
-        <f:content></f:content>
-        <f:footer></f:footer>
-    </f:DynamicPage> -->
 </mvc:View>

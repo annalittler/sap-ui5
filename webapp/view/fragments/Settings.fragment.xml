@@ -9,15 +9,20 @@
 
     <Dialog id="settingsBox" title="Settings">
         <!-- <html:div class="sapUiSmallMarginStart"> -->
-        <VBox justifyContent="SpaceBetween">
-            <HBox>
+        <VBox justifyContent="">
+            <HBox justifyContent="" alignItems="Center">
                 <Label text="Images:" class="sapUiTinyMargin"></Label>
-                <Switch state="true" change=".onShowImages" />
+                <Switch state="true" change=".onShowImages" class="" />
             </HBox>
-            <HBox>
+            <Toolbar width="100%" height="1px" />
+            <HBox justifyContent="" alignItems="Center">
+                <Label text="Empty shelves auto-tag:" class="sapUiTinyMargin"></Label>
+                <Switch state="true" change=".onEmptyShelvesTag" class="" />
+            </HBox>
+            <!-- <HBox>
                 <Label text="Sort items by aisle:"></Label>
                 <Switch state="true" change=".onGroupByAisle" />
-            </HBox>
+            </HBox> -->
             <!-- </html:div> -->
         </VBox>
         <beginButton>
