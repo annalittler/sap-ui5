@@ -121,6 +121,10 @@ sap.ui.define(
       },
 
       onAddItem: function () {
+        var successTone = new Audio("./resources/success_tone.mp3");
+        successTone.loop = false;
+        var errorTone = new Audio("./resources/error_tone.mp3");
+        errorTone.loop = false;
         var input = parseInt(this.getView().byId("searchInputVal").getValue());
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
@@ -137,11 +141,14 @@ sap.ui.define(
             const index = mockData.findIndex(existsInData);
             oData.articles.unshift(mockData[index]);
             oModel.refresh();
+            successTone.play();
           } else {
             MessageToast.show("Product not found");
+            errorTone.play();
           }
         } else {
           MessageToast.show("Item already in list");
+          errorTone.play();
         }
       },
       onDeleteList: function () {
