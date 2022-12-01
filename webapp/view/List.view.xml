@@ -55,7 +55,8 @@
                   <OverflowToolbarLayoutData priority="AlwaysOverflow" />
                 </layoutData>
               </Button>
-              <Button text="{= ${deleteMulti>/status} === true ? 'Delete Single' : 'Delete Multiple'}" icon="sap-icon://delete" press=".onDeleteMenu" class="sapUiSmallMarginBottom">
+              <Button text="{= ${tableData>/deleteMulti/status} === true ? 'Delete Single' : 'Delete Multiple'}" icon="sap-icon://delete" press=".onDeleteMenu" class="sapUiSmallMarginBottom">
+                <!-- <Button text="{tableData>/deleteMulti/status}" icon="sap-icon://delete" press=".onDeleteMenu" class="sapUiSmallMarginBottom"> -->
                 <layoutData>
                   <OverflowToolbarLayoutData priority="AlwaysOverflow" />
                 </layoutData>
@@ -82,7 +83,7 @@
                 <CustomListItem id="idListItem" type="Active" press=".onClickItem">
                   <HBox class="sapUiSmallMargin" width="98%">
                     <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginEnd">
-                      <Image src="{tableData>image}" height="50px" visible="{= ${showImgs>/status} === true ? true : false }" />
+                      <Image src="{tableData>image}" height="50px" press=".onImgPress" visible="{= ${tableData>/showImgs/status} === true ? true : false }" />
                     </HBox>
                     <VBox class="SapUiLargeMargin" width="100%">
                       <HBox justifyContent="SpaceBetween">
@@ -91,6 +92,8 @@
                       <HBox justifyContent="SpaceBetween">
                         <!-- <ObjectAttribute title="Qty" text="{tableData>qty}" /> -->
                         <ObjectAttribute title="Article" text="{tableData>articleNo}" />
+                        <!-- <ObjectAttribute title="Article" text="{tableData>/showImgs/status}" /> -->
+                        <!-- <ObjectAttribute title="Article" text="" /> -->
                       </HBox>
                       <HBox justifyContent="SpaceBetween" class="sapUiMediumMarginEnd">
                         <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }" state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" />

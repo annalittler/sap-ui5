@@ -48,49 +48,22 @@ sap.ui.define(
         // this.setModel(deleteModel, "deleteModel");
       },
 
-      onShowImages: function (e) {
-        var oModel = this.getView().getModel("showImgs");
-        // console.log(oModel);
-        var state = e.getSource().getState();
-        if (state === true) {
-          var showImgs = {
-            status: true,
-          };
-          oModel.oData = showImgs;
-          oModel.refresh();
-        }
-
-        if (state === false) {
-          var showImgs = {
-            status: false,
-          };
-          oModel.oData = showImgs;
-          oModel.refresh();
-        }
+      onImgPress: function () {
+        var model = this.getView().getModel("tableData");
+        var data = model.getData();
+        data.hello = [1, 2, 3, 4];
+        console.log(model);
+        model.refresh();
       },
 
-      onGroupByAisle: function (e) {
-        console.log("hi");
-        var oModel = this.getView().getModel("groupByAisle");
-
-        // console.log(oModel);
+      onShowImages: function (e) {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
         var state = e.getSource().getState();
-        if (state === true) {
-          var groupByAisle = {
-            status: true,
-          };
-          oModel.oData = groupByAisle;
-          oModel.refresh();
-        }
-
-        if (state === false) {
-          var groupByAisle = {
-            status: false,
-          };
-          oModel.oData = groupByAisle;
-          oModel.refresh();
-        }
-        console.log(oModel.oData);
+        state === true
+          ? (oData.showImgs.status = true)
+          : (oData.showImgs.status = false);
+        oModel.refresh();
       },
 
       onSettingsPopup: function () {
@@ -234,29 +207,57 @@ sap.ui.define(
         var oRouter = UIComponent.getRouterFor(this);
         oRouter.navTo("scan");
       },
+      // onDeleteMenu: function () {
+      //   var oModel = this.getView().getModel("tableData");
+      //   var oData = oModel.oData;
+      //   oModel.refresh();
+      //   console.log(oData);
+      //   var oDeleteMultiButton = this.byId("idButtonDeleteMulti");
+      //   var oDeleteButton = this.byId("idButtonDelete");
+      //   var list = this.byId("listItems");
+      //   var listLastMode = list._sLastMode;
+      //   console.log(listLastMode);
+      //   if (listLastMode == "Delete") {
+      //     oData.deleteMulti.status = true;
+      //     // list.setMode("MultiSelect");
+      //     list.setType("Navigation");
+      //     oDeleteButton.setVisible(false);
+      //     oDeleteMultiButton.setVisible(true);
+      //     console.log(oDeleteButton);
+      //   } else {
+      //     oData.deleteMulti.status = false;
+      //     // list.setMode("Delete");
+      //     list.setType("Active");
+      //     oDeleteMultiButton.setVisible(false);
+      //     oDeleteButton.setVisible(true);
+      //   }
+      //   oModel.refresh();
+      // },
+
       onDeleteMenu: function () {
-        var oModel = this.getView().getModel("deleteMulti");
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
         oModel.refresh();
+        console.log(oData);
         var oDeleteMultiButton = this.byId("idButtonDeleteMulti");
         var oDeleteButton = this.byId("idButtonDelete");
         var list = this.byId("listItems");
+        console.log(list);
         var listLastMode = list._sLastMode;
         console.log(listLastMode);
         if (listLastMode == "Delete") {
           list.setMode("MultiSelect");
-          oModel.oData.status = true;
-          // list.setType("Navigation");
+          oData.deleteMulti.status = true;
           oDeleteButton.setVisible(false);
           oDeleteMultiButton.setVisible(true);
-          // console.log(oDeleteButton);
         } else {
           list.setMode("Delete");
-          oModel.oData.status = false;
-          // list.setType("Active");
+          oData.deleteMulti.status = false;
           oDeleteMultiButton.setVisible(false);
           oDeleteButton.setVisible(true);
         }
         oModel.refresh();
+        console.log(oData);
       },
 
       onExportPress: function () {
@@ -325,6 +326,18 @@ sap.ui.define(
                       name: "Pres. stock",
                       template: {
                         content: "{presStock}",
+                      },
+                    },
+                    {
+                      name: "Requested quantity",
+                      template: {
+                        content: "{amountRequired}",
+                      },
+                    },
+                    {
+                      name: "Empty shelf?",
+                      template: {
+                        content: "{isShelfEmpty}",
                       },
                     },
                   ],
@@ -431,26 +444,15 @@ sap.ui.define(
           }
         );
       },
-      onEmptyShelvesTag: function (e) {
-        console.log("hi");
-        var oModel = this.getView().getModel("emptyShelvesTag");
-        // console.log(oModel);
+      onEmptyShelvesAutoTag: function (e) {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
         var state = e.getSource().getState();
-        if (state === true) {
-          var emptyShelvesTag = {
-            status: true,
-          };
-          oModel.oData = emptyShelvesTag;
-          oModel.refresh();
-        }
-
-        if (state === false) {
-          var showImgs = {
-            status: false,
-          };
-          oModel.oData = showImgs;
-          oModel.refresh();
-        }
+        console.log(state);
+        state === true
+          ? (oData.emptyShelvesAutoTag.status = true)
+          : (oData.emptyShelvesAutoTag.status = false);
+        oModel.refresh();
       },
     });
   }

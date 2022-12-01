@@ -14,38 +14,9 @@ sap.ui.define(
         // call the init function of the parent
         UIComponent.prototype.init.apply(this, arguments);
 
-        var showImgs = {
-          status: true,
-        };
-
-        var groupByAisle = {
-          status: true,
-        };
-
-        var deleteMulti = {
-          status: false,
-        };
-
-        var emptyShelvesTag = {
-          status: false,
-        };
-
         this.getRouter().initialize();
 
-        var oShowImgs = new JSONModel(showImgs);
-        this.setModel(oShowImgs, "showImgs");
-
-        var oEmptyShelvesTag = new JSONModel(emptyShelvesTag);
-        this.setModel(oEmptyShelvesTag, "emptyShelvesTag");
-
-        var oGroupByAisle = new JSONModel(groupByAisle);
-        this.setModel(oGroupByAisle, "groupByAisle");
-
-        var oModelDelete = new JSONModel(deleteMulti);
-        this.setModel(oModelDelete, "deleteMulti");
-
         const obj = {
-          title: "Picked Items",
           articles: [
             {
               name: "PAMS PURE PLAIN FLOUR",
@@ -56,7 +27,7 @@ sap.ui.define(
               image:
                 "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
               soh: 8,
-              presStock: 4,
+              presStock: 12,
               aisle: 3,
               delivery: "25/12/2022",
             },
@@ -67,8 +38,8 @@ sap.ui.define(
               articleNo: 5013622,
               image:
                 "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3765420344565789.avif",
-              soh: 54,
-              presStock: 3,
+              soh: 0,
+              presStock: 18,
               aisle: 10,
               delivery: "25/12/2022",
             },
@@ -80,7 +51,7 @@ sap.ui.define(
               image:
                 "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4560913944979699.avif",
               soh: 34,
-              presStock: 0,
+              presStock: 16,
               aisle: 3,
               delivery: "25/12/2022",
             },
@@ -90,6 +61,18 @@ sap.ui.define(
         var tableModel = new JSONModel(obj);
         sap.ui.getCore().setModel(tableModel, "tableData");
         this.setModel(tableModel, "tableData");
+
+        var oData = tableModel.getData();
+
+        oData.deleteMulti = { status: false };
+        oData.emptyShelvesAutoTag = { status: true };
+        oData.shelfIsEmpty = { status: oData.emptyShelvesAutoTag.status };
+        oData.showImgs = { status: true };
+        oData.replenShelfCheck = { status: false };
+        oData.reportBtlCheck = { status: false };
+        oData.stockOnShelfSelect = { status: false };
+        oData.reqQuantitySelect = { status: true };
+        // console.log(oData);
       },
     });
   }
