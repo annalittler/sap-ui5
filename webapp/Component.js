@@ -59,19 +59,21 @@ sap.ui.define(
         };
 
         var tableModel = new JSONModel(obj);
+
         sap.ui.getCore().setModel(tableModel, "tableData");
         this.setModel(tableModel, "tableData");
 
         var oData = tableModel.getData();
 
-        oData.deleteMulti = { status: false };
-        oData.emptyShelvesAutoTag = { status: true };
-        oData.shelfIsEmpty = { status: oData.emptyShelvesAutoTag.status };
-        oData.showImgs = { status: true };
-        oData.replenShelfCheck = { status: false };
-        oData.reportBtlCheck = { status: false };
-        oData.stockOnShelfSelect = { status: false };
-        oData.reqQuantitySelect = { status: true };
+        // oData.deleteMulti = { status: false };
+        // oData.emptyShelvesAutoTag = { status: true };
+        // oData.shelfIsEmpty = { status: oData.emptyShelvesAutoTag.status };
+        // oData.showImgs = { status: true };
+        // oData.replenShelfCheck = { status: false };
+        // oData.reportBtlCheck = { status: false };
+        // oData.stockOnShelfSelect = { status: false };
+        // oData.reqQuantitySelect = { status: true };
+        // oData.allData =
         // console.log(oData);
       },
     });

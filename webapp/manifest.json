@@ -17,11 +17,9 @@
       "keywords": ["{{<keyword1>}}", "{{<keyword2>}}"]
     },
     "dataSources": {
-      "<dataSourceAlias>": {
-        "uri": "<uri>",
-        "settings": {
-          "localUri": "<localUri>"
-        }
+      "tableData_alias": {
+        "uri": "model/Data.json",
+        "type": "JSON"
       }
     }
   },
@@ -73,6 +71,10 @@
           "fallbackLocale": ""
         },
         "uri": "<uriRelativeToManifest>"
+      },
+      "tableData1": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "tableData_alias"
       },
       "": {
         "dataSource": "<dataSourceAlias>",

@@ -37,7 +37,20 @@ sap.ui.define(
     return Controller.extend("sap.ui.demo.walkthrough.controller.List", {
       onInit: async function () {
         this.startedScanning = false;
-        var oModel = this.getView().getModel("tableData");
+        var oData = this.getView().getModel("tableData1").getData();
+        oData.deleteMulti = { status: false };
+        oData.emptyShelvesAutoTag = { status: true };
+        oData.shelfIsEmpty = {
+          status: oData.emptyShelvesAutoTag.status,
+        };
+        oData.showImgs = { status: true };
+        oData.replenShelfCheck = { status: false };
+        oData.reportBtlCheck = { status: false };
+        oData.stockOnShelfSelect = { status: false };
+        oData.reqQuantitySelect = { status: true };
+        oData.pickedItems = [];
+        console.log(oData);
+
         // var oData = oModel.getData();
         // console.log(oData);
 
@@ -50,9 +63,12 @@ sap.ui.define(
 
       onImgPress: function () {
         var model = this.getView().getModel("tableData");
+        var model1 = this.getView().getModel("tableData1");
         var data = model.getData();
+        var data1 = model1.getData();
         data.hello = [1, 2, 3, 4];
-        console.log(model);
+        console.log(data);
+        console.log(data1);
         model.refresh();
       },
 

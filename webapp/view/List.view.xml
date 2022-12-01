@@ -83,7 +83,7 @@
                 <CustomListItem id="idListItem" type="Active" press=".onClickItem">
                   <HBox class="sapUiSmallMargin" width="98%">
                     <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginEnd">
-                      <Image src="{tableData>image}" height="50px" press=".onImgPress" visible="{= ${tableData>/showImgs/status} === true ? true : false }" />
+                      <Image src="{tableData>/image}" height="50px" press=".onImgPress" visible="{= ${tableData>/showImgs/status} === true ? true : false }" />
                     </HBox>
                     <VBox class="SapUiLargeMargin" width="100%">
                       <HBox justifyContent="SpaceBetween">
