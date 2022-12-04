@@ -17,11 +17,9 @@
       "keywords": ["{{<keyword1>}}", "{{<keyword2>}}"]
     },
     "dataSources": {
-      "<dataSourceAlias>": {
-        "uri": "<uri>",
-        "settings": {
-          "localUri": "<localUri>"
-        }
+      "allData_alias": {
+        "uri": "Data.json",
+        "type": "JSON"
       }
     }
   },
@@ -73,6 +71,10 @@
           "fallbackLocale": ""
         },
         "uri": "<uriRelativeToManifest>"
+      },
+      "allData": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "allData_alias"
       },
       "": {
         "dataSource": "<dataSourceAlias>",

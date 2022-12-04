@@ -26,23 +26,13 @@
           </customHeader>
           <content>
             <OverflowToolbar>
-              <!-- <Input placeholder="Enter article number" width="72%" id="searchInputVal">
-                <layoutData>
-                  <OverflowToolbarLayoutData priority="AlwaysOverflow" />
-                </layoutData>
-              </Input>
-              <Button press=".onAddItem" width="50px" text="Add" type="Ghost">
-                <layoutData>
-                  <OverflowToolbarLayoutData priority="AlwaysOverflow" />
-                </layoutData>
-              </Button> -->
-              <!-- <contentMiddle> -->
-
-              <SearchField search=".onFilterItems" width="85%" placeholder="Search your list">
+              <!-- <html:div alignItems="Center"> -->
+              <SearchField search=".onFilterItems" width="70%" placeholder="Search your list">
                 <layoutData>
                   <OverflowToolbarLayoutData priority="NeverOverflow" />
                 </layoutData>
               </SearchField>
+              <!-- </html:div> -->
               <!-- </contentMiddle> -->
               <ToolbarSpacer />
               <Button text="Add by article number" icon="sap-icon://add" press=".onAddItemPopup" class="sapUiSmallMarginBottom" ariaHasPopup="Dialog">
@@ -70,15 +60,16 @@
                 group: true
                 }
             } : items='tableData>/articles'}"> -->
-
-            <List id="listItems" mode="Delete" delete=".onDeleteItem" selectionChange=".onSelectionChange" items="{
-                path: 'tableData>/articles',
+            <!-- headerText="{= ${tableData>/articles}.length} " -->
+            <List id="listItems" mode="Delete" growing="true" delete=".onDeleteItem" selectionChange=".onSelectionChange" items="{
+                path: 'tableData>/articles', 
                   sorter: {
                     path: 'aisle',
                     group: '.getGroup'
                   },
                   groupHeaderFactory: '.getGroupHeader'
                 }">
+
               <items>
                 <CustomListItem id="idListItem" type="Active" press=".onClickItem">
                   <HBox class="sapUiSmallMargin" width="98%">
@@ -89,18 +80,25 @@
                       <HBox justifyContent="SpaceBetween">
                         <Title text="{tableData>name} {tableData>qty}" wrapping="true" class="SapUiLargeMarginEnd" />
                       </HBox>
-                      <HBox justifyContent="SpaceBetween">
-                        <!-- <ObjectAttribute title="Qty" text="{tableData>qty}" /> -->
+                      <!-- <HBox justifyContent="SpaceBetween"> -->
+                      <!-- <ObjectAttribute title="Qty" text="{tableData>qty}" /> -->
+                      <VBox>
                         <ObjectAttribute title="Article" text="{tableData>articleNo}" />
-                        <!-- <ObjectAttribute title="Article" text="{tableData>/showImgs/status}" /> -->
-                        <!-- <ObjectAttribute title="Article" text="" /> -->
-                      </HBox>
-                      <HBox justifyContent="SpaceBetween" class="sapUiMediumMarginEnd">
-                        <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }" state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" />
-                        <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" />
-                        <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop' : 'sapUiTinyMarginTop'}" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" /> -->
-                        <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop sapUiTinyMarginEnd' : 'sapUiTinyMarginTop'}" text="{deleteMulti>/status}" /> -->
-                      </HBox>
+                        <ObjectAttribute title="Barcode" text="{tableData>barcode}" />
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginEnd">
+                          <ObjectStatus class="" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{=${tableData>soh} > 10 ? 'Success' : (${tableData>soh} === 0 ? 'Error' : 'Warning')}"></ObjectStatus>
+                          <!-- <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }" state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" /> -->
+
+                          <Switch customTextOff="Gap" customTextOn="Gap" state="{= ${tableData>/emptyShelvesAutoTag/status} === true ? true : false}"></Switch>
+                        </HBox>
+                      </VBox>
+                      <!-- <ObjectAttribute title="Article" text="{tableData>/showImgs/status}" /> -->
+                      <!-- <ObjectAttribute title="Article" text="" /> -->
+                      <!-- </HBox> -->
+                      <!-- <HBox justifyContent="SpaceBetween" class="sapUiMediumMarginEnd"> -->
+                      <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop' : 'sapUiTinyMarginTop'}" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" /> -->
+                      <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop sapUiTinyMarginEnd' : 'sapUiTinyMarginTop'}" text="{deleteMulti>/status}" /> -->
+                      <!-- </HBox> -->
                     </VBox>
                   </HBox>
                 </CustomListItem>
@@ -109,6 +107,7 @@
           </content>
           <footer>
             <Toolbar design="Solid" enabled="true" visible="true" width="100%">
+
               <Button id="scanBtn" icon="sap-icon://bar-code" press=".onOpenScan" visible="true" />
               <!-- <Button id="" icon="sap-icon://hello-world" press=".onOpenScan" visible="true" /> -->
               <Button text="End Scanning" id="closeBtn" visible="false" press=".onStopScan" />

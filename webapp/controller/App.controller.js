@@ -54,6 +54,11 @@ sap.ui.define(
         data.hello = [1, 2, 3, 4];
         console.log(model);
         model.refresh();
+        var oAllData = this.getView().getModel("allData").getData().articles;
+        // var length = this.getView().getModel("tableData").getData()
+        //   .articles.length;
+        // console.log(length);
+        console.log(oAllData);
       },
 
       onShowImages: function (e) {
@@ -104,6 +109,10 @@ sap.ui.define(
         this.byId("settingsBox").close();
       },
 
+      onCloseSearchBox: function () {
+        this.byId("searchBox").close();
+      },
+
       onCloseAddItem: function () {
         this.byId("addItemBox").close();
       },
@@ -127,19 +136,22 @@ sap.ui.define(
         errorTone.loop = false;
         var input = parseInt(this.getView().byId("searchInputVal").getValue());
         var oModel = this.getView().getModel("tableData");
+        var oAllItems = this.getView().getModel("allData").getData().articles;
         var oData = oModel.getData();
         var oArticles = oData.articles;
 
         // oData.findIndex(items);
-        var index = oArticles.findIndex((items) => items.articleNo == input);
+        // var index = oArticles.findIndex((items) => items.articleNo == input);
+        // console.log(allItems);
+        // console.log(mockData);
         if (oArticles.findIndex((item) => item.articleNo == input) == -1) {
-          console.log("hi");
-          if (mockData.find((e) => e.articleNo === input)) {
+          // console.log("hi");
+          if (oAllItems.find((e) => e.articleNo === input)) {
             function existsInData(e) {
               return e.articleNo === input;
             }
-            const index = mockData.findIndex(existsInData);
-            oData.articles.unshift(mockData[index]);
+            const index = oAllItems.findIndex(existsInData);
+            oData.articles.unshift(oAllItems[index]);
             oModel.refresh();
             successTone.play();
           } else {
@@ -353,8 +365,9 @@ sap.ui.define(
                   .saveFile(`Gapbuster List ${date}`)
                   .catch(function (oError) {
                     sap.m.MessageToast.show(
-                      "Generate is not possible beause no model was set"
+                      "Generate is not possible because no model was set"
                     );
+                    console.log(oError);
                   })
                   .then(function () {
                     oExport.destroy();
@@ -367,18 +380,58 @@ sap.ui.define(
         });
       },
       onFilterItems: function (oEvent) {
+        // var oView = this.getView();
+        var sQuery = oEvent.getParameter("query");
+        console.log(sQuery);
+        var oData = this.getView().getModel("tableData").getData();
+        oData.searchQuery = sQuery;
+        // console.log(oData);
+        var oView = this.getView();
+
+        if (!this.byId("searchBox")) {
+          Fragment.load({
+            id: oView.getId(),
+            name: "sap.ui.demo.walkthrough.view.fragments.Search",
+            controller: this,
+          }).then(function (oDialog) {
+            // console.log(oDialog);
+            oView.addDependent(oDialog);
+            oDialog.open();
+          });
+        } else {
+          this.byId("searchBox").open();
+        }
         // build filter array
         var aFilter = [];
-        var sQuery = oEvent.getParameter("query");
         if (sQuery) {
           aFilter.push(new Filter("name", FilterOperator.Contains, sQuery));
         }
-
         // filter binding
-        var oList = this.byId("listItems");
+        var oListStr = sap.ui.core.Fragment.createId(oView.getId(), "allItems");
+        var oSearchFieldStr = sap.ui.core.Fragment.createId(
+          oView.getId(),
+          "allItems"
+        );
+        // var list = sap.ui.getCore().byId("allItems");
+        // console.log(list);
+        var oList = this.byId(oListStr);
+        // console.log(oList);
         var oBinding = oList.getBinding("items");
+        console.log(oBinding);
         oBinding.filter(aFilter);
       },
+      //   // build filter array
+      //   var aFilter = [];
+      //   var sQuery = oEvent.getParameter("query");
+      //   if (sQuery) {
+      //     aFilter.push(new Filter("name", FilterOperator.Contains, sQuery));
+      //   }
+
+      //   // filter binding
+      //   var oList = this.byId("listItems");
+      //   var oBinding = oList.getBinding("items");
+      //   oBinding.filter(aFilter);
+      // },
       getGroup: function (oContext) {
         var sKey = oContext.getProperty("aisle");
         return {
@@ -392,33 +445,7 @@ sap.ui.define(
           upperCase: false,
         });
       },
-      onSelectionChange: function (oEvent) {
-        var oList = oEvent.getSource();
-        // var oLabel = this.byId("idFilterLabel");
-        // var oInfoToolbar = this.byId("idInfoToolbar");
 
-        // With the 'getSelectedContexts' function you can access the context paths
-        // of all list items that have been selected, regardless of any current
-        // filter on the aggregation binding.
-        // var aContexts = oList.getSelectedContexts(true);
-
-        // update UI
-        // var bSelected = aContexts && aContexts.length > 0;
-        // var sText = bSelected ? aContexts.length + " selected" : null;
-        // oInfoToolbar.setVisible(bSelected);
-        // oLabel.setText(sText);
-        // console.log(aContexts);
-        // console.log(aContexts.length);
-
-        // for (let i = 0; i < aContexts.length; i++) {
-
-        // }
-        // aContexts.forEach(function (item) {
-        //   console.log(item.sPath.slice(10));
-        // });
-
-        // console.log(oItems);
-      },
       onDeleteMulti: function () {
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
@@ -459,6 +486,28 @@ sap.ui.define(
         state === true
           ? (oData.emptyShelvesAutoTag.status = true)
           : (oData.emptyShelvesAutoTag.status = false);
+        oModel.refresh();
+      },
+
+      onClickItemSearchFrag: function (e) {
+        var oModel = this.getView().getModel("tableData");
+        var oPickedItems = oModel.getData().articles;
+        var oAllData = this.getView().getModel("allData").getData().articles;
+        var sObjPath = e.getSource().getBindingContext("allData").getPath();
+        // console.log(sSomePropertyValue);
+        var index = parseInt(sObjPath.substring(sObjPath.lastIndexOf("/") + 1));
+        // console.log(index);
+        var oItemArticleNo = oAllData[index].articleNo;
+        if (
+          oPickedItems.some((item) => item.articleNo == oItemArticleNo) ===
+          false
+        ) {
+          oPickedItems.unshift(oAllData[index]);
+          MessageToast.show("Item added to list");
+        } else {
+          MessageToast.show("Item already in list");
+        }
+
         oModel.refresh();
       },
     });

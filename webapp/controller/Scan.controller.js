@@ -28,6 +28,7 @@ sap.ui.define(
         // console.log(this.getView("List").getModel());
         var oModel = sap.ui.getCore().getModel("tableData");
         var oData = oModel.getData();
+        var oAllItems = this.getView().getModel("allData").getData().articles;
 
         // oModel.setSizeLimit(2);
         // oModel.setData(oData.articles);
@@ -75,12 +76,12 @@ sap.ui.define(
                   oScannedItems.findIndex((obj) => obj.barcode == item) === -1
                 ) {
                   oScannedItems.unshift(oScannedBarcode);
-                  if (mockData.find((e) => e.barcode === item)) {
+                  if (oAllItems.find((e) => e.barcode === item)) {
                     function existsInData(e) {
                       return e.barcode === item;
                     }
-                    const index = mockData.findIndex(existsInData);
-                    oData.articles.unshift(mockData[index]);
+                    const index = oAllItems.findIndex(existsInData);
+                    oData.articles.unshift(oAllItems[index]);
                     // oModel.refresh();
                   }
                   if (oData.articles.length >= 10) {

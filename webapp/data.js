@@ -36,7 +36,6 @@ const mockData = [
     aisle: 3,
     delivery: "25/12/2022",
   },
-
   {
     name: "ALL GOOD OAT MILK BARISTA",
     qty: "1L",

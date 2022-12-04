@@ -6,47 +6,36 @@
     <Page title="{tableData>name}" id="idDetail" showFooter="true" showNavButton="true" navButtonPress=".onNavBack">
 
         <content>
-            <HBox alignItems="Center" backgroundDesign="Solid">
-                <VBox class="sapUiContentPadding" width="20%" alignItems="Center">
+            <VBox backgroundDesign="Solid">
+                <HBox class="sapUiTinyMargin">
                     <Image src="{tableData>image}" width="75px" press=".onImgPress" />
-                </VBox>
-                <VBox width="80%" class="sapUiContentPadding">
-                    <HBox>
-                        <Title text="{tableData>name}"></Title>
-                    </HBox>
-                    <HBox class="sapUiTinyMarginTop">
-                        <ObjectAttribute text="Article: {tableData>articleNo}"></ObjectAttribute>
-                    </HBox>
-                    <HBox>
-                        <ObjectAttribute text="Barcode: {tableData>barcode}"></ObjectAttribute>
-                    </HBox>
-                    <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginTop">
-                        <ObjectAttribute text="SOH: {tableData>soh}"></ObjectAttribute>
-                        <!-- <ObjectAttribute text="{= ${tableData>soh > 10 ? 'In Stock' : 'Out of Stock'} }"></ObjectAttribute> -->
-                    </HBox>
-                    <HBox alignItems="Center" justifyContent="SpaceBetween">
-                        <ObjectStatus state="{=${tableData>soh} > 10 ? 'Success' : (${tableData>soh} === 0 ? 'Error' : 'Warning')}" icon="{=${tableData>soh} > 10 ? 'sap-icon://message-success' : (${tableData>soh} === 0 ? 'sap-icon://message-error' : 'sap-icon://message-warning')}" text="{=${tableData>soh} > 10 ? 'In Stock' : (${tableData>soh} === 0 ? 'Out of Stock' : 'Low Stock')}"
-                        />
-                        <!-- <ObjectAttribute text="{ parts: ['json>/name', 'json>/nr'], formatter: '.Formatter.inStockCondition'}"></ObjectAttribute> -->
-                        <!-- <Icon src="{= ${propertyname} === 'UP' ? 'sap-icon://arrow-top' : ${propertyname} === 'DOWN' ? 'sap-icon://arrow-bottom' : 'sap-icon://arrow-left'}" /> -->
-                        <CheckBox id="emptyCheckbox" text="Empty Shelf?" select=".onEmptyShelfCheckChange" selected="{= ${tableData>/emptyShelvesAutoTag/status} === true ? true : false}"></CheckBox>
-                        <!-- <CheckBox id="emptyCheckbox" text="{emptyShelvesTag>/status}" select=".onCheckboxChange"></CheckBox> -->
-                    </HBox>
-                    <HBox justifyContent="SpaceBetween">
-                        <ObjectAttribute text="Next delivery:
-                        {tableData>delivery}"></ObjectAttribute>
-                        <VBox>
-                            <ObjectAttribute text="Pres Stock: {tableData>presStock}"></ObjectAttribute>
-                            <Link text="Update" press=".onUpdatePresStock" ariaHasPopup="Dialog"></Link>
-                        </VBox>
-                    </HBox>
-                </VBox>
-            </HBox>
+                    <VBox width="80%" class="sapUiContentPadding">
+                        <Title text="{tableData>name} {tableData>qty}"></Title>
+                        <ObjectAttribute text="{tableData>articleNo}"></ObjectAttribute>
+                    </VBox>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="sapUiTinyMargin sapUiMediumMarginBeginEnd">
+                    <VBox>
+                        <Label text="SOH"></Label>
+                        <ObjectStatus text="{tableData>soh} EA" state="{=${tableData>soh} > 10 ? 'Success' : (${tableData>soh} === 0 ? 'Error' : 'Warning')}"></ObjectStatus>
+                    </VBox>
+                    <VBox>
+                        <ObjectAttribute text="Pres Stock: {tableData>presStock}"></ObjectAttribute>
+                        <Link text="Update" press=".onUpdatePresStock" ariaHasPopup="Dialog"></Link>
+                    </VBox>
+                    <VBox>
+                        <Label text="Next delivery" />
+                        <ObjectAttribute text="{tableData>delivery}"></ObjectAttribute>
+                    </VBox>
+                </HBox>
+            </VBox>
             <VBox class="sapUiSmallMargin">
-
-                <Text text="Please select action(s)" class="sapUiTinyMarginTopBottom"></Text>
-                <CustomListItem id="replenClItem" class="" blocked="{=${tableData>soh} === 0 ? true : false}">
-                    <CheckBox id="replenShelfCheck" text="Replenish Shelf" select=".onReplenShelfCheck" editable="{=${tableData>soh} === 0 ? false : true}" state="{{=${tableData>soh} === 0 ? 'Error' : 'None'}}"></CheckBox>
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Text text="Please select action(s)" class="sapUiTinyMarginTopBottom"></Text>
+                    <Switch id="emptySwitch" change=".onEmptyShelfCheckChange" customTextOff="Gap" customTextOn="Gap" state="{= ${tableData>/emptyShelvesAutoTag/status} === true ? true : false}"></Switch>
+                </HBox>
+                <CustomListItem id="replenClItem" blocked="{=${tableData>soh} === 0 ? true : false}">
+                    <CheckBox id="replenShelfCheck" text="Replenish Shelf" select=".onReplenShelfCheck" editable="{=${tableData>soh} === 0 ? false : true}"></CheckBox>
                 </CustomListItem>
                 <VBox width="100%" visible="{= ${tableData>/replenShelfCheck/status} === true ? true : false}">
                     <Toolbar width="100%" height="1px" />
@@ -59,32 +48,13 @@
                 <CustomListItem id="reportClItem">
                     <CheckBox id="reportBtlCheck" text="Report to Buyer's Task List" select=".onReportBtlCheck"></CheckBox>
                 </CustomListItem>
-                <!-- <Text text="hello world" visible="{formatter: '.replenishShelf'}"></Text> -->
-                <!-- <Text text="hello world" visible=""></Text> -->
             </VBox>
-
-            <!-- <VBox class="sapUiContentPadding sapUiSmallMargin sapUiMediumMarginBeginEnd">
-                <HBox justifyContent="SpaceBetween">
-                    <Text text="PRESENTATION STOCK: {tableData>presStock}"></Text>
-                    <Text text="SOH: {tableData>soh}"></Text>
-                </HBox>
-                <RadioButtonGroup>
-                    <RadioButton id="idRadioFullShelf" text="Replenish Full Shelf" selected="{= ${presStock} > 0 ? false : true }" editable="{= ${RequestType} !== 'IC' ? true : false }" />
-                    <RadioButton id="idRadioExactQuantity" text="Replenish Exact Quantity" selected="{= ${RequestType} === 'EQ' ? true : false }" editable="{= ${RequestType} !== 'IC' ? true : false }" />
-                    <RadioButton id="idRadioInvController" text="Report to Inventory Controller" selected="{= ${RequestType} === 'IC' ? true : false }" editable="false" />
-                </RadioButtonGroup>
-                <Label text="Presentation Stock" class="sapUiSmallMarginTop" />
-                <StepInput value="{PresentationStock}" min="0" step="1" />
-            </VBox> -->
-
         </content>
 
 
         <footer>
             <Toolbar design="Solid" enabled="true" visible="true" width="100%">
                 <ToolbarSpacer />
-                <!-- <Text text="Images: "></Text>
-              <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" /> -->
                 <Button id="idButtonSubmitItem" type="Emphasized" text="Submit" press=".onSubmitItem" />
             </Toolbar>
         </footer>

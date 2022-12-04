@@ -1,0 +1,59 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+
+    <!-- <Text text="Images:" class="sapUiTinyMargin"></Text>
+    <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" />
+ -->
+
+    <Dialog id="searchBox" title="Add an item" contentHeight="100%">
+        <VBox justifyContent="Center" class="sapUiSmallMargin">
+            <SearchField id="searchField" search=".onFilterItems" value="{tableData>/searchQuery}"></SearchField>
+            <ScrollContainer>
+
+
+                <List id="allItems" items="{path: 'allData>/articles'}">
+                    <items>
+                        <CustomListItem id="idDataItem" type="Navigation" press=".onClickItemSearchFrag">
+                            <HBox class="sapUiTinyMargin" width="">
+                                <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginEnd">
+                                    <Image src="{allData>image}" height="50px" />
+                                </HBox>
+                                <VBox class="SapUiLargeMargin" width="100%">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title text="{allData>name} {allData>qty}" wrapping="true" class="SapUiLargeMarginEnd" />
+                                    </HBox>
+                                    <!-- <HBox justifyContent="SpaceBetween"> -->
+                                    <!-- <ObjectAttribute title="Qty" text="{tableData>qty}" /> -->
+                                    <VBox>
+                                        <ObjectAttribute title="Article" text="{allData>articleNo}" />
+                                        <ObjectAttribute title="Barcode" text="{allData>barcode}" />
+                                        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginEnd">
+                                            <ObjectStatus class="" text="{= ${allData>soh} > 0 ? 'SOH: ' + ${path: 'allData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{=${allData>soh} > 10 ? 'Success' : (${allData>soh} === 0 ? 'Error' : 'Warning')}"></ObjectStatus>
+                                            <!-- <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }" state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" /> -->
+
+                                            <!-- <Switch customTextOff="No Gap" customTextOn="Gap"></Switch> -->
+                                        </HBox>
+                                    </VBox>
+                                    <!-- <ObjectAttribute title="Article" text="{tableData>/showImgs/status}" /> -->
+                                    <!-- <ObjectAttribute title="Article" text="" /> -->
+                                    <!-- </HBox> -->
+                                    <!-- <HBox justifyContent="SpaceBetween" class="sapUiMediumMarginEnd"> -->
+                                    <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop' : 'sapUiTinyMarginTop'}" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" /> -->
+                                    <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop sapUiTinyMarginEnd' : 'sapUiTinyMarginTop'}" text="{deleteMulti>/status}" /> -->
+                                    <!-- </HBox> -->
+                                </VBox>
+                            </HBox>
+                        </CustomListItem>
+                    </items>
+                </List>
+            </ScrollContainer>
+            <!-- <Button press=".onFilterItems" width="50px" text="Add" type="Ghost" class="sapUiTinyMarginBegin"></Button> -->
+
+        </VBox>
+        <beginButton>
+            <Button text="Close" press=".onCloseSearchBox" class="sapUiNoMarginBottom" type="Emphasized"></Button>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -137,7 +137,7 @@ sap.ui.define(
       onStockOnShelfChange: function (e) {
         // var stepInput = this.byId("stockOnShelfStepInput");
         // var stockOnShelfStepInput = this.byId("stockOnShelfStepInput");
-        var emptyShelfCheck = this.byId("emptyCheckbox");
+        var emptyShelfCheck = this.byId("emptySwitch");
         // var state = e.getParameters().selected;
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
@@ -145,8 +145,8 @@ sap.ui.define(
         var shelfEmpty = oData.shelfIsEmpty.status;
         var shelfEmptyAutoTag = oData.emptyShelvesAutoTag.status;
         shelfEmpty || shelfEmptyAutoTag
-          ? emptyShelfCheck.setSelected(false)
-          : emptyShelfCheck.setSelected(true);
+          ? emptyShelfCheck.setState(false)
+          : emptyShelfCheck.setState(true);
       },
 
       onReqQuantitySelect: function (e) {
@@ -158,8 +158,8 @@ sap.ui.define(
       },
       onSubmitItem: function (e) {
         var oView = this.getView("List");
-        var oEmptyShelfCheck = this.byId("emptyCheckbox");
-        var bIsShelfEmpty = oEmptyShelfCheck.getSelected();
+        var oEmptyShelfCheck = this.byId("emptySwitch");
+        var bIsShelfEmpty = oEmptyShelfCheck.getState();
         var oModel = oView.getModel("tableData");
         var oData = oModel.getData();
         var iStockOnShelf = this.byId("stockOnShelfStepInput").getValue();
