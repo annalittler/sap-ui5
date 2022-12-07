@@ -9,7 +9,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
       "soh": 8,
-      "presStock": 4,
+      "presStock": 18,
       "aisle": 3,
       "delivery": "25/12/2022"
     },
@@ -21,7 +21,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3765420344565789.avif",
       "soh": 54,
-      "presStock": 3,
+      "presStock": 22,
       "aisle": 1,
       "delivery": "25/12/2022"
     },
@@ -33,7 +33,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4560913944979699.avif",
       "soh": 34,
-      "presStock": 0,
+      "presStock": 22,
       "aisle": 3,
       "delivery": "25/12/2022"
     },
@@ -45,7 +45,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/544443431544691.avif",
       "soh": 0,
-      "presStock": 0,
+      "presStock": 30,
       "aisle": 4,
       "delivery": "25/12/2022"
     },
@@ -57,7 +57,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7278182323084154.avif",
       "soh": 83,
-      "presStock": 2,
+      "presStock": 22,
       "aisle": 4,
       "delivery": "25/12/2022"
     },
@@ -69,7 +69,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/7138028174164914.avif",
       "soh": 2,
-      "presStock": 0,
+      "presStock": 20,
       "aisle": 9,
       "delivery": "25/12/2022"
     },
@@ -81,7 +81,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3374903838554067.avif",
       "soh": 0,
-      "presStock": 0,
+      "presStock": 18,
       "aisle": 5,
       "delivery": "25/12/2022"
     },
@@ -93,7 +93,7 @@
       "barcode": 80042556,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4781330397012883.avif",
       "soh": 56,
-      "presStock": 1,
+      "presStock": 18,
       "aisle": 7,
       "delivery": "25/12/2022"
     },
@@ -105,7 +105,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/5152274480947803.avif",
       "soh": 0,
-      "presStock": 2,
+      "presStock": 22,
       "aisle": 10,
       "delivery": "25/12/2022"
     },
@@ -117,7 +117,7 @@
       "barcode": 9415077038398,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/2626326568698991.avif",
       "soh": 5,
-      "presStock": 2,
+      "presStock": 14,
       "aisle": 7,
       "delivery": "25/12/2022"
     },
@@ -129,7 +129,7 @@
       "barcode": 93613903,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4098008843437409.avif",
       "soh": 45,
-      "presStock": 0,
+      "presStock": null,
       "aisle": 5,
       "delivery": "25/12/2022"
     },
@@ -141,7 +141,7 @@
       "barcode": 9300462348575,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/300623578866993.avif",
       "soh": 68,
-      "presStock": 0,
+      "presStock": 18,
       "aisle": 7,
       "delivery": "25/12/2022"
     },
@@ -153,19 +153,19 @@
       "barcode": 5010651001313,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/554995834038976.avif",
       "soh": 0,
-      "presStock": 0,
+      "presStock": 12,
       "aisle": 3,
       "delivery": "25/12/2022"
     },
     {
       "name": "EXTRA WHITE BUBBLEMINT GUM",
-      "qty": "14G",
+      "qty": "27G",
       "price": 1.39,
       "articleNo": 5003713,
-      "barcode": 93544160,
+      "barcode": 93548625,
       "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4098008843437409.avif",
       "soh": 45,
-      "presStock": 0,
+      "presStock": 16,
       "aisle": 5,
       "delivery": "25/12/2022"
     }

@@ -280,9 +280,7 @@ sap.ui.define(
       },
 
       onExportPress: function () {
-        // var time = getTime();
         var date = new Date();
-        // getting model into oModel variable.
         var oModel = this.getView().getModel("tableData");
 
         MessageBox.confirm("Are you sure you want to export the list?", {
@@ -356,7 +354,7 @@ sap.ui.define(
                     {
                       name: "Empty shelf?",
                       template: {
-                        content: "{isShelfEmpty}",
+                        content: "{isGap}",
                       },
                     },
                   ],
@@ -404,14 +402,20 @@ sap.ui.define(
         // build filter array
         var aFilter = [];
         if (sQuery) {
-          aFilter.push(new Filter("name", FilterOperator.Contains, sQuery));
+          var iQuery = parseInt(sQuery);
+          aFilter.push(
+            new Filter("name", FilterOperator.Contains, sQuery)
+            // new Filter("barcode", FilterOperator.Contains, iQuery),
+            // new Filter("article", FilterOperator.Contains, iQuery)
+          );
         }
+        console.log(typeof sQuery);
         // filter binding
         var oListStr = sap.ui.core.Fragment.createId(oView.getId(), "allItems");
-        var oSearchFieldStr = sap.ui.core.Fragment.createId(
-          oView.getId(),
-          "allItems"
-        );
+        // var oSearchFieldStr = sap.ui.core.Fragment.createId(
+        //   oView.getId(),
+        //   "allItems"
+        // );
         // var list = sap.ui.getCore().byId("allItems");
         // console.log(list);
         var oList = this.byId(oListStr);
@@ -482,21 +486,39 @@ sap.ui.define(
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
         var state = e.getSource().getState();
-        console.log(state);
+
         state === true
           ? (oData.emptyShelvesAutoTag.status = true)
           : (oData.emptyShelvesAutoTag.status = false);
+        console.log(oData.emptyShelvesAutoTag);
+        // if (state === true) {
+        //   MessageBox.confirm(
+        //     'Are you sure you want to turn on the Empty Shelf Auto-tag? All future scans will be tagged as "Empty Shelf".',
+        //     {
+        //       actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+        //       emphasizedAction: MessageBox.Action.OK,
+        //       onClose: function (sAction) {
+        //         sAction === MessageBox.Action.OK
+        //           ? (oData.emptyShelvesAutoTag.status = true)
+        //           : (oData.emptyShelvesAutoTag.status = false);
+        //       },
+        //     }
+        //   );
+        // }
+
         oModel.refresh();
       },
 
       onClickItemSearchFrag: function (e) {
         var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
         var oPickedItems = oModel.getData().articles;
         var oAllData = this.getView().getModel("allData").getData().articles;
         var sObjPath = e.getSource().getBindingContext("allData").getPath();
+        console.log(oData);
         // console.log(sSomePropertyValue);
         var index = parseInt(sObjPath.substring(sObjPath.lastIndexOf("/") + 1));
-        // console.log(index);
+        console.log(index);
         var oItemArticleNo = oAllData[index].articleNo;
         if (
           oPickedItems.some((item) => item.articleNo == oItemArticleNo) ===
@@ -504,11 +526,51 @@ sap.ui.define(
         ) {
           oPickedItems.unshift(oAllData[index]);
           MessageToast.show("Item added to list");
+          // oPickedItems[0].manualGap = undefined;
+          oPickedItems[0].isGap = oData.emptyShelvesAutoTag.status;
+          console.log(oPickedItems[0]);
         } else {
           MessageToast.show("Item already in list");
         }
-
+        console.log(oPickedItems);
         oModel.refresh();
+      },
+      listGapSwitch: function (e) {
+        var oView = this.getView();
+        var oModel = oView.getModel("tableData");
+        var oData = oModel.getData();
+        var oBinding = e.getSource().getBindingContext("tableData");
+        var sPath = oBinding.getPath();
+        var iIndex = parseInt(sPath.substring(sPath.lastIndexOf("/") + 1));
+        var bState = e.getParameter("state");
+        var oItem = oData.articles[iIndex];
+        // if (bState === true) {
+        //   oItem.manualGap = true;
+        // } else oItem.manualGap = false;
+        console.log(bState);
+        // console.log(oItem);
+        // bState === true ? (oItem.isGap = true) : (oItem.isGap = false);
+        oItem.isGap = bState;
+        // console.log(oItem.isGap);
+        // oItem.isGap = bState;
+        console.log("status:", oItem.isGap);
+        console.log(oItem);
+
+        // var sObjPath = this.getView().mObjectBindingInfos.tableData.path;
+        // var index = parseInt(sObjPath.substring(sObjPath.lastIndexOf("/") + 1));
+        // var oItem = oData.articles[index];
+        // var bState = this.byId("emptySwitch").getState();
+        // if (bState === true) {
+        //   oItem.manualGap = true;
+        // } else oItem.manualGap = false;
+        // // console.log(oSwitch.getState());
+        // // var state = e.getParameters().selected;
+        // console.log(oItem);
+        // var stockOnShelfStepInput = this.byId("stockOnShelfStepInput");
+        // bState === true
+        //   ? ((oData.shelfIsEmpty.status = true),
+        //     stockOnShelfStepInput.setValue(0))
+        //   : (oData.shelfIsEmpty.status = false);
       },
     });
   }

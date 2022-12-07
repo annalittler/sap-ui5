@@ -20,7 +20,7 @@
                         <ObjectStatus text="{tableData>soh} EA" state="{=${tableData>soh} > 10 ? 'Success' : (${tableData>soh} === 0 ? 'Error' : 'Warning')}"></ObjectStatus>
                     </VBox>
                     <VBox>
-                        <ObjectAttribute text="Pres Stock: {tableData>presStock}"></ObjectAttribute>
+                        <ObjectStatus text="Pres stock: {=${tableData>presStock} === 0 || ${tableData>presStock} === '' || ${tableData>presStock} === null ? 'N/A' : ${tableData>presStock} }" state="{=${tableData>presStock} === 0 || ${tableData>presStock} === '' || ${tableData>presStock} === null ? 'Error' : 'None' }"></ObjectStatus>
                         <Link text="Update" press=".onUpdatePresStock" ariaHasPopup="Dialog"></Link>
                     </VBox>
                     <VBox>
@@ -32,21 +32,24 @@
             <VBox class="sapUiSmallMargin">
                 <HBox justifyContent="SpaceBetween" alignItems="Center">
                     <Text text="Please select action(s)" class="sapUiTinyMarginTopBottom"></Text>
-                    <Switch id="emptySwitch" change=".onEmptyShelfCheckChange" customTextOff="Gap" customTextOn="Gap" state="{= ${tableData>/emptyShelvesAutoTag/status} === true ? true : false}"></Switch>
+                    <!-- <Text text="{tableData>isGap}" class="sapUiTinyMarginTopBottom"></Text> -->
+                    <Switch id="emptySwitch" change=".onEmptyShelfCheckChange" customTextOff="Gap" customTextOn="Gap" state="{tableData>isGap}"></Switch>
                 </HBox>
                 <CustomListItem id="replenClItem" blocked="{=${tableData>soh} === 0 ? true : false}">
-                    <CheckBox id="replenShelfCheck" text="Replenish Shelf" select=".onReplenShelfCheck" editable="{=${tableData>soh} === 0 ? false : true}"></CheckBox>
+                    <CheckBox id="replenShelfCheck" text="Replenish Shelf" select=".onReplenShelfCheck" selected="{= ${tableData>soh} > 0 ? true : false}" editable="{=${tableData>soh} === 0 ? false : true}"></CheckBox>
                 </CustomListItem>
-                <VBox width="100%" visible="{= ${tableData>/replenShelfCheck/status} === true ? true : false}">
+                <VBox width="100%" visible="{= ${tableData>/replenShelfCheck/status} === true &amp;&amp; ${tableData>soh} > 0 ? true : false}">
                     <Toolbar width="100%" height="1px" />
                     <Text class="sapUiTinyMarginTopBottom" text="Select replenishment mode"></Text>
-                    <RadioButton text="Request Quantity" select=".onReqQuantitySelect" selected="true"></RadioButton>
-                    <RadioButton id="stockOnShelfRadio" text="Enter Stock on Shelf" select=".onStockOnShelfSelect"></RadioButton>
-                    <StepInput id="reqQuantityStepInput" visible="{= ${tableData>/reqQuantitySelect/status} === true ? true : false}" min="0" max="{tableData>soh}" change=".onReqQuantityInputChange"></StepInput>
+                    <RadioButton text="Request Quantity" select=".onReqQuantitySelect" selected="{= ${tableData>isGap} === true ? true : false}"></RadioButton>
+                    <!-- <Text text="{}" /> -->
+                    <!-- <Text text="{= ${tableData>soh} >= ${tableData>presStock} ? true : false}"></Text> -->
+                    <RadioButton id="stockOnShelfRadio" text="Enter Stock on Shelf" select=".onStockOnShelfSelect" selected="{= ${tableData>isGap} === false ? true : false}"></RadioButton>
+                    <StepInput id="reqQuantityStepInput" visible="{= ${tableData>/reqQuantitySelect/status} === true ? true : false}" min="0" value="{= ${tableData>soh} >= ${tableData>presStock} ? ${tableData>presStock} : ${tableData>soh}}" max="{tableData>soh}" change=".onReqQuantityInputChange"></StepInput>
                     <StepInput id="stockOnShelfStepInput" visible="{= ${tableData>/stockOnShelfSelect/status} === true ? true : false}" min="0" change=".onStockOnShelfChange" editable="{= ${tableData>/isShelfEmpty/status === true ? false : true}}"></StepInput>
                 </VBox>
                 <CustomListItem id="reportClItem">
-                    <CheckBox id="reportBtlCheck" text="Report to Buyer's Task List" select=".onReportBtlCheck"></CheckBox>
+                    <CheckBox id="reportBtlCheck" text="Report to Buyer's Task List" select=".onReportBtlCheck" selected="{= ${tableData>soh} > 0 ? false : true}"></CheckBox>
                 </CustomListItem>
             </VBox>
         </content>

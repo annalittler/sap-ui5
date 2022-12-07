@@ -28,7 +28,7 @@ sap.ui.define(
         // console.log(this.getView("List").getModel());
         var oModel = sap.ui.getCore().getModel("tableData");
         var oData = oModel.getData();
-        var oAllItems = this.getView().getModel("allData").getData().articles;
+        // var oAllItems = this.getView().getModel("allData").getData().articles;
 
         // oModel.setSizeLimit(2);
         // oModel.setData(oData.articles);
@@ -67,6 +67,9 @@ sap.ui.define(
               );
             })
             .then((barcodePicker) => {
+              var oAllItems = this.getView()
+                .getModel("allData")
+                .getData().articles;
               // barcodePicker is ready here, show a message every time a barcode is scanned
               barcodePicker.on("scan", (scanResult) => {
                 var oScannedBarcode = {};
@@ -101,8 +104,13 @@ sap.ui.define(
         oRouter.navTo("list");
         var oView = this.getView("Scan");
         console.log(oView);
+        // var scanView = new sap.ui.getCore().byId("Scan");
+        // var oView = this.getView("Scan");
+
+        oView.destroy();
       },
       onNavBack: function () {
+        var oView = this.getView("Scan");
         var oHistory = History.getInstance();
         var sPreviousHash = oHistory.getPreviousHash();
         if (sPreviousHash !== undefined) {
@@ -111,6 +119,7 @@ sap.ui.define(
           var oRouter = UIComponent.getRouterFor(this);
           oRouter.navTo("list");
         }
+        oView.destroy();
       },
       onDeleteItem: function (e) {
         var arr = [];
@@ -252,6 +261,15 @@ sap.ui.define(
             }
           },
         });
+      },
+      onExit: function () {
+        console.log("onExit() of controller called...");
+        alert("onExit function called");
+        // var oView = this.getView("Scan");
+        // console.log(oView);
+        var oScanner = this.createId("scandit-barcode-picker1");
+        console.log(oScanner);
+        oScanner.destroy();
       },
     });
   }

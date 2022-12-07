@@ -18,19 +18,19 @@ sap.ui.define(
 
         const obj = {
           articles: [
-            // {
-            //   name: "PAMS PURE PLAIN FLOUR",
-            //   qty: "1.5KG",
-            //   price: 1.99,
-            //   articleNo: 5003829,
-            //   barcode: 50038299,
-            //   image:
-            //     "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
-            //   soh: 8,
-            //   presStock: 12,
-            //   aisle: 3,
-            //   delivery: "25/12/2022",
-            // },
+            {
+              name: "PAMS PURE PLAIN FLOUR",
+              qty: "1.5KG",
+              price: 1.99,
+              articleNo: 5003829,
+              barcode: 50038299,
+              image:
+                "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
+              soh: 8,
+              presStock: 12,
+              aisle: 3,
+              delivery: "25/12/2022",
+            },
             // {
             //   name: "TARARUA BUTTER",
             //   qty: "500G",
@@ -66,13 +66,14 @@ sap.ui.define(
 
         oData.deleteMulti = { status: false };
         oData.emptyShelvesAutoTag = { status: true };
-        oData.shelfIsEmpty = { status: oData.emptyShelvesAutoTag.status };
         oData.showImgs = { status: true };
-        oData.replenShelfCheck = { status: false };
+        oData.replenShelfCheck = { status: true };
         oData.reportBtlCheck = { status: false };
         oData.stockOnShelfSelect = { status: false };
         oData.reqQuantitySelect = { status: true };
+        oData.shelfIsEmpty = { status: oData.emptyShelvesAutoTag.status };
         // console.log(oData);
+        console.log(oData);
       },
     });
   }
