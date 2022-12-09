@@ -30,6 +30,7 @@ sap.ui.define(
               presStock: 12,
               aisle: 3,
               delivery: "25/12/2022",
+              isGap: true,
             },
             // {
             //   name: "TARARUA BUTTER",
@@ -72,6 +73,7 @@ sap.ui.define(
         oData.stockOnShelfSelect = { status: false };
         oData.reqQuantitySelect = { status: true };
         oData.shelfIsEmpty = { status: oData.emptyShelvesAutoTag.status };
+        oData.threeItems = { articles: [] };
         // console.log(oData);
         console.log(oData);
       },

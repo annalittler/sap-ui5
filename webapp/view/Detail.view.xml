@@ -1,10 +1,15 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
     controllerName="sap.ui.demo.walkthrough.controller.Detail"
-    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f"
->
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f">
 
-    <Page title="{tableData>name}" id="idDetail" showFooter="true" showNavButton="true" navButtonPress=".onNavBack">
-
+    <Page title="{tableData>name}" id="idDetail" showFooter="true" showNavButton="false" navButtonPress=".onNavBack">
+        <customHeader design="Solid">
+            <f:ShellBar title="{i18n>appTitle}" showNavButton="false">
+                <f:profile>
+                    <Avatar initials="AL" />
+                </f:profile>
+            </f:ShellBar>
+        </customHeader>
         <content>
             <VBox backgroundDesign="Solid">
                 <HBox class="sapUiTinyMargin">
@@ -36,25 +41,24 @@
                     <Switch id="emptySwitch" change=".onEmptyShelfCheckChange" customTextOff="Gap" customTextOn="Gap" state="{tableData>isGap}"></Switch>
                 </HBox>
                 <CustomListItem id="replenClItem" blocked="{=${tableData>soh} === 0 ? true : false}">
-                    <CheckBox id="replenShelfCheck" text="Replenish Shelf" select=".onReplenShelfCheck" selected="{= ${tableData>soh} > 0 ? true : false}" editable="{=${tableData>soh} === 0 ? false : true}"></CheckBox>
+                    <CheckBox id="replenShelfCheck" text="Replenish Shelf" select=".onReplenShelfCheck" selected="{= ${tableData>soh} > 0 ? true : false}" blocked="{=${tableData>soh} === 0 ? true : false}"></CheckBox>
                 </CustomListItem>
                 <VBox width="100%" visible="{= ${tableData>/replenShelfCheck/status} === true &amp;&amp; ${tableData>soh} > 0 ? true : false}">
                     <Toolbar width="100%" height="1px" />
                     <Text class="sapUiTinyMarginTopBottom" text="Select replenishment mode"></Text>
-                    <RadioButton text="Request Quantity" select=".onReqQuantitySelect" selected="{= ${tableData>isGap} === true ? true : false}"></RadioButton>
+                    <RadioButton text="Request Quantity" select=".onReqQuantitySelect" selected="true"></RadioButton>
                     <!-- <Text text="{}" /> -->
                     <!-- <Text text="{= ${tableData>soh} >= ${tableData>presStock} ? true : false}"></Text> -->
-                    <RadioButton id="stockOnShelfRadio" text="Enter Stock on Shelf" select=".onStockOnShelfSelect" selected="{= ${tableData>isGap} === false ? true : false}"></RadioButton>
+                    <!-- <StepInput id="reqQuantityStepInput" visible="{= ${tableData>/reqQuantitySelect/status} === true ? true : false}" min="0" value="{= ${tableData>soh} >= ${tableData>presStock} ? ${tableData>presStock} : ${tableData>soh}}" max="{tableData>soh}" change=".onReqQuantityInputChange"></StepInput> -->
                     <StepInput id="reqQuantityStepInput" visible="{= ${tableData>/reqQuantitySelect/status} === true ? true : false}" min="0" value="{= ${tableData>soh} >= ${tableData>presStock} ? ${tableData>presStock} : ${tableData>soh}}" max="{tableData>soh}" change=".onReqQuantityInputChange"></StepInput>
-                    <StepInput id="stockOnShelfStepInput" visible="{= ${tableData>/stockOnShelfSelect/status} === true ? true : false}" min="0" change=".onStockOnShelfChange" editable="{= ${tableData>/isShelfEmpty/status === true ? false : true}}"></StepInput>
+                    <RadioButton id="stockOnShelfRadio" text="Enter Stock on Shelf" select=".onStockOnShelfSelect" selected="" blocked="{=${tableData>presStock} === 0 || ${tableData>presStock} === '' || ${tableData>presStock} === null ? true : false }"></RadioButton>
+                    <StepInput id="stockOnShelfStepInput" visible="{= ${tableData>/stockOnShelfSelect/status} === true}" min="0" value="{= ${tableData>isGap} === true? 0 : 1}" change=" .onStockOnShelfChange" blocked="{= ${tableData>/isShelfEmpty/status === true ? true : false}}"></StepInput>
                 </VBox>
                 <CustomListItem id="reportClItem">
                     <CheckBox id="reportBtlCheck" text="Report to Buyer's Task List" select=".onReportBtlCheck" selected="{= ${tableData>soh} > 0 ? false : true}"></CheckBox>
                 </CustomListItem>
             </VBox>
         </content>
-
-
         <footer>
             <Toolbar design="Solid" enabled="true" visible="true" width="100%">
                 <ToolbarSpacer />

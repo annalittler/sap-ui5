@@ -74,6 +74,7 @@ sap.ui.define(
               barcodePicker.on("scan", (scanResult) => {
                 var oScannedBarcode = {};
                 var item = parseInt(scanResult.barcodes[0].data);
+                var oNewItem = [];
                 oScannedBarcode.barcode = item;
                 if (
                   oScannedItems.findIndex((obj) => obj.barcode == item) === -1
@@ -83,9 +84,21 @@ sap.ui.define(
                     function existsInData(e) {
                       return e.barcode === item;
                     }
+
                     const index = oAllItems.findIndex(existsInData);
-                    oData.articles.unshift(oAllItems[index]);
+
+                    oNewItem.push(oAllItems[index]);
+                    const oCurrentData = oModel.getProperty("/articles");
+                    const oNewData = oNewItem.concat(oCurrentData);
+                    oModel.setProperty("/articles", oNewData);
+
+                    // oData.articles.unshift(oAllItems[index]);
+                    var successTone = new Audio("./resources/success_tone.mp3");
+                    successTone.loop = false;
+                    // var errorTone = new Audio("./resources/error_tone.mp3");
+                    // errorTone.loop = false;
                     // oModel.refresh();
+                    successTone.play();
                   }
                   if (oData.articles.length >= 10) {
                     MessageBox.warning(
@@ -102,12 +115,12 @@ sap.ui.define(
       onLeaveScan: function () {
         var oRouter = UIComponent.getRouterFor(this);
         oRouter.navTo("list");
-        var oView = this.getView("Scan");
-        console.log(oView);
+        // var oView = this.getView("Scan");
+        // console.log(oView);
         // var scanView = new sap.ui.getCore().byId("Scan");
         // var oView = this.getView("Scan");
 
-        oView.destroy();
+        // oView.destroy();
       },
       onNavBack: function () {
         var oView = this.getView("Scan");
@@ -119,7 +132,7 @@ sap.ui.define(
           var oRouter = UIComponent.getRouterFor(this);
           oRouter.navTo("list");
         }
-        oView.destroy();
+        // oView.destroy();
       },
       onDeleteItem: function (e) {
         var arr = [];
@@ -160,116 +173,116 @@ sap.ui.define(
           ),
         });
       },
-      onExportPress: function () {
-        // var time = getTime();
-        var date = new Date();
-        // getting model into oModel variable.
-        var oModel = this.getView().getModel("tableData");
+      // onExportPress: function () {
+      //   // var time = getTime();
+      //   var date = new Date();
+      //   // getting model into oModel variable.
+      //   var oModel = this.getView().getModel("tableData");
 
-        MessageBox.confirm("Are you sure you want to export the list?", {
-          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-          emphasizedAction: MessageBox.Action.OK,
-          onClose: function (sAction) {
-            if (sAction === MessageBox.Action.OK) {
-              if (oModel.oData.articles.length > 0) {
-                var oExport = new Export({
-                  exportType: new exportCSV({
-                    // for xls....
-                    // fileExtension: "xls",
-                    // separatorChar: "\t",
-                    // charset: "utf-8",
-                    // mimeType: "application/vnd.ms-excel",
+      //   MessageBox.confirm("Are you sure you want to export the list?", {
+      //     actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+      //     emphasizedAction: MessageBox.Action.OK,
+      //     onClose: function (sAction) {
+      //       if (sAction === MessageBox.Action.OK) {
+      //         if (oModel.oData.articles.length > 0) {
+      //           var oExport = new Export({
+      //             exportType: new exportCSV({
+      //               // for xls....
+      //               // fileExtension: "xls",
+      //               // separatorChar: "\t",
+      //               // charset: "utf-8",
+      //               // mimeType: "application/vnd.ms-excel",
 
-                    // for CSV....
-                    charset: "utf-8",
-                    fileExtension: "csv",
-                    separatorChar: ",",
-                    mimeType: "application/csv",
-                  }),
-                  models: oModel,
+      //               // for CSV....
+      //               charset: "utf-8",
+      //               fileExtension: "csv",
+      //               separatorChar: ",",
+      //               mimeType: "application/csv",
+      //             }),
+      //             models: oModel,
 
-                  rows: {
-                    path: "/articles",
-                  },
-                  columns: [
-                    {
-                      name: "Aisle No.",
-                      template: {
-                        content: "{aisle}",
-                      },
-                    },
-                    {
-                      name: "Article No.",
-                      template: {
-                        content: "{articleNo}",
-                      },
-                    },
-                    {
-                      name: "Name",
-                      template: {
-                        content: "{name}",
-                      },
-                    },
-                    {
-                      name: "Qty",
-                      template: {
-                        content: "{qty}",
-                      },
-                    },
-                    {
-                      name: "Stock on hand",
-                      template: {
-                        content: "{soh}",
-                      },
-                    },
-                    {
-                      name: "Pres. stock",
-                      template: {
-                        content: "{presStock}",
-                      },
-                    },
-                  ],
-                });
-                oExport
-                  .saveFile(`Gapbuster List ${date}`)
-                  .catch(function (oError) {
-                    sap.m.MessageToast.show(
-                      "Generate is not possible beause no model was set"
-                    );
-                  })
-                  .then(function () {
-                    oExport.destroy();
-                  });
-              } else {
-                MessageToast.show("Cannot export empty list");
-              }
-            }
-          },
-        });
-      },
-      onDeleteList: function () {
-        var oModel = this.getView().getModel("tableData");
-        var oData = oModel.getData();
-        MessageBox.confirm("Are you sure you want to delete the list?", {
-          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-          emphasizedAction: MessageBox.Action.OK,
-          onClose: function (sAction) {
-            if (sAction === MessageBox.Action.OK) {
-              oData.articles = [];
-              oModel.refresh();
-              MessageToast.show("List deleted");
-            }
-          },
-        });
-      },
+      //             rows: {
+      //               path: "/articles",
+      //             },
+      //             columns: [
+      //               {
+      //                 name: "Aisle No.",
+      //                 template: {
+      //                   content: "{aisle}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Article No.",
+      //                 template: {
+      //                   content: "{articleNo}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Name",
+      //                 template: {
+      //                   content: "{name}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Qty",
+      //                 template: {
+      //                   content: "{qty}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Stock on hand",
+      //                 template: {
+      //                   content: "{soh}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Pres. stock",
+      //                 template: {
+      //                   content: "{presStock}",
+      //                 },
+      //               },
+      //             ],
+      //           });
+      //           oExport
+      //             .saveFile(`Gapbuster List ${date}`)
+      //             .catch(function (oError) {
+      //               sap.m.MessageToast.show(
+      //                 "Generate is not possible beause no model was set"
+      //               );
+      //             })
+      //             .then(function () {
+      //               oExport.destroy();
+      //             });
+      //         } else {
+      //           MessageToast.show("Cannot export empty list");
+      //         }
+      //       }
+      //     },
+      //   });
+      // },
+      // onDeleteList: function () {
+      //   var oModel = this.getView().getModel("tableData");
+      //   var oData = oModel.getData();
+      //   MessageBox.confirm("Are you sure you want to delete the list?", {
+      //     actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+      //     emphasizedAction: MessageBox.Action.OK,
+      //     onClose: function (sAction) {
+      //       if (sAction === MessageBox.Action.OK) {
+      //         oData.articles = [];
+      //         oModel.refresh();
+      //         MessageToast.show("List deleted");
+      //       }
+      //     },
+      //   });
+      // },
       onExit: function () {
-        console.log("onExit() of controller called...");
-        alert("onExit function called");
-        // var oView = this.getView("Scan");
-        // console.log(oView);
-        var oScanner = this.createId("scandit-barcode-picker1");
-        console.log(oScanner);
-        oScanner.destroy();
+        // console.log("onExit() of controller called...");
+        // alert("onExit function called");
+        // // var oView = this.getView("Scan");
+        // // console.log(oView);
+        // var oScanner = this.createId("scandit-barcode-picker1");
+        // console.log(oScanner);
+        // oScanner.destroy();
       },
     });
   }

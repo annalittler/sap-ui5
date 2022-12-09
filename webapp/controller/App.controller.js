@@ -58,7 +58,10 @@ sap.ui.define(
         // var length = this.getView().getModel("tableData").getData()
         //   .articles.length;
         // console.log(length);
-        console.log(oAllData);
+        // console.log(oAllData);
+        // console.log(this.getView("detail"));
+        // var test = sap.ui.getCore().byId("emptySwitch");
+        // console.log(test);
       },
 
       onShowImages: function (e) {
@@ -163,56 +166,64 @@ sap.ui.define(
           errorTone.play();
         }
       },
-      onDeleteList: function () {
-        var oModel = this.getView().getModel("tableData");
-        var oData = oModel.getData();
-        console.log(oData);
-        MessageBox.confirm(
-          `Are you sure you want to delete your list? (${oData.articles.length} items)`,
-          {
-            actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-            emphasizedAction: MessageBox.Action.OK,
-            onClose: function (sAction) {
-              if (sAction === MessageBox.Action.OK) {
-                oData.articles = [];
-                oModel.refresh();
-                MessageToast.show("List deleted");
-              }
-            },
-          }
-        );
-      },
+      // onDeleteList: function () {
+      //   var oModel = this.getView().getModel("tableData");
+      //   var oData = oModel.getData();
+      //   console.log(oData);
+      //   MessageBox.confirm(
+      //     `Are you sure you want to delete your list? (${oData.articles.length} items)`,
+      //     {
+      //       actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+      //       emphasizedAction: MessageBox.Action.OK,
+      //       onClose: function (sAction) {
+      //         if (sAction === MessageBox.Action.OK) {
+      //           oData.articles = [];
+      //           oModel.refresh();
+      //           MessageToast.show("List deleted");
+      //         }
+      //       },
+      //     }
+      //   );
+      // },
 
       onDeleteItem: function (e) {
-        var arr = [];
+        // var oModel = this.getView().getModel("tableData");
+        // var oData = oModel.getData();
+        // var oList = this.getView().byId("listItems"); // get the list using its Id
+        // var oSwipedItem = oList.getSwipedItem();
 
-        var oModel = this.getView().getModel("tableData");
-        var oData = oModel.getData();
+        // console.log(oSwipedItem);
+        var oList = this.getView().byId("listItems"); // get the list using its Id
+        var oSwipedItem = oList.getSwipedItem(); // Get which list item is swiped to delete
+        oList.removeAggregation("items", oSwipedItem); // Remove this aggregation to delete list item from list
+        oList.swipeOut(); // we are done, hide the swipeContent from screen
 
-        var oItem = e
-          .getParameter("listItem")
-          .getBindingContext("tableData")
-          .getObject();
-        console.log(oItem);
-        // oModel.refresh();
+        var 
 
-        var oArticles = oData.articles;
+        // var oItem = e
+        //   .getParameter("listItem")
+        //   .getBindingContext("tableData")
+        //   .getObject();
+        // console.log(oItem);
+        // // oModel.refresh();
 
-        MessageBox.confirm("Are you sure you want to delete this item?", {
-          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-          emphasizedAction: MessageBox.Action.OK,
-          onClose: function (sAction) {
-            if (sAction === MessageBox.Action.OK) {
-              function existsInData(e) {
-                return e.articleNo === oItem.articleNo;
-              }
-              const index = oArticles.findIndex(existsInData);
-              oArticles.splice(index, 1);
-              oModel.refresh();
-              MessageToast.show("Item deleted");
-            }
-          },
-        });
+        // var oArticles = oData.articles;
+
+        // MessageBox.confirm("Are you sure you want to delete this item?", {
+        //   actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+        //   emphasizedAction: MessageBox.Action.OK,
+        //   onClose: function (sAction) {
+        //     if (sAction === MessageBox.Action.OK) {
+        //       function existsInData(e) {
+        //         return e.articleNo === oItem.articleNo;
+        //       }
+        //       const index = oArticles.findIndex(existsInData);
+        //       oArticles.splice(index, 1);
+        //       oModel.refresh();
+        //       MessageToast.show("Item deleted");
+        //     }
+        //   },
+        // });
       },
       onClickItem: function (e) {
         var oRouter = UIComponent.getRouterFor(this);
@@ -226,6 +237,12 @@ sap.ui.define(
         var oRouter = UIComponent.getRouterFor(this);
         oRouter.navTo("scan");
       },
+
+      onNavReviewList: function (e) {
+        var oRouter = UIComponent.getRouterFor(this);
+        oRouter.navTo("review");
+      },
+
       // onDeleteMenu: function () {
       //   var oModel = this.getView().getModel("tableData");
       //   var oData = oModel.oData;
@@ -253,134 +270,134 @@ sap.ui.define(
       //   oModel.refresh();
       // },
 
-      onDeleteMenu: function () {
-        var oModel = this.getView().getModel("tableData");
-        var oData = oModel.getData();
-        oModel.refresh();
-        console.log(oData);
-        var oDeleteMultiButton = this.byId("idButtonDeleteMulti");
-        var oDeleteButton = this.byId("idButtonDelete");
-        var list = this.byId("listItems");
-        console.log(list);
-        var listLastMode = list._sLastMode;
-        console.log(listLastMode);
-        if (listLastMode == "Delete") {
-          list.setMode("MultiSelect");
-          oData.deleteMulti.status = true;
-          oDeleteButton.setVisible(false);
-          oDeleteMultiButton.setVisible(true);
-        } else {
-          list.setMode("Delete");
-          oData.deleteMulti.status = false;
-          oDeleteMultiButton.setVisible(false);
-          oDeleteButton.setVisible(true);
-        }
-        oModel.refresh();
-        console.log(oData);
-      },
+      // onDeleteMenu: function () {
+      //   var oModel = this.getView().getModel("tableData");
+      //   var oData = oModel.getData();
+      //   oModel.refresh();
+      //   console.log(oData);
+      //   var oDeleteMultiButton = this.byId("idButtonDeleteMulti");
+      //   var oDeleteButton = this.byId("idButtonDelete");
+      //   var list = this.byId("listItems");
+      //   console.log(list);
+      //   var listLastMode = list._sLastMode;
+      //   console.log(listLastMode);
+      //   if (listLastMode == "Delete") {
+      //     list.setMode("MultiSelect");
+      //     oData.deleteMulti.status = true;
+      //     oDeleteButton.setVisible(false);
+      //     oDeleteMultiButton.setVisible(true);
+      //   } else {
+      //     list.setMode("Delete");
+      //     oData.deleteMulti.status = false;
+      //     oDeleteMultiButton.setVisible(false);
+      //     oDeleteButton.setVisible(true);
+      //   }
+      //   oModel.refresh();
+      //   console.log(oData);
+      // },
 
-      onExportPress: function () {
-        var date = new Date();
-        var oModel = this.getView().getModel("tableData");
+      // onExportPress: function () {
+      //   var date = new Date();
+      //   var oModel = this.getView().getModel("tableData");
 
-        MessageBox.confirm("Are you sure you want to export the list?", {
-          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-          emphasizedAction: MessageBox.Action.OK,
-          onClose: function (sAction) {
-            if (sAction === MessageBox.Action.OK) {
-              if (oModel.oData.articles.length > 0) {
-                var oExport = new Export({
-                  exportType: new exportCSV({
-                    // for xls....
-                    // fileExtension: "xls",
-                    // separatorChar: "\t",
-                    // charset: "utf-8",
-                    // mimeType: "application/vnd.ms-excel",
+      //   MessageBox.confirm("Are you sure you want to export the list?", {
+      //     actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+      //     emphasizedAction: MessageBox.Action.OK,
+      //     onClose: function (sAction) {
+      //       if (sAction === MessageBox.Action.OK) {
+      //         if (oModel.oData.articles.length > 0) {
+      //           var oExport = new Export({
+      //             exportType: new exportCSV({
+      //               // for xls....
+      //               // fileExtension: "xls",
+      //               // separatorChar: "\t",
+      //               // charset: "utf-8",
+      //               // mimeType: "application/vnd.ms-excel",
 
-                    // for CSV....
-                    charset: "utf-8",
-                    fileExtension: "csv",
-                    separatorChar: ",",
-                    mimeType: "application/csv",
-                  }),
-                  models: oModel,
+      //               // for CSV....
+      //               charset: "utf-8",
+      //               fileExtension: "csv",
+      //               separatorChar: ",",
+      //               mimeType: "application/csv",
+      //             }),
+      //             models: oModel,
 
-                  rows: {
-                    path: "/articles",
-                  },
-                  columns: [
-                    {
-                      name: "Aisle No.",
-                      template: {
-                        content: "{aisle}",
-                      },
-                    },
-                    {
-                      name: "Article No.",
-                      template: {
-                        content: "{articleNo}",
-                      },
-                    },
-                    {
-                      name: "Name",
-                      template: {
-                        content: "{name}",
-                      },
-                    },
-                    {
-                      name: "Qty",
-                      template: {
-                        content: "{qty}",
-                      },
-                    },
-                    {
-                      name: "Stock on hand",
-                      template: {
-                        content: "{soh}",
-                      },
-                    },
-                    {
-                      name: "Pres. stock",
-                      template: {
-                        content: "{presStock}",
-                      },
-                    },
-                    {
-                      name: "Requested quantity",
-                      template: {
-                        content: "{amountRequired}",
-                      },
-                    },
-                    {
-                      name: "Empty shelf?",
-                      template: {
-                        content: "{isGap}",
-                      },
-                    },
-                  ],
-                });
-                oExport
-                  .saveFile(`Gapbuster List ${date}`)
-                  .catch(function (oError) {
-                    sap.m.MessageToast.show(
-                      "Generate is not possible because no model was set"
-                    );
-                    console.log(oError);
-                  })
-                  .then(function () {
-                    oExport.destroy();
-                  });
-              } else {
-                MessageToast.show("Cannot export empty list");
-              }
-            }
-          },
-        });
-      },
+      //             rows: {
+      //               path: "/articles",
+      //             },
+      //             columns: [
+      //               {
+      //                 name: "Aisle No.",
+      //                 template: {
+      //                   content: "{aisle}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Article No.",
+      //                 template: {
+      //                   content: "{articleNo}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Name",
+      //                 template: {
+      //                   content: "{name}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Qty",
+      //                 template: {
+      //                   content: "{qty}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Stock on hand",
+      //                 template: {
+      //                   content: "{soh}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Pres. stock",
+      //                 template: {
+      //                   content: "{presStock}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Requested quantity",
+      //                 template: {
+      //                   content: "{amountRequired}",
+      //                 },
+      //               },
+      //               {
+      //                 name: "Empty shelf?",
+      //                 template: {
+      //                   content: "{isGap}",
+      //                 },
+      //               },
+      //             ],
+      //           });
+      //           oExport
+      //             .saveFile(`Gapbuster List ${date}`)
+      //             .catch(function (oError) {
+      //               sap.m.MessageToast.show(
+      //                 "Generate is not possible because no model was set"
+      //               );
+      //               console.log(oError);
+      //             })
+      //             .then(function () {
+      //               oExport.destroy();
+      //             });
+      //         } else {
+      //           MessageToast.show("Cannot export empty list");
+      //         }
+      //       }
+      //     },
+      //   });
+      // },
       onFilterItems: function (oEvent) {
         // var oView = this.getView();
         var sQuery = oEvent.getParameter("query");
-        console.log(sQuery);
+        // console.log(sQuery);
         var oData = this.getView().getModel("tableData").getData();
         oData.searchQuery = sQuery;
         // console.log(oData);
@@ -389,6 +406,7 @@ sap.ui.define(
         if (!this.byId("searchBox")) {
           Fragment.load({
             id: oView.getId(),
+            // id: "searchFragment",
             name: "sap.ui.demo.walkthrough.view.fragments.Search",
             controller: this,
           }).then(function (oDialog) {
@@ -400,27 +418,25 @@ sap.ui.define(
           this.byId("searchBox").open();
         }
         // build filter array
+
+        // console.log(id);
         var aFilter = [];
         if (sQuery) {
-          var iQuery = parseInt(sQuery);
-          aFilter.push(
-            new Filter("name", FilterOperator.Contains, sQuery)
-            // new Filter("barcode", FilterOperator.Contains, iQuery),
-            // new Filter("article", FilterOperator.Contains, iQuery)
-          );
+          // var iQuery = parseInt(sQuery);
+          aFilter.push(new Filter("name", FilterOperator.Contains, sQuery));
         }
-        console.log(typeof sQuery);
         // filter binding
-        var oListStr = sap.ui.core.Fragment.createId(oView.getId(), "allItems");
-        // var oSearchFieldStr = sap.ui.core.Fragment.createId(
-        //   oView.getId(),
-        //   "allItems"
-        // );
-        // var list = sap.ui.getCore().byId("allItems");
-        // console.log(list);
-        var oList = this.byId(oListStr);
-        // console.log(oList);
+        // var oListStr = sap.ui.core.Fragment.createId(oView.getId(), "allItems");
+        var oList = this.getView().byId("allItems");
+
+        // var oList = sap.ui.core.Fragment.byId("searchFragment", "allItems");
+        // var oList = sap.ui.getCore().byId("allItems");
+        // var oList = this.byId("allItems");
+        console.log(oList);
+
         var oBinding = oList.getBinding("items");
+        // var fragmentId = this.getView().createId("searchFragment");
+        // var tab = Fragment.byId(fragmentId, "allItems");
         console.log(oBinding);
         oBinding.filter(aFilter);
       },
@@ -436,19 +452,19 @@ sap.ui.define(
       //   var oBinding = oList.getBinding("items");
       //   oBinding.filter(aFilter);
       // },
-      getGroup: function (oContext) {
-        var sKey = oContext.getProperty("aisle");
-        return {
-          key: sKey,
-          title: "Aisle " + sKey || "No Aisle Assigned",
-        };
-      },
-      getGroupHeader: function (oGroup) {
-        return new sap.m.GroupHeaderListItem({
-          title: oGroup.title,
-          upperCase: false,
-        });
-      },
+      // getGroup: function (oContext) {
+      //   var sKey = oContext.getProperty("aisle");
+      //   return {
+      //     key: sKey,
+      //     title: "Aisle " + sKey || "No Aisle Assigned",
+      //   };
+      // },
+      // getGroupHeader: function (oGroup) {
+      //   return new sap.m.GroupHeaderListItem({
+      //     title: oGroup.title,
+      //     upperCase: false,
+      //   });
+      // },
 
       onDeleteMulti: function () {
         var oModel = this.getView().getModel("tableData");
@@ -515,25 +531,26 @@ sap.ui.define(
         var oPickedItems = oModel.getData().articles;
         var oAllData = this.getView().getModel("allData").getData().articles;
         var sObjPath = e.getSource().getBindingContext("allData").getPath();
-        console.log(oData);
-        // console.log(sSomePropertyValue);
         var index = parseInt(sObjPath.substring(sObjPath.lastIndexOf("/") + 1));
-        console.log(index);
         var oItemArticleNo = oAllData[index].articleNo;
+        var oNewItem = [];
         if (
           oPickedItems.some((item) => item.articleNo == oItemArticleNo) ===
           false
         ) {
-          oPickedItems.unshift(oAllData[index]);
+          oNewItem.push(oAllData[index]);
+          const oCurrentData = oModel.getProperty("/articles");
+          const oNewData = oNewItem.concat(oCurrentData);
+          oModel.setProperty("/articles", oNewData);
+          console.log(oPickedItems);
           MessageToast.show("Item added to list");
-          // oPickedItems[0].manualGap = undefined;
-          oPickedItems[0].isGap = oData.emptyShelvesAutoTag.status;
-          console.log(oPickedItems[0]);
+          oNewData[0].isGap = oData.emptyShelvesAutoTag.status;
         } else {
           MessageToast.show("Item already in list");
         }
-        console.log(oPickedItems);
         oModel.refresh();
+
+        // console.log(oPickedItems);
       },
       listGapSwitch: function (e) {
         var oView = this.getView();

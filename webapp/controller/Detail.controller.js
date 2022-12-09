@@ -32,21 +32,6 @@ sap.ui.define(
           .getRoute("detail")
           .attachPatternMatched(this._onObjectMatched, this);
         var oBinding = this.getView().getBindingContext();
-        // console.log(oBinding);
-
-        // var checkbox = this.byId("emptyCheckbox");
-        // console.log(checkbox);
-        // var oModel = this.getView().getModel("tableData");
-        // var oData = oModel.getData();
-        // var oBinding = this.getView().getBindingContext("tableData");
-        // var sObjPath = oBinding.getPath();
-        // var iIndex = parseInt(
-        //   sObjPath.substring(sObjPath.lastIndexOf("/") + 1)
-        // );
-        // var iSoh = oData.articles[iIndex].soh;
-        // if (iSoh <= 0) {
-        //   oData.replenShelfCheck.status = false;
-        // }
       },
       _onObjectMatched: function (oEvent) {
         this.getView().bindElement({
@@ -135,13 +120,15 @@ sap.ui.define(
         var sObjPath = this.getView().mObjectBindingInfos.tableData.path;
         var index = parseInt(sObjPath.substring(sObjPath.lastIndexOf("/") + 1));
         var oItem = oData.articles[index];
+        var emptySwitch = this.byId("emptySwitch");
+        console.log(emptySwitch.getState());
+
         // var bState = this.byId("emptySwitch").getState();
         // console.log(bState);
         // console.log(oSwitch.getState());
         // var state = e.getParameters().selected;
         var stockOnShelfStepInput = this.byId("stockOnShelfStepInput");
         oItem.isGap ? stockOnShelfStepInput.setValue(0) : null;
-
         // console.log(oItem);
       },
 
@@ -182,7 +169,7 @@ sap.ui.define(
           oItem.isGap = true;
           emptyShelfCheck.setState(true);
         }
-        console.log(oItem);
+        // console.log(oItem);
 
         // var shelfEmpty = oData.shelfIsEmpty.status;
         // var shelfEmptyAutoTag = oData.emptyShelvesAutoTag.status;

@@ -168,6 +168,18 @@
       "presStock": 16,
       "aisle": 5,
       "delivery": "25/12/2022"
+    },
+    {
+      "name": "TEST ITEM",
+      "qty": "500G",
+      "price": 4.39,
+      "articleNo": 5023849,
+      "barcode": 93553438,
+      "image": "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/554995834038976.avif",
+      "soh": 0,
+      "presStock": 12,
+      "aisle": 3,
+      "delivery": "25/12/2022"
     }
   ]
 }

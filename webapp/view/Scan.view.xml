@@ -13,7 +13,7 @@
             <!-- <Text text="Recent scans" /> -->
 
             <List id=""
-                items="{tableData>/articles}" mode="Delete" delete="onDeleteItem">
+                items="{tableData>/articles}" mode="Delete" delete="onDeleteItem" growing="true" growingThreshold="3">
                 <items>
                     <CustomListItem id="idListItem" type="Active" press=".onClickItem">
                         <HBox class="sapUiSmallMargin" width="95%">
@@ -44,8 +44,8 @@
                 design="Solid" enabled="true" visible="true" width="100%">
                 <Button text="End Scanning" id="closeBtn" press=".onLeaveScan"></Button>
                 <ToolbarSpacer />
-                <Button id="idButtonDelete" type="Reject" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" />
-                <Button id="idButtonExport" type="Emphasized" text="Export" />
+                <!-- <Button id="idButtonDelete" type="Reject" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" /> -->
+                <!-- <Button id="idButtonExport" type="Emphasized" text="Export" /> -->
             </Toolbar>
         </footer>
     </Page>

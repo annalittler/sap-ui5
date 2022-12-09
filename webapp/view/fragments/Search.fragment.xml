@@ -1,8 +1,8 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:html="http://www.w3.org/1999/xhtml">
-
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    id="searchFragment">
     <!-- <Text text="Images:" class="sapUiTinyMargin"></Text>
     <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" />
  -->
@@ -13,7 +13,7 @@
             <ScrollContainer>
 
 
-                <List id="allItems" items="{path: 'allData>/articles'}">
+                <List id="allItems" items="{path: 'allData>/articles'}" growing="true" growingThreshold="5" growingTriggerText="See More Items">
                     <items>
                         <CustomListItem id="idDataItem" type="Navigation" press=".onClickItemSearchFrag">
                             <HBox class="sapUiTinyMargin" width="">
@@ -31,18 +31,8 @@
                                         <ObjectAttribute title="Barcode" text="{allData>barcode}" />
                                         <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginEnd">
                                             <ObjectStatus class="" text="{= ${allData>soh} > 0 ? 'SOH: ' + ${path: 'allData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{=${allData>soh} > 10 ? 'Success' : (${allData>soh} === 0 ? 'Error' : 'Warning')}"></ObjectStatus>
-                                            <!-- <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }" state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" /> -->
-
-                                            <!-- <Switch customTextOff="No Gap" customTextOn="Gap"></Switch> -->
                                         </HBox>
                                     </VBox>
-                                    <!-- <ObjectAttribute title="Article" text="{tableData>/showImgs/status}" /> -->
-                                    <!-- <ObjectAttribute title="Article" text="" /> -->
-                                    <!-- </HBox> -->
-                                    <!-- <HBox justifyContent="SpaceBetween" class="sapUiMediumMarginEnd"> -->
-                                    <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop' : 'sapUiTinyMarginTop'}" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{= ${tableData>soh} > 0 ? 'None' : 'Error' }" /> -->
-                                    <!-- <ObjectStatus class="{= ${deleteMulti>/status} === true ? 'sapUiTinyMarginTop sapUiTinyMarginEnd' : 'sapUiTinyMarginTop'}" text="{deleteMulti>/status}" /> -->
-                                    <!-- </HBox> -->
                                 </VBox>
                             </HBox>
                         </CustomListItem>

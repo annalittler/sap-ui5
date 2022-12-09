@@ -116,6 +116,11 @@
           "pattern": "scan",
           "name": "scan",
           "target": "scan"
+        },
+        {
+          "pattern": "review",
+          "name": "review",
+          "target": "review"
         }
       ],
       "targets": {
@@ -130,6 +135,10 @@
         "scan": {
           "viewId": "scan",
           "viewName": "Scan"
+        },
+        "review": {
+          "viewId": "Review",
+          "viewName": "review"
         }
       }
     },
