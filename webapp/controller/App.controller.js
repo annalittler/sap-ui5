@@ -187,19 +187,43 @@ sap.ui.define(
       // },
 
       onDeleteItem: function (e) {
-        // var oModel = this.getView().getModel("tableData");
+        var oModel = this.getView().getModel("tableData");
         // var oData = oModel.getData();
         // var oList = this.getView().byId("listItems"); // get the list using its Id
         // var oSwipedItem = oList.getSwipedItem();
+        const oArticles = oModel.getProperty("/articles");
 
         // console.log(oSwipedItem);
         var oList = this.getView().byId("listItems"); // get the list using its Id
         var oSwipedItem = oList.getSwipedItem(); // Get which list item is swiped to delete
-        oList.removeAggregation("items", oSwipedItem); // Remove this aggregation to delete list item from list
-        oList.swipeOut(); // we are done, hide the swipeContent from screen
+        var oBinding = oSwipedItem.getBindingContext("tableData");
+        // oList.removeAggregation("items", oSwipedItem); // Remove this aggregation to delete list item from list
 
-        var 
+        MessageBox.confirm("Are you sure you want to delete this item?", {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+            if (sAction === MessageBox.Action.OK) {
+              var sPath = oBinding.getPath();
+              var iIndex = parseInt(
+                sPath.substring(sPath.lastIndexOf("/") + 1)
+              );
+              console.log(iIndex);
+              oArticles.splice(iIndex, 1);
+              var newArticles = oArticles.concat([]);
+              oModel.setProperty("/articles", newArticles);
+              MessageToast.show("Item deleted");
+              oModel.refresh(true);
+              oList.swipeOut(); // we are done, hide the swipeContent from screen
+            }
+          },
+        });
 
+        // const oNewData = oNewItem.concat(oCurrentData);
+        // oModel.setProperty("/articles", oNewData);
+
+        // console.log(oPickedItems);
+        // console.log(oCurrentData);
         // var oItem = e
         //   .getParameter("listItem")
         //   .getBindingContext("tableData")
@@ -208,22 +232,6 @@ sap.ui.define(
         // // oModel.refresh();
 
         // var oArticles = oData.articles;
-
-        // MessageBox.confirm("Are you sure you want to delete this item?", {
-        //   actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-        //   emphasizedAction: MessageBox.Action.OK,
-        //   onClose: function (sAction) {
-        //     if (sAction === MessageBox.Action.OK) {
-        //       function existsInData(e) {
-        //         return e.articleNo === oItem.articleNo;
-        //       }
-        //       const index = oArticles.findIndex(existsInData);
-        //       oArticles.splice(index, 1);
-        //       oModel.refresh();
-        //       MessageToast.show("Item deleted");
-        //     }
-        //   },
-        // });
       },
       onClickItem: function (e) {
         var oRouter = UIComponent.getRouterFor(this);
@@ -466,38 +474,38 @@ sap.ui.define(
       //   });
       // },
 
-      onDeleteMulti: function () {
-        var oModel = this.getView().getModel("tableData");
-        var oData = oModel.getData();
-        var oList = this.byId("listItems");
-        var oItems = oList.getSelectedItems();
-        MessageBox.warning(
-          `Are you sure you want to delete ${oItems.length} ${
-            oItems.length > 1 ? "items" : "item"
-          }?`,
-          {
-            actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-            emphasizedAction: MessageBox.Action.OK,
-            onClose: function (sAction) {
-              if (sAction === MessageBox.Action.OK) {
-                for (var i = oItems.length - 1; i >= 0; i--) {
-                  var path = oItems[i].getBindingContextPath();
-                  var index = parseInt(
-                    path.substring(path.lastIndexOf("/") + 1)
-                  );
-                  oData.articles.splice(index, 1);
-                  MessageToast.show(
-                    `${oItems.length} ${
-                      oItems.length > 1 ? "items" : "item"
-                    } deleted`
-                  );
-                }
-              }
-              oModel.refresh();
-            },
-          }
-        );
-      },
+      // onDeleteMulti: function () {
+      //   var oModel = this.getView().getModel("tableData");
+      //   var oData = oModel.getData();
+      //   var oList = this.byId("listItems");
+      //   var oItems = oList.getSelectedItems();
+      //   MessageBox.warning(
+      //     `Are you sure you want to delete ${oItems.length} ${
+      //       oItems.length > 1 ? "items" : "item"
+      //     }?`,
+      //     {
+      //       actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+      //       emphasizedAction: MessageBox.Action.OK,
+      //       onClose: function (sAction) {
+      //         if (sAction === MessageBox.Action.OK) {
+      //           for (var i = oItems.length - 1; i >= 0; i--) {
+      //             var path = oItems[i].getBindingContextPath();
+      //             var index = parseInt(
+      //               path.substring(path.lastIndexOf("/") + 1)
+      //             );
+      //             oData.articles.splice(index, 1);
+      //             MessageToast.show(
+      //               `${oItems.length} ${
+      //                 oItems.length > 1 ? "items" : "item"
+      //               } deleted`
+      //             );
+      //           }
+      //         }
+      //         oModel.refresh();
+      //       },
+      //     }
+      //   );
+      // },
       onEmptyShelvesAutoTag: function (e) {
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
@@ -542,7 +550,7 @@ sap.ui.define(
           const oCurrentData = oModel.getProperty("/articles");
           const oNewData = oNewItem.concat(oCurrentData);
           oModel.setProperty("/articles", oNewData);
-          console.log(oPickedItems);
+          // console.log(oPickedItems);
           MessageToast.show("Item added to list");
           oNewData[0].isGap = oData.emptyShelvesAutoTag.status;
         } else {

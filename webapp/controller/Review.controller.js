@@ -2,6 +2,7 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
+    "sap/m/MessageToast",
     "sap/ui/core/UIComponent",
     "sap/ui/core/Fragment",
     "sap/ui/export/library",
@@ -12,6 +13,7 @@ sap.ui.define(
   function (
     Controller,
     MessageBox,
+    MessageToast,
     UIComponent,
     Fragment,
     exportLibrary,
@@ -61,29 +63,40 @@ sap.ui.define(
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
         oModel.refresh();
-        console.log(oData);
+        // console.log(oData);
         var oMultiSelectBtn = this.byId("idMultiSelectBtn");
-        // var oDeleteMultiButton = this.byId("idButtonDeleteMulti");
+        var oDeleteMultiButton = this.byId("idButtonDeleteMulti");
+        var oDeleteListButton = this.byId("idButtonDelete");
         var oMultiSelectCancel = this.byId("idMultiSelectCancel");
+        var oExportListButton = this.byId("idButtonExport");
+        var oExportMultiButton = this.byId("idButtonExportMulti");
         var list = this.byId("listItems");
-        console.log(list);
+        // console.log(list);
         var listLastMode = list._sLastMode;
         console.log(listLastMode);
         var oHBox = this.byId("idListHBox");
-        if (listLastMode == "Delete") {
+        if (listLastMode == "None") {
           list.setMode("MultiSelect");
           oData.deleteMulti.status = true;
           oMultiSelectBtn.setVisible(false);
           oMultiSelectCancel.setVisible(true);
-          oHBox.setClass("sapUiNoMargin");
+          oDeleteMultiButton.setVisible(true);
+          oDeleteListButton.setVisible(false);
+          oExportListButton.setVisible(false);
+          oExportMultiButton.setVisible(true);
+          oData.selectedItems = [];
         } else {
-          list.setMode("Delete");
+          list.setMode("None");
           oData.deleteMulti.status = false;
           oMultiSelectBtn.setVisible(true);
           oMultiSelectCancel.setVisible(false);
+          oDeleteMultiButton.setVisible(false);
+          oDeleteListButton.setVisible(true);
+          oExportListButton.setVisible(true);
+          oExportMultiButton.setVisible(false);
         }
         oModel.refresh();
-        console.log(oData);
+        // console.log(oData);
       },
 
       onClickItem: function (e) {
@@ -273,6 +286,96 @@ sap.ui.define(
       onNavBackOne: function () {
         var oRouter = UIComponent.getRouterFor(this);
         oRouter.navTo("list");
+      },
+      onDeleteItem: function (e) {
+        var oModel = this.getView().getModel("tableData");
+        const oArticles = oModel.getProperty("/articles");
+
+        var oList = this.getView().byId("listItems"); // get the list using its Id
+        var oSwipedItem = oList.getSwipedItem(); // Get which list item is swiped to delete
+        var oBinding = oSwipedItem.getBindingContext("tableData");
+
+        MessageBox.confirm("Are you sure you want to delete this item?", {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+            if (sAction === MessageBox.Action.OK) {
+              var sPath = oBinding.getPath();
+              var iIndex = parseInt(
+                sPath.substring(sPath.lastIndexOf("/") + 1)
+              );
+              console.log(iIndex);
+              oArticles.splice(iIndex, 1);
+              var newArticles = oArticles.concat([]);
+              oModel.setProperty("/articles", newArticles);
+              MessageToast.show("Item deleted");
+            }
+          },
+        });
+
+        oList.swipeOut(); // we are done, hide the swipeContent from screen
+        oModel.refresh(true);
+      },
+      onDeleteMulti: function () {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+        var oArticles = oModel.getProperty("/articles");
+        console.log(oArticles);
+        console.log(oData.articles);
+        var oList = this.byId("listItems");
+        var arr = [];
+        var oItems = oList.getSelectedItems();
+        console.log(oItems[0]);
+        MessageBox.warning(
+          `Are you sure you want to delete ${oItems.length} ${
+            oItems.length > 1 ? "items" : "item"
+          }?`,
+          {
+            actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+            emphasizedAction: MessageBox.Action.OK,
+            onClose: function (sAction) {
+              if (sAction === MessageBox.Action.OK) {
+                // for (var i = oItems.length - 1; i >= 0; i--) {
+                for (var i = 0; i <= oItems.length; i++) {
+                  console.log(i);
+                  var path = oItems[i].getBindingContextPath();
+                  var index = parseInt(
+                    path.substring(path.lastIndexOf("/") + 1)
+                  );
+                  var indexStr = path.substring(path.lastIndexOf("/") + 1);
+                  var index = parseInt(indexStr);
+                  //   console.log(typeof indexStr, indexStr);
+                  console.log(oArticles);
+                  oArticles.splice(index, 1);
+                  //   console.log(typeof path, path);
+                  //   console.log(typeof index, index);
+                  //   arr.push();
+                  oModel.refresh(true);
+                }
+              }
+            },
+          }
+        );
+        },
+      
+      onSelectionChange: function () {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+        var oArticles = oData.articles;
+        var oList = this.byId("listItems");
+        var oItems = oList.getSelectedItems();
+        console.log(oItems);
+        var oSelectedItems = [];
+        for (var i = oItems.length - 1; i >= 0; i--) {
+          var path = oItems[i].getBindingContextPath();
+          var index = parseInt(path.substring(path.lastIndexOf("/") + 1));
+          oSelectedItems.push(oArticles[index]);
+        }
+        console.log(oSelectedItems);
+        oData.selectedItems = oSelectedItems;
+        oModel.refresh(true);
+        // console.log(oData.selectedItems);
+        // console.log(oData);
       },
     });
   }

@@ -114,7 +114,7 @@
                 }
             } : items='tableData>/articles'}"> -->
             <!-- headerText="{= ${tableData>/articles}.length} " -->
-            <List id="listItems" mode="Delete" growing="true" growingThreshold="5" delete=".onDeleteItem" selectionChange=".onSelectionChange" items="{
+            <List id="listItems" growing="true" growingThreshold="5" selectionChange=".onSelectionChange" items="{
         path: 'tableData>/articles',
                   sorter: {
                     path: 'aisle',
@@ -122,9 +122,14 @@
                   },
                   groupHeaderFactory: '.getGroupHeader'
                 }">
-
+              <swipeContent>
+                <Button
+                  icon="sap-icon://delete"
+                  type="Negative"
+                  press=".onDeleteItem" />
+              </swipeContent>
               <items>
-                <CustomListItem id="idListItem" type="Active" press=".onClickItem">
+                <CustomListItem id="idListItem" type="Navigation" press=".onClickItem">
                   <HBox id="idListHBox" class="" width="98%">
                     <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginEnd">
                       <Image src="{tableData>image}" height="50px" press=".onImgPress" visible="{= ${tableData>/showImgs/status} === true ? true : false }" />
@@ -160,9 +165,11 @@
               <ToolbarSpacer />
               <!-- <Text text="Images: "></Text>
               <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" /> -->
-              <Button id="idButtonExport" type="Emphasized" text="Submit List" press=".onExportPress" />
-              <Button id="idButtonDelete" type="Ghost" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" />
-              <Button id="idButtonDeleteMulti" type="Ghost" text="Delete Items" press=".onDeleteMulti" ariaHasPopup="Dialog" visible="false" />
+              <Button id="idButtonExport" type="Emphasized" text="Submit List" press=".onExportPress" width="100px" />
+              <Button id="idButtonExportMulti" type="Emphasized" text="Submit ({= ${tableData>/selectedItems}.length})" press=".onExportPress" visible="false" width="100px" />
+              <Button id="idButtonDelete" type="Ghost" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" width="100px" />
+              <Button id="idButtonDeleteMulti" type="Ghost" text="Delete ({= ${tableData>/selectedItems}.length})" press=".onDeleteMulti" ariaHasPopup="Dialog" visible="false" width="100px" />
+
             </Toolbar>
           </footer>
         </Page>

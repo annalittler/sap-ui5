@@ -83,7 +83,7 @@
             </OverflowToolbar>
             <html:div id="scandit-barcode-picker" />
 
-            <List id="listItems" growing="true" growingThreshold="3" delete=".onDeleteItem" selectionChange=".onSelectionChange" swipe=".handleSwipe" items="{
+            <List id="listItems" growing="true" growingThreshold="3" delete=".onDeleteItem" selectionChange=".onSelectionChange" items="{
                 path: 'tableData>/articles'
                 }">
               <swipeContent>

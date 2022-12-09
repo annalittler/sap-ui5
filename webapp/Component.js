@@ -18,20 +18,20 @@ sap.ui.define(
 
         const obj = {
           articles: [
-            {
-              name: "PAMS PURE PLAIN FLOUR",
-              qty: "1.5KG",
-              price: 1.99,
-              articleNo: 5003829,
-              barcode: 50038299,
-              image:
-                "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
-              soh: 8,
-              presStock: 12,
-              aisle: 3,
-              delivery: "25/12/2022",
-              isGap: true,
-            },
+            // {
+            //   name: "PAMS PURE PLAIN FLOUR",
+            //   qty: "1.5KG",
+            //   price: 1.99,
+            //   articleNo: 5003829,
+            //   barcode: 50038299,
+            //   image:
+            //     "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3885142916237945.avif",
+            //   soh: 8,
+            //   presStock: 12,
+            //   aisle: 3,
+            //   delivery: "25/12/2022",
+            //   isGap: true,
+            // },
             // {
             //   name: "TARARUA BUTTER",
             //   qty: "500G",
