@@ -257,12 +257,12 @@ sap.ui.define(
                         content: "{isGap}",
                       },
                     },
-                    {
-                      name: "Able to fulfil Requested Quantity?",
-                      template: {
-                        content: "{ableToFulfil}",
-                      },
-                    },
+                    // {
+                    //   name: "Able to fulfil Requested Quantity?",
+                    //   template: {
+                    //     content: "{ableToFulfil}",
+                    //   },
+                    // },
                   ],
                 });
                 oExport
@@ -335,8 +335,8 @@ sap.ui.define(
             emphasizedAction: MessageBox.Action.OK,
             onClose: function (sAction) {
               if (sAction === MessageBox.Action.OK) {
-                // for (var i = oItems.length - 1; i >= 0; i--) {
-                for (var i = 0; i <= oItems.length; i++) {
+                for (var i = oItems.length - 1; i >= 0; i--) {
+                  // for (var i = 0; i <= oItems.length; i++) {
                   console.log(i);
                   var path = oItems[i].getBindingContextPath();
                   var index = parseInt(
@@ -344,20 +344,21 @@ sap.ui.define(
                   );
                   var indexStr = path.substring(path.lastIndexOf("/") + 1);
                   var index = parseInt(indexStr);
-                  //   console.log(typeof indexStr, indexStr);
+                  arr.push(index);
                   console.log(oArticles);
+                }
+                arr.sort();
+                for (var i = arr.length - 1; i >= 0; i--) {
+                  var index = arr[i];
                   oArticles.splice(index, 1);
-                  //   console.log(typeof path, path);
-                  //   console.log(typeof index, index);
-                  //   arr.push();
                   oModel.refresh(true);
                 }
               }
             },
           }
         );
-        },
-      
+      },
+
       onSelectionChange: function () {
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
@@ -376,6 +377,126 @@ sap.ui.define(
         oModel.refresh(true);
         // console.log(oData.selectedItems);
         // console.log(oData);
+      },
+      onExportMultiPress: function () {
+        var oData = this.getView().getModel("tableData").getData();
+        var date = new Date();
+        var oModel = this.getView().getModel("tableData");
+        var oArticles = oModel.getProperty("/selectedItems");
+        console.log(oArticles);
+        oArticles.forEach(function (item) {
+          if (item.isGap === undefined) {
+            item.isGap = false;
+          }
+          if (item.requestedQuantity > item.soh) {
+            item.ableToFulfil = false;
+          } else {
+            item.ableToFulfil = true;
+          }
+        });
+
+        MessageBox.confirm(
+          `Are you sure you want to export (${oData.selectedItems.length} items?`,
+          {
+            actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+            emphasizedAction: MessageBox.Action.OK,
+            onClose: function (sAction) {
+              if (sAction === MessageBox.Action.OK) {
+                if (oModel.oData.articles.length > 0) {
+                  var oExport = new Export({
+                    exportType: new exportCSV({
+                      // for xls....
+                      // fileExtension: "xls",
+                      // separatorChar: "\t",
+                      // charset: "utf-8",
+                      // mimeType: "application/vnd.ms-excel",
+
+                      // for CSV....
+                      charset: "utf-8",
+                      fileExtension: "csv",
+                      separatorChar: ",",
+                      mimeType: "application/csv",
+                    }),
+                    models: oModel,
+
+                    rows: {
+                      path: "/articles",
+                    },
+                    columns: [
+                      {
+                        name: "Aisle No.",
+                        template: {
+                          content: "{aisle}",
+                        },
+                      },
+                      {
+                        name: "Article No.",
+                        template: {
+                          content: "{articleNo}",
+                        },
+                      },
+                      {
+                        name: "Name",
+                        template: {
+                          content: "{name}",
+                        },
+                      },
+                      {
+                        name: "Qty",
+                        template: {
+                          content: "{qty}",
+                        },
+                      },
+                      {
+                        name: "Stock on hand",
+                        template: {
+                          content: "{soh}",
+                        },
+                      },
+                      {
+                        name: "Pres. stock",
+                        template: {
+                          content: "{presStock}",
+                        },
+                      },
+                      {
+                        name: "Requested quantity",
+                        template: {
+                          content: "{requestedQuantity}",
+                        },
+                      },
+                      {
+                        name: "Empty shelf?",
+                        template: {
+                          content: "{isGap}",
+                        },
+                      },
+                      {
+                        name: "Able to fulfil Requested Quantity?",
+                        template: {
+                          content: "{ableToFulfil}",
+                        },
+                      },
+                    ],
+                  });
+                  oExport
+                    .saveFile(`Gapbuster List ${date}`)
+                    .catch(function (oError) {
+                      sap.m.MessageToast.show(
+                        "Generate is not possible because no model was set"
+                      );
+                      console.log(oError);
+                    })
+                    .then(function () {
+                      oExport.destroy();
+                    });
+                } else {
+                  MessageToast.show("Cannot export empty list");
+                }
+              }
+            },
+          }
+        );
       },
     });
   }

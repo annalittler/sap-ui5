@@ -166,7 +166,7 @@
               <!-- <Text text="Images: "></Text>
               <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" /> -->
               <Button id="idButtonExport" type="Emphasized" text="Submit List" press=".onExportPress" width="100px" />
-              <Button id="idButtonExportMulti" type="Emphasized" text="Submit ({= ${tableData>/selectedItems}.length})" press=".onExportPress" visible="false" width="100px" />
+              <Button id="idButtonExportMulti" type="Emphasized" text="Submit ({= ${tableData>/selectedItems}.length})" press=".onExportMultiPress" visible="false" width="100px" />
               <Button id="idButtonDelete" type="Ghost" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" width="100px" />
               <Button id="idButtonDeleteMulti" type="Ghost" text="Delete ({= ${tableData>/selectedItems}.length})" press=".onDeleteMulti" ariaHasPopup="Dialog" visible="false" width="100px" />
 

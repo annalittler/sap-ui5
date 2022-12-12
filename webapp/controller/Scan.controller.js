@@ -99,6 +99,10 @@ sap.ui.define(
                     // errorTone.loop = false;
                     // oModel.refresh();
                     successTone.play();
+                    var oScannedArticle = oModel.getData().articles[0];
+                    if (oModel.getData().emptyShelvesAutoTag.status === true) {
+                      oScannedArticle.isGap = true;
+                    }
                   }
                   if (oData.articles.length >= 10) {
                     MessageBox.warning(
