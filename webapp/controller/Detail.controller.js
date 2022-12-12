@@ -32,10 +32,6 @@ sap.ui.define(
           .getRoute("detail")
           .attachPatternMatched(this._onObjectMatched, this);
         var oBinding = this.getView().getBindingContext();
-        // console.log(oBinding);
-
-        // var checkbox = this.byId("emptyCheckbox");
-        // console.log(checkbox);
       },
       _onObjectMatched: function (oEvent) {
         this.getView().bindElement({
@@ -61,16 +57,6 @@ sap.ui.define(
       //   var oBinding = this.getView().getBindingContext();
       //   console.log(oBinding);
       // },
-      onEmptyShelfCheckChange: function (e) {
-        var state = e.getParameters().selected;
-        var oModel = this.getView().getModel("tableData");
-        var oData = oModel.getData();
-        var stockOnShelfStepInput = this.byId("stockOnShelfStepInput");
-        state === true
-          ? ((oData.shelfIsEmpty.status = true),
-            stockOnShelfStepInput.setValue(0))
-          : (oData.shelfIsEmpty.status = false);
-      },
 
       onUpdatePresStock: function () {
         var oView = this.getView();
@@ -95,20 +81,20 @@ sap.ui.define(
         var iValue = e.getParameters();
         // console.log(iValue);
       },
-      // onEmptyShelvesAutoTag: function (e) {
-      //   var oModel = this.getView().getModel("tableData");
-      //   var oData = oModel.getData();
-      //   var state = e.getSource().getState();
-      //   state === true
-      //     ? (oData.emptyShelvesAutoTag.status = true)
-      //     : (oData.emptyShelvesAutoTag.status = false);
-      //   oModel.refresh();
-      // },
 
       onReplenShelfCheck: function (e) {
-        var state = e.getParameters().selected;
+        var state = e.getParameter("selected");
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
+        // var oBinding = this.getView().getBindingContext("tableData");
+        // var sObjPath = oBinding.getPath();
+        // var iIndex = parseInt(
+        //   sObjPath.substring(sObjPath.lastIndexOf("/") + 1)
+        // );
+        // var iSoh = oData.articles[iIndex].soh;
+        // if (iSoh <= 0) {
+        // }
+        // console.log(iSoh <= 0);
         oData.replenShelfCheck.status = state;
         oModel.refresh();
         var listItem = this.byId("replenClItem");
@@ -117,7 +103,7 @@ sap.ui.define(
           : listItem.setSelected(false);
       },
       onReportBtlCheck: function (e) {
-        var state = e.getParameters().selected;
+        var state = e.getParameter("selected");
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
         oData.reportBtlCheck.status = state;
@@ -127,8 +113,36 @@ sap.ui.define(
           ? listItem.setSelected(true)
           : listItem.setSelected(false);
       },
+
+      onEmptyShelfCheckChange: function (e) {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+        var sObjPath = this.getView().mObjectBindingInfos.tableData.path;
+        var index = parseInt(sObjPath.substring(sObjPath.lastIndexOf("/") + 1));
+        var oItem = oData.articles[index];
+        var emptySwitch = this.byId("emptySwitch");
+        console.log(emptySwitch.getState());
+
+        // var bState = this.byId("emptySwitch").getState();
+        // console.log(bState);
+        // console.log(oSwitch.getState());
+        // var state = e.getParameters().selected;
+        var stockOnShelfStepInput = this.byId("stockOnShelfStepInput");
+        oItem.isGap ? stockOnShelfStepInput.setValue(0) : null;
+        // console.log(oItem);
+      },
+
+      onImgPress: function () {
+        var oModel = this.getView().getModel("tableData");
+        var oData = oModel.getData();
+        var sObjPath = this.getView().mObjectBindingInfos.tableData.path;
+        var index = parseInt(sObjPath.substring(sObjPath.lastIndexOf("/") + 1));
+        var oItem = oData.articles[index];
+        console.log(oItem);
+      },
+
       onStockOnShelfSelect: function (e) {
-        var state = e.getParameters().selected;
+        var state = e.getParameter("selected");
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
         oData.stockOnShelfSelect.status = state;
@@ -137,29 +151,45 @@ sap.ui.define(
       onStockOnShelfChange: function (e) {
         // var stepInput = this.byId("stockOnShelfStepInput");
         // var stockOnShelfStepInput = this.byId("stockOnShelfStepInput");
-        var emptyShelfCheck = this.byId("emptyCheckbox");
+
+        var emptyShelfCheck = this.byId("emptySwitch");
         // var state = e.getParameters().selected;
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
+        var iValue = e.getParameter("value");
+        var sObjPath = this.getView().mObjectBindingInfos.tableData.path;
+        var index = parseInt(sObjPath.substring(sObjPath.lastIndexOf("/") + 1));
+        var oItem = oData.articles[index];
+        console.log(oItem);
+        if (iValue > 0) {
+          oItem.isGap = false;
+          emptyShelfCheck.setState(false);
+        }
+        if (iValue === 0) {
+          oItem.isGap = true;
+          emptyShelfCheck.setState(true);
+        }
+        // console.log(oItem);
 
-        var shelfEmpty = oData.shelfIsEmpty.status;
-        var shelfEmptyAutoTag = oData.emptyShelvesAutoTag.status;
-        shelfEmpty || shelfEmptyAutoTag
-          ? emptyShelfCheck.setSelected(false)
-          : emptyShelfCheck.setSelected(true);
+        // var shelfEmpty = oData.shelfIsEmpty.status;
+        // var shelfEmptyAutoTag = oData.emptyShelvesAutoTag.status;
+        // shelfEmpty || shelfEmptyAutoTag
+        //   ? isGap.setState(false)
+        //   : emptyShelfCheck.setState(true);
       },
 
       onReqQuantitySelect: function (e) {
-        var state = e.getParameters().selected;
+        var state = e.getParameter("selected");
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
         oData.reqQuantitySelect.status = state;
         oModel.refresh();
+        // console.log("test", state);
       },
       onSubmitItem: function (e) {
         var oView = this.getView("List");
-        var oEmptyShelfCheck = this.byId("emptyCheckbox");
-        var bIsShelfEmpty = oEmptyShelfCheck.getSelected();
+        var oEmptyShelfCheck = this.byId("emptySwitch");
+        var bIsShelfEmpty = oEmptyShelfCheck.getState();
         var oModel = oView.getModel("tableData");
         var oData = oModel.getData();
         var iStockOnShelf = this.byId("stockOnShelfStepInput").getValue();
@@ -169,7 +199,17 @@ sap.ui.define(
         var iAmountRequired = oItem.presStock - iStockOnShelf;
         oItem.requestedQuantity = iAmountRequired;
         oItem.isShelfEmpty = bIsShelfEmpty;
+        // var id = sap.ui.core.Fragment.createId(
+        //   oView.getId(),
+        //   "emptyShelvesSwitchSettings"
+        // );
+        // var oAutoGapTag = this.byId(id);
+        // console.log(oAutoGapTag);
+
         // console.log(oItem);
+        if (oData.emptyShelvesAutoTag || bIsShelfEmpty) {
+        }
+
         oModel.refresh();
         var oHistory = History.getInstance();
         var sPreviousHash = oHistory.getPreviousHash();
