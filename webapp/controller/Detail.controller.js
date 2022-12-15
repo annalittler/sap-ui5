@@ -53,11 +53,6 @@ sap.ui.define(
           oRouter.navTo("list");
         }
       },
-      // onImgPress: function (e) {
-      //   var oBinding = this.getView().getBindingContext();
-      //   console.log(oBinding);
-      // },
-
       onUpdatePresStock: function () {
         var oView = this.getView();
         if (!this.byId("updatePresStockBox")) {
@@ -79,22 +74,12 @@ sap.ui.define(
       },
       onChangePresStock: function (e) {
         var iValue = e.getParameters();
-        // console.log(iValue);
       },
 
       onReplenShelfCheck: function (e) {
         var state = e.getParameter("selected");
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
-        // var oBinding = this.getView().getBindingContext("tableData");
-        // var sObjPath = oBinding.getPath();
-        // var iIndex = parseInt(
-        //   sObjPath.substring(sObjPath.lastIndexOf("/") + 1)
-        // );
-        // var iSoh = oData.articles[iIndex].soh;
-        // if (iSoh <= 0) {
-        // }
-        // console.log(iSoh <= 0);
         oData.replenShelfCheck.status = state;
         oModel.refresh();
         var listItem = this.byId("replenClItem");
@@ -122,14 +107,8 @@ sap.ui.define(
         var oItem = oData.articles[index];
         var emptySwitch = this.byId("emptySwitch");
         console.log(emptySwitch.getState());
-
-        // var bState = this.byId("emptySwitch").getState();
-        // console.log(bState);
-        // console.log(oSwitch.getState());
-        // var state = e.getParameters().selected;
         var stockOnShelfStepInput = this.byId("stockOnShelfStepInput");
         oItem.isGap ? stockOnShelfStepInput.setValue(0) : null;
-        // console.log(oItem);
       },
 
       onImgPress: function () {
@@ -149,11 +128,8 @@ sap.ui.define(
         oModel.refresh();
       },
       onStockOnShelfChange: function (e) {
-        // var stepInput = this.byId("stockOnShelfStepInput");
-        // var stockOnShelfStepInput = this.byId("stockOnShelfStepInput");
-
         var emptyShelfCheck = this.byId("emptySwitch");
-        // var state = e.getParameters().selected;
+        var oReqQuantityInput = this.byId("reqQuantityStepInput");
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
         var iValue = e.getParameter("value");
@@ -169,13 +145,10 @@ sap.ui.define(
           oItem.isGap = true;
           emptyShelfCheck.setState(true);
         }
-        // console.log(oItem);
-
-        // var shelfEmpty = oData.shelfIsEmpty.status;
-        // var shelfEmptyAutoTag = oData.emptyShelvesAutoTag.status;
-        // shelfEmpty || shelfEmptyAutoTag
-        //   ? isGap.setState(false)
-        //   : emptyShelfCheck.setState(true);
+        var oPresStock = oItem.presStock;
+        var iNumToRequest = oPresStock - iValue;
+        console.log(iNumToRequest);
+        oReqQuantityInput.setValue(iNumToRequest);
       },
 
       onReqQuantitySelect: function (e) {
@@ -184,7 +157,6 @@ sap.ui.define(
         var oData = oModel.getData();
         oData.reqQuantitySelect.status = state;
         oModel.refresh();
-        // console.log("test", state);
       },
       onSubmitItem: function (e) {
         var oView = this.getView("List");
@@ -199,14 +171,6 @@ sap.ui.define(
         var iAmountRequired = oItem.presStock - iStockOnShelf;
         oItem.requestedQuantity = iAmountRequired;
         oItem.isShelfEmpty = bIsShelfEmpty;
-        // var id = sap.ui.core.Fragment.createId(
-        //   oView.getId(),
-        //   "emptyShelvesSwitchSettings"
-        // );
-        // var oAutoGapTag = this.byId(id);
-        // console.log(oAutoGapTag);
-
-        // console.log(oItem);
         if (oData.emptyShelvesAutoTag || bIsShelfEmpty) {
         }
 
@@ -222,7 +186,6 @@ sap.ui.define(
       },
       onReqQuantityInputChange: function () {
         var oStepInput = this.byId("reqQuantityStepInput");
-        // console.log(oStepInput);
         var iReqQuantity = this.byId("reqQuantityStepInput").getValue();
         var iReqQuantityMax = this.byId("reqQuantityStepInput").getMax();
         if (iReqQuantity === iReqQuantityMax) {

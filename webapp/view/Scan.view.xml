@@ -4,13 +4,9 @@
     xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml">
 
     <Page title="Scan an item" showNavButton="true" navButtonPress=".onNavBack">
-        <headerContent>
-            <!-- <Button text="hi im a button" icon="sap-icon://hello-world" press=""></Button> -->
-        </headerContent>
+        <headerContent></headerContent>
         <content>
             <html:div id="scandit-barcode-picker1"></html:div>
-            <!-- <mvc:XMLView viewName="sap.ui.demo.walkthrough.view"></mvc:XMLView> -->
-            <!-- <Text text="Recent scans" /> -->
 
             <List id=""
                 items="{tableData>/articles}" mode="Delete" delete="onDeleteItem" growing="true" growingThreshold="3">
@@ -44,8 +40,6 @@
                 design="Solid" enabled="true" visible="true" width="100%">
                 <Button text="End Scanning" id="closeBtn" press=".onLeaveScan"></Button>
                 <ToolbarSpacer />
-                <!-- <Button id="idButtonDelete" type="Reject" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" /> -->
-                <!-- <Button id="idButtonExport" type="Emphasized" text="Export" /> -->
             </Toolbar>
         </footer>
     </Page>

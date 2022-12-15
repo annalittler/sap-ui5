@@ -63,7 +63,6 @@ sap.ui.define(
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
         oModel.refresh();
-        // console.log(oData);
         var oMultiSelectBtn = this.byId("idMultiSelectBtn");
         var oDeleteMultiButton = this.byId("idButtonDeleteMulti");
         var oDeleteListButton = this.byId("idButtonDelete");
@@ -71,10 +70,8 @@ sap.ui.define(
         var oExportListButton = this.byId("idButtonExport");
         var oExportMultiButton = this.byId("idButtonExportMulti");
         var list = this.byId("listItems");
-        // console.log(list);
         var listLastMode = list._sLastMode;
         console.log(listLastMode);
-        var oHBox = this.byId("idListHBox");
         if (listLastMode == "None") {
           list.setMode("MultiSelect");
           oData.deleteMulti.status = true;
@@ -96,7 +93,6 @@ sap.ui.define(
           oExportMultiButton.setVisible(false);
         }
         oModel.refresh();
-        // console.log(oData);
       },
 
       onClickItem: function (e) {
@@ -146,7 +142,6 @@ sap.ui.define(
           .getBindingContext("tableData")
           .getObject();
         console.log(oItem);
-        // oModel.refresh();
 
         var oArticles = oData.articles;
 
@@ -176,7 +171,6 @@ sap.ui.define(
             item.isGap = false;
           }
           if (item.requestedQuantity > item.soh) {
-            // item.requestedQuantity = item.soh;
             item.ableToFulfil = false;
           } else {
             item.ableToFulfil = true;
@@ -257,12 +251,6 @@ sap.ui.define(
                         content: "{isGap}",
                       },
                     },
-                    // {
-                    //   name: "Able to fulfil Requested Quantity?",
-                    //   template: {
-                    //     content: "{ableToFulfil}",
-                    //   },
-                    // },
                   ],
                 });
                 oExport
@@ -336,7 +324,6 @@ sap.ui.define(
             onClose: function (sAction) {
               if (sAction === MessageBox.Action.OK) {
                 for (var i = oItems.length - 1; i >= 0; i--) {
-                  // for (var i = 0; i <= oItems.length; i++) {
                   console.log(i);
                   var path = oItems[i].getBindingContextPath();
                   var index = parseInt(
@@ -375,8 +362,6 @@ sap.ui.define(
         console.log(oSelectedItems);
         oData.selectedItems = oSelectedItems;
         oModel.refresh(true);
-        // console.log(oData.selectedItems);
-        // console.log(oData);
       },
       onExportMultiPress: function () {
         var oData = this.getView().getModel("tableData").getData();

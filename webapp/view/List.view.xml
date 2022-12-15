@@ -26,7 +26,6 @@
           </customHeader>
           <content>
             <OverflowToolbar>
-              <!-- <html:div alignItems="Center"> -->
               <HBox width="100%" justifyContent="End">
 
                 <SearchField search=".onFilterItems" placeholder="Search">
@@ -41,25 +40,7 @@
                   </layoutData>
                 </Button>
               </HBox>
-              <!-- </html:div> -->
-              <!-- </contentMiddle> -->
               <ToolbarSpacer />
-              <!-- <Button text="Add by article number" icon="sap-icon://add" press=".onAddItemPopup" class="sapUiSmallMarginBottom" ariaHasPopup="Dialog">
-                <layoutData>
-                  <OverflowToolbarLayoutData priority="AlwaysOverflow" />
-                </layoutData>
-              </Button>
-              <Button text="Settings" icon="sap-icon://action-settings" press=".onSettingsPopup" class="sapUiSmallMarginBottom" ariaHasPopup="Dialog">
-                <layoutData>
-                  <OverflowToolbarLayoutData priority="AlwaysOverflow" />
-                </layoutData>
-              </Button> -->
-              <!-- <Button text="{= ${tableData>/deleteMulti/status} === true ? 'Delete Single' : 'Delete Multiple'}" icon="sap-icon://delete" press=".onDeleteMenu" class="sapUiSmallMarginBottom"> -->
-              <!-- <Button text="{tableData>/deleteMulti/status}" icon="sap-icon://delete" press=".onDeleteMenu" class="sapUiSmallMarginBottom"> -->
-              <!-- <layoutData>
-                <OverflowToolbarLayoutData priority="AlwaysOverflow" />
-              </layoutData>
-              </Button> -->
               <Button icon="sap-icon://list" text="Save List" type="Transparent">
                 <layoutData>
                   <OverflowToolbarLayoutData priority="AlwaysOverflow" />
@@ -102,17 +83,12 @@
                       <HBox justifyContent="SpaceBetween">
                         <Title text="{tableData>name} {tableData>qty}" wrapping="true" class="SapUiLargeMarginEnd" />
                       </HBox>
-                      <!-- <HBox justifyContent="SpaceBetween"> -->
-                      <!-- <ObjectAttribute title="Qty" text="{tableData>qty}" /> -->
                       <VBox>
                         <ObjectAttribute title="Article" text="{tableData>articleNo}" />
                         <ObjectAttribute title="Next delivery" text="{tableData>delivery}" />
                         <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginEnd">
                           <ObjectStatus class="" text="{= ${tableData>soh} > 0 ? 'SOH: ' + ${path: 'tableData>soh', type: 'sap.ui.model.type.Integer'} : 'S0H: 0' }" state="{=${tableData>soh} > 10 ? 'Success' : (${tableData>soh} === 0 ? 'Error' : 'Warning')}"></ObjectStatus>
-                          <!-- <ObjectStatus class="sapUiTinyMarginTop" text="{= ${tableData>soh} > 0 ? 'Replenish Full Shelf' : 'Report to Buyer' }" state="{= ${tableData>soh} > 0 ? 'Warning' : 'Error' }" /> -->
-                          <!-- <Switch id="idListGapSwitch" customTextOff="Gap" change=".listGapSwitch" customTextOn="Gap" state="{= ${tableData>/emptyShelvesAutoTag/status} === true ? true : false}"></Switch> -->
                           <Switch id="idListGapSwitch" customTextOff="Gap" change=".listGapSwitch" customTextOn="Gap" state="{tableData>isGap}"></Switch>
-                          <!-- <Text text="{tableData>isGap}" /> -->
 
                         </HBox>
                       </VBox>
@@ -121,21 +97,11 @@
                 </CustomListItem>
               </items>
             </List>
-            <!-- <Link press=".onNavReviewList" text="Review Full List {= ${tableData>/articles}.length === 1 ? ${tableData>/articles}.length + ' article' : ${tableData>/articles}.length + ' articles' }"></Link> -->
             <VBox width="100%" alignItems="Center" class="sapUiTinyMarginTop">
               <Link press=".onNavReviewList" text="Review Full List" emphasized="true"></Link>
               <Link press=".onNavReviewList" text="({=${tableData>/articles}.length} Products)"></Link>
             </VBox>
           </content>
-          <!-- <footer>
-            <Toolbar design="Solid" enabled="true" visible="true" width="100%">
-            <Button text="End Scanning" id="closeBtn" visible="false" press=".onStopScan" />
-            <ToolbarSpacer />
-            <Button id="idButtonDelete" type="Reject" text="Delete List" press=".onDeleteList" ariaHasPopup="Dialog" />
-            <Button id="idButtonDeleteMulti" type="Reject" text="Delete Items" press=".onDeleteMulti" ariaHasPopup="Dialog" visible="false" />
-            <Button id="idButtonExport" type="Emphasized" text="Export" press=".onExportPress" />
-            </Toolbar>
-          </footer> -->
         </Page>
       </pages>
     </App>

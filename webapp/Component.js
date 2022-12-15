@@ -11,7 +11,6 @@ sap.ui.define(
         manifest: "json",
       },
       init: function () {
-        // call the init function of the parent
         UIComponent.prototype.init.apply(this, arguments);
 
         this.getRouter().initialize();
@@ -32,30 +31,6 @@ sap.ui.define(
             //   delivery: "25/12/2022",
             //   isGap: true,
             // },
-            // {
-            //   name: "TARARUA BUTTER",
-            //   qty: "500G",
-            //   price: 6.49,
-            //   articleNo: 5013622,
-            //   image:
-            //     "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/3765420344565789.avif",
-            //   soh: 0,
-            //   presStock: 18,
-            //   aisle: 10,
-            //   delivery: "25/12/2022",
-            // },
-            // {
-            //   name: "CHELSEA WHITE SUGAR",
-            //   qty: "1.5KG",
-            //   price: 3.19,
-            //   articleNo: 5002760,
-            //   image:
-            //     "https://grocer-img.sgp1.cdn.digitaloceanspaces.com/products/4560913944979699.avif",
-            //   soh: 34,
-            //   presStock: 16,
-            //   aisle: 3,
-            //   delivery: "25/12/2022",
-            // },
           ],
         };
 
@@ -74,8 +49,6 @@ sap.ui.define(
         oData.reqQuantitySelect = { status: true };
         oData.shelfIsEmpty = { status: oData.emptyShelvesAutoTag.status };
         oData.threeItems = { articles: [] };
-        // console.log(oData);
-        console.log(oData);
       },
     });
   }

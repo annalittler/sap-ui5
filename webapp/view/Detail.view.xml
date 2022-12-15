@@ -1,7 +1,6 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
     controllerName="sap.ui.demo.walkthrough.controller.Detail"
     xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f">
-
     <Page title="{tableData>name}" id="idDetail" showFooter="true" showNavButton="false" navButtonPress=".onNavBack">
         <customHeader design="Solid">
             <f:ShellBar title="{i18n>appTitle}" showNavButton="false">
@@ -37,7 +36,6 @@
             <VBox class="sapUiSmallMargin">
                 <HBox justifyContent="SpaceBetween" alignItems="Center">
                     <Text text="Please select action(s)" class="sapUiTinyMarginTopBottom"></Text>
-                    <!-- <Text text="{tableData>isGap}" class="sapUiTinyMarginTopBottom"></Text> -->
                     <Switch id="emptySwitch" change=".onEmptyShelfCheckChange" customTextOff="Gap" customTextOn="Gap" state="{tableData>isGap}"></Switch>
                 </HBox>
                 <CustomListItem id="replenClItem" blocked="{=${tableData>soh} === 0 ? true : false}">
@@ -47,12 +45,13 @@
                     <Toolbar width="100%" height="1px" />
                     <Text class="sapUiTinyMarginTopBottom" text="Select replenishment mode"></Text>
                     <RadioButton text="Request Quantity" select=".onReqQuantitySelect" selected="true"></RadioButton>
-                    <!-- <Text text="{}" /> -->
-                    <!-- <Text text="{= ${tableData>soh} >= ${tableData>presStock} ? true : false}"></Text> -->
                     <!-- <StepInput id="reqQuantityStepInput" visible="{= ${tableData>/reqQuantitySelect/status} === true ? true : false}" min="0" value="{= ${tableData>soh} >= ${tableData>presStock} ? ${tableData>presStock} : ${tableData>soh}}" max="{tableData>soh}" change=".onReqQuantityInputChange"></StepInput> -->
-                    <StepInput id="reqQuantityStepInput" visible="{= ${tableData>/reqQuantitySelect/status} === true ? true : false}" min="0" value="{= ${tableData>soh} >= ${tableData>presStock} ? ${tableData>presStock} : ${tableData>soh}}" max="{tableData>soh}" change=".onReqQuantityInputChange"></StepInput>
+                    <StepInput id="reqQuantityStepInput" enabled="{= ${tableData>/reqQuantitySelect/status} === true ? true : false}" min="0" value="{= ${tableData>soh} >= ${tableData>presStock} ? ${tableData>presStock} : ${tableData>soh}}" max="{tableData>soh}" change=".onReqQuantityInputChange"></StepInput>
+                    <!-- <StepInput id="reqQuantityStepInput" min="0" value="{= ${tableData>soh} >= ${tableData>presStock} ? ${tableData>presStock} : ${tableData>soh}}" max="{tableData>soh}" change=".onReqQuantityInputChange"></StepInput> -->
                     <RadioButton id="stockOnShelfRadio" text="Enter Stock on Shelf" select=".onStockOnShelfSelect" selected="" blocked="{=${tableData>presStock} === 0 || ${tableData>presStock} === '' || ${tableData>presStock} === null ? true : false }"></RadioButton>
-                    <StepInput id="stockOnShelfStepInput" visible="{= ${tableData>/stockOnShelfSelect/status} === true}" min="0" value="{= ${tableData>isGap} === true? 0 : 1}" change=" .onStockOnShelfChange" blocked="{= ${tableData>/isShelfEmpty/status === true ? true : false}}"></StepInput>
+                    <!-- <StepInput id="stockOnShelfStepInput" visible="{= ${tableData>/stockOnShelfSelect/status} === true}" min="0" value="{= ${tableData>isGap} === true? 0 : 1}" change=" .onStockOnShelfChange" blocked="{= ${tableData>/isShelfEmpty/status === true ? true : false}}"></StepInput> -->
+                    <StepInput id="stockOnShelfStepInput" enabled="{= ${tableData>/stockOnShelfSelect/status} === true}" min="0" value="{= ${tableData>isGap} === true? 0 : 1}" change=" .onStockOnShelfChange" blocked="{= ${tableData>/isShelfEmpty/status === true ? true : false}}"></StepInput>
+                    <!-- <StepInput id="stockOnShelfStepInput" min="0" value="{= ${tableData>isGap} === true? 0 : 1}" change=" .onStockOnShelfChange" blocked="{= ${tableData>/isShelfEmpty/status === true ? true : false}}"></StepInput> -->
                 </VBox>
                 <CustomListItem id="reportClItem">
                     <CheckBox id="reportBtlCheck" text="Report to Buyer's Task List" select=".onReportBtlCheck" selected="{= ${tableData>soh} > 0 ? false : true}"></CheckBox>

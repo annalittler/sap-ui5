@@ -25,19 +25,9 @@ sap.ui.define(
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.Scan", {
       onInit: async function () {
-        // console.log(this.getView("List").getModel());
         var oModel = sap.ui.getCore().getModel("tableData");
         var oData = oModel.getData();
-        // var oAllItems = this.getView().getModel("allData").getData().articles;
 
-        // oModel.setSizeLimit(2);
-        // oModel.setData(oData.articles);
-
-        // oModel.iSizeLimit = 2;
-        // console.log(oModel);
-        // oModelThreeItems.setSizeLimit(3);
-        // console.log(oModelThreeItems.oData);
-        // console.log(oData);
         this.startedScanning = false;
         console.log("scanning started?", this.startedScanning);
         var scanner = this.byId("scandit-barcode-picker1");
@@ -45,8 +35,8 @@ sap.ui.define(
         if (this.startedScanning === false) {
           this.startedScanning = true;
           var oScannedItems = [];
-
           ScanditSDK.configure(
+            // API KEY GOES HERE
             "AeUi1GO8QVCLQNsakx9oKmAH8IrQG9AmeWtsE+tNIEiresInMWGlkKgl6E7VYtnzlUu7bctPsTKOYGdgeVS0grtHLoL2Sfksjw1W7ER0ZTfRdGo+a3Rt1p0Z3abZOunN1CykPI44zjwq/CNmFimQxgaubAj5Vn/RuJdbFyuQQEthlnNgDYQmrHOH02p5luFLvnFpnmVjtnJI+/+MnHFg7Mbyaj9uPqOxuApRhPkGJQOmWOw3EAIDDUv3EicW+0L+Dxe3FYebkYfcmlkuhuI7KF+bezTYCwStuwYGINtr3+AKlqKstFFoSqroA71EZw32tfr8FDfr0YrGeZD1UoPK6qR7Gz0RVWHjtVYs2cZqsYPp8pXg7wC0Rs5GoF7kA9V/7gB5Prla1SwUEimHpqg/IPmOjnZjR3WFjq9JCFilbZ2ljY3yv3kbZ9wxA93HqYuYEUm5EfQnjkDq+VETJMzcUyl8MrIzDcoMuKjaDPSlew0hbI0uzJY8MRRpxdrxG0zStKDj2G7bzynd8H9AOft0+fPw5Tgb2/LmJc87AuwAlnPVSBMhDpoBDCMWLVPE1rB+Idn0oHkzKbMfvmm56BLRNLQocQKj3JY4fuKD5hHsmnQy0sXxlWjAF0ospJCvbW9KbWPWALnMDZ/ZE050vY4ZNeXOHULN2joOxxQbG/Y6CXJKpJm4dbUEUuSPEs5Ufn2e3b4ZPjLrrHAm1geZ40BNWtdNkuV+rOxLCC4XbbWLcyhSy7QtZu1x3BpSMyHqfHQWne+GgMpBbNPKvgJHf15jA6qBI0zDcbP6/MkBuhD4ASU2+UAYm7DK",
             {
               engineLocation:
@@ -91,13 +81,8 @@ sap.ui.define(
                     const oCurrentData = oModel.getProperty("/articles");
                     const oNewData = oNewItem.concat(oCurrentData);
                     oModel.setProperty("/articles", oNewData);
-
-                    // oData.articles.unshift(oAllItems[index]);
                     var successTone = new Audio("./resources/success_tone.mp3");
                     successTone.loop = false;
-                    // var errorTone = new Audio("./resources/error_tone.mp3");
-                    // errorTone.loop = false;
-                    // oModel.refresh();
                     successTone.play();
                     var oScannedArticle = oModel.getData().articles[0];
                     if (oModel.getData().emptyShelvesAutoTag.status === true) {
@@ -108,7 +93,6 @@ sap.ui.define(
                     MessageBox.warning(
                       "Your list contains 10 items, please export soon to avoid data loss."
                     );
-                    // console.log("time to save");
                   }
                   oModel.refresh();
                 }
@@ -119,12 +103,6 @@ sap.ui.define(
       onLeaveScan: function () {
         var oRouter = UIComponent.getRouterFor(this);
         oRouter.navTo("list");
-        // var oView = this.getView("Scan");
-        // console.log(oView);
-        // var scanView = new sap.ui.getCore().byId("Scan");
-        // var oView = this.getView("Scan");
-
-        // oView.destroy();
       },
       onNavBack: function () {
         var oView = this.getView("Scan");
@@ -136,11 +114,8 @@ sap.ui.define(
           var oRouter = UIComponent.getRouterFor(this);
           oRouter.navTo("list");
         }
-        // oView.destroy();
       },
       onDeleteItem: function (e) {
-        var arr = [];
-
         var oModel = this.getView().getModel("tableData");
         var oData = oModel.getData();
 
@@ -148,7 +123,6 @@ sap.ui.define(
           .getParameter("listItem")
           .getBindingContext("tableData")
           .getObject();
-        // console.log(oItem);
         oModel.refresh();
 
         var oArticles = oData.articles;
@@ -177,117 +151,7 @@ sap.ui.define(
           ),
         });
       },
-      // onExportPress: function () {
-      //   // var time = getTime();
-      //   var date = new Date();
-      //   // getting model into oModel variable.
-      //   var oModel = this.getView().getModel("tableData");
-
-      //   MessageBox.confirm("Are you sure you want to export the list?", {
-      //     actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-      //     emphasizedAction: MessageBox.Action.OK,
-      //     onClose: function (sAction) {
-      //       if (sAction === MessageBox.Action.OK) {
-      //         if (oModel.oData.articles.length > 0) {
-      //           var oExport = new Export({
-      //             exportType: new exportCSV({
-      //               // for xls....
-      //               // fileExtension: "xls",
-      //               // separatorChar: "\t",
-      //               // charset: "utf-8",
-      //               // mimeType: "application/vnd.ms-excel",
-
-      //               // for CSV....
-      //               charset: "utf-8",
-      //               fileExtension: "csv",
-      //               separatorChar: ",",
-      //               mimeType: "application/csv",
-      //             }),
-      //             models: oModel,
-
-      //             rows: {
-      //               path: "/articles",
-      //             },
-      //             columns: [
-      //               {
-      //                 name: "Aisle No.",
-      //                 template: {
-      //                   content: "{aisle}",
-      //                 },
-      //               },
-      //               {
-      //                 name: "Article No.",
-      //                 template: {
-      //                   content: "{articleNo}",
-      //                 },
-      //               },
-      //               {
-      //                 name: "Name",
-      //                 template: {
-      //                   content: "{name}",
-      //                 },
-      //               },
-      //               {
-      //                 name: "Qty",
-      //                 template: {
-      //                   content: "{qty}",
-      //                 },
-      //               },
-      //               {
-      //                 name: "Stock on hand",
-      //                 template: {
-      //                   content: "{soh}",
-      //                 },
-      //               },
-      //               {
-      //                 name: "Pres. stock",
-      //                 template: {
-      //                   content: "{presStock}",
-      //                 },
-      //               },
-      //             ],
-      //           });
-      //           oExport
-      //             .saveFile(`Gapbuster List ${date}`)
-      //             .catch(function (oError) {
-      //               sap.m.MessageToast.show(
-      //                 "Generate is not possible beause no model was set"
-      //               );
-      //             })
-      //             .then(function () {
-      //               oExport.destroy();
-      //             });
-      //         } else {
-      //           MessageToast.show("Cannot export empty list");
-      //         }
-      //       }
-      //     },
-      //   });
-      // },
-      // onDeleteList: function () {
-      //   var oModel = this.getView().getModel("tableData");
-      //   var oData = oModel.getData();
-      //   MessageBox.confirm("Are you sure you want to delete the list?", {
-      //     actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-      //     emphasizedAction: MessageBox.Action.OK,
-      //     onClose: function (sAction) {
-      //       if (sAction === MessageBox.Action.OK) {
-      //         oData.articles = [];
-      //         oModel.refresh();
-      //         MessageToast.show("List deleted");
-      //       }
-      //     },
-      //   });
-      // },
-      onExit: function () {
-        // console.log("onExit() of controller called...");
-        // alert("onExit function called");
-        // // var oView = this.getView("Scan");
-        // // console.log(oView);
-        // var oScanner = this.createId("scandit-barcode-picker1");
-        // console.log(oScanner);
-        // oScanner.destroy();
-      },
+      onExit: function () {},
     });
   }
 );

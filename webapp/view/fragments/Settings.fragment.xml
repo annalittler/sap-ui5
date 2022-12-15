@@ -3,16 +3,11 @@
     xmlns:core="sap.ui.core"
     xmlns:html="http://www.w3.org/1999/xhtml">
 
-    <!-- <Text text="Images:" class="sapUiTinyMargin"></Text>
-    <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" />
- -->
 
     <Dialog id="settingsBox" title="Settings">
-        <!-- <html:div class="sapUiSmallMarginStart"> -->
         <VBox justifyContent="">
             <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBeginEnd">
                 <Label text="Empty shelves auto-tag:" class="sapUiTinyMargin"></Label>
-                <!-- <Switch state="{tableData>/emptyShelvesAutoTag/status}" change=".onEmptyShelvesAutoTag" id="emptyShelvesSwitchSettings" /> -->
                 <Switch state="true" change=".onEmptyShelvesAutoTag" id="emptyShelvesSwitchSettings" />
             </HBox>
             <Toolbar width="100%" height="1px" />
@@ -20,11 +15,6 @@
                 <Label text="Display Images:" class="sapUiTinyMargin"></Label>
                 <Switch state="true" change=".onShowImages" class="" />
             </HBox>
-            <!-- <HBox>
-                <Label text="Sort items by aisle:"></Label>
-                <Switch state="true" change=".onGroupByAisle" />
-            </HBox> -->
-            <!-- </html:div> -->
         </VBox>
         <beginButton>
             <Button text="Close" press=".onCloseSettings" class="sapUiNoMarginBottom" type="Emphasized"></Button>

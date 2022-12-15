@@ -3,9 +3,6 @@
     xmlns:core="sap.ui.core"
     xmlns:html="http://www.w3.org/1999/xhtml"
     id="searchFragment">
-    <!-- <Text text="Images:" class="sapUiTinyMargin"></Text>
-    <Switch state="false" customTextOn="On" customTextOff="Off" change=".onShowImages" />
- -->
 
     <Dialog id="searchBox" title="Add an item" contentHeight="100%">
         <VBox justifyContent="Center" class="sapUiSmallMargin">
@@ -24,8 +21,6 @@
                                     <HBox justifyContent="SpaceBetween">
                                         <Title text="{allData>name} {allData>qty}" wrapping="true" class="SapUiLargeMarginEnd" />
                                     </HBox>
-                                    <!-- <HBox justifyContent="SpaceBetween"> -->
-                                    <!-- <ObjectAttribute title="Qty" text="{tableData>qty}" /> -->
                                     <VBox>
                                         <ObjectAttribute title="Article" text="{allData>articleNo}" />
                                         <ObjectAttribute title="Barcode" text="{allData>barcode}" />
@@ -39,7 +34,6 @@
                     </items>
                 </List>
             </ScrollContainer>
-            <!-- <Button press=".onFilterItems" width="50px" text="Add" type="Ghost" class="sapUiTinyMarginBegin"></Button> -->
 
         </VBox>
         <beginButton>
